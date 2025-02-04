@@ -2,5 +2,130 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="display-4 text-success">It works!</h1>
+    <!-- Hero Section -->
+    <section class="hero bg-success text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-3 fw-bold">Transform Your Fitness, Sustainably</h1>
+            <p class="lead">Join our eco-friendly fitness community, shop sustainable merchandise, and achieve your health goals.</p>
+            <a href="/plans" class="btn btn-light btn-lg mt-3">Explore Plans</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container text-center my-5">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/plans.jpg' %}" class="card-img-top" alt="Fitness Plans">
+                    <div class="card-body">
+                        <h5 class="card-title">Fitness & Diet Plans</h5>
+                        <p class="card-text">Custom workout and meal plans tailored for you.</p>
+                        <a href="/plans" class="btn btn-success">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/workouts.jpg' %}" class="card-img-top" alt="Workouts">
+                    <div class="card-body">
+                        <h5 class="card-title">Workout Reviews</h5>
+                        <p class="card-text">See how others are progressing and share your journey.</p>
+                        <a href="/reviews" class="btn btn-success">View Reviews</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/shop.jpg' %}" class="card-img-top" alt="Shop">
+                    <div class="card-body">
+                        <h5 class="card-title">Eco-Friendly Shop</h5>
+                        <p class="card-text">Sustainable fitness gear and apparel.</p>
+                        <a href="/shop" class="btn btn-success">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/community.jpg' %}" class="card-img-top" alt="Community">
+                    <div class="card-body">
+                        <h5 class="card-title">Join the Community</h5>
+                        <p class="card-text">Connect with like-minded fitness enthusiasts.</p>
+                        <a href="/community" class="btn btn-success">Join Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Featured Merchandise</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/product1.jpg' %}" class="card-img-top" alt="Product 1">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Eco Yoga Mat</h5>
+                        <p class="card-text">$49.99</p>
+                        <a href="/shop" class="btn btn-outline-success">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/product2.jpg' %}" class="card-img-top" alt="Product 2">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Recycled Gym Bottle</h5>
+                        <p class="card-text">$19.99</p>
+                        <a href="/shop" class="btn btn-outline-success">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'images/product3.jpg' %}" class="card-img-top" alt="Product 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Organic Cotton Tank</h5>
+                        <p class="card-text">$29.99</p>
+                        <a href="/shop" class="btn btn-outline-success">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">What Our Customers Say</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"The meal plans helped me lose 10lbs in 2 months! Amazing community!"</p>
+                        <h6 class="text-end">- Sarah W.</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"Sustainable fitness gear that actually performs. Love my eco yoga mat!"</p>
+                        <h6 class="text-end">- John D.</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm p-3">
+                        <p>"The workout reviews keep me motivated every day. Best fitness site ever!"</p>
+                        <h6 class="text-end">- Alex P.</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Community CTA -->
+    <section class="container text-center my-5">
+        <h2>Be Part of the Movement</h2>
+        <p>Connect with other fitness enthusiasts, share progress, and support each other.</p>
+        <a href="/community" class="btn btn-success btn-lg">Join the Community</a>
+    </section>
+
 {% endblock %}
