@@ -1,94 +1,110 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
     {% block meta %}
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Eco-Fitness | Sustainable Workouts & Nutrition Plans">
     {% endblock %}
-    <title>Eco-Fitness {% block extra_title %}{% endblock %}</title>
+
+    {% block extra_meta %}{% endblock %}
+
     {% block corecss %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% endblock %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
 
-        .navbar-brand {
-            font-weight: bold;
-            color: #28a745 !important;
-        }
+    {% block extra_css %}{% endblock %}
 
-        footer {
-            background: #222;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
+    {% block corejs %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% endblock %}
 
-        .social-icons a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.5rem;
-        }
-    </style>
+    {% block extra_js %}{% endblock %}
+
+    <title>Eco-Fitness {% block extra_title %}{% endblock %}</title>
 </head>
-
 <body>
-
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="/">Eco-Fitness</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Eco-Fitness Logo" height="40">
+                Eco-Fitness
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/plans">Fitness & Diet Plans</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/reviews">Reviews</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/shop">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/community">Community</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}">Plans</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'reviews' %}">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'community' %}">Community</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+                <!-- Search Bar -->
+                <form class="d-flex ms-3" method="GET" action="{% url 'search' %}">
+                    <input class="form-control me-2" type="search" placeholder="Search" name="q">
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+                <!-- User & Cart -->
+                <ul class="navbar-nav ms-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
+                                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cart' %}">
+                            <i class="fas fa-shopping-cart"></i> Cart
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    {% if messages %}
+        <div class="message-container mt-5">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <!-- Main Content -->
-    <div class="container my-4">
+    <main class="container mt-5 pt-4">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
             <p>&copy; 2025 Eco-Fitness. All Rights Reserved.</p>
-            <div class="social-icons">
-                <a href="https://facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
-                <a href="https://twitter.com" target="_blank"><i class="bi bi-twitter"></i></a>
-                <a href="https://instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
+            <div class="d-flex justify-content-center">
+                <a href="https://facebook.com" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                <a href="https://twitter.com" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="https://instagram.com" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
             </div>
         </div>
     </footer>
 
-    {% block corejs %}
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-    {% endblock %}
+    {% block postloadjs %}{% endblock %}
 </body>
-
 </html>
