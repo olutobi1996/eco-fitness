@@ -80,6 +80,9 @@
         </div>
     </nav>
 
+    {% include 'includes/mobile-top-header.html' %}
+    {% include 'includes/main-nav.html' %}
+
     {% if messages %}
         <div class="message-container mt-5">
             {% for message in messages %}

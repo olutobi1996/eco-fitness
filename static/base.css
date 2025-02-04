@@ -1,0 +1,124 @@
+/* General Styles */
+html, body {
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+    color: #444;
+    background: url('/media/eco_fitness_bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #28a745 !important; /* Eco-friendly green */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    color: #444 !important;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #28a745 !important;
+}
+
+/* Buttons */
+.btn-green {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-green:hover {
+    background-color: #218838;
+}
+
+.btn-outline-green {
+    border: 2px solid #28a745;
+    color: #28a745;
+}
+
+.btn-outline-green:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Search Bar */
+.navbar .form-control {
+    border: 2px solid #28a745;
+}
+
+.navbar .btn-outline-success {
+    border-color: #28a745;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    color: white;
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+/* Typography */
+.logo-font {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.text-green {
+    color: #28a745 !important;
+}
+
+/* Buttons & Links */
+.shop-now-button {
+    background: #28a745;
+    color: white;
+    min-width: 260px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 5px;
+}
+
+.shop-now-button:hover {
+    background: #218838;
+    color: white;
+}
+
+/* Footer */
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer a {
+    color: #28a745;
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: #45c367;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+}
