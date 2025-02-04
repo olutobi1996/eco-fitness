@@ -1,0 +1,61 @@
+<div class="collapse navbar-collapse" id="main-nav">
+    <ul class="navbar-nav w-auto mx-auto">
+        <!-- Home Link -->
+        <li class="nav-item d-block d-md-none">
+            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'home' %}" id="home-link">
+                Home
+            </a>
+        </li>
+
+        <!-- Fitness Plans Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="#" id="fitness-plans-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Fitness Plans
+            </a>
+            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="fitness-plans-link">
+                <li><a href="{% url 'products' %}?category=workout_plans" class="dropdown-item">Workout Plans</a></li>
+                <li><a href="{% url 'products' %}?category=diet_plans" class="dropdown-item">Diet Plans</a></li>
+                <li><a href="{% url 'products' %}?category=workout_plans,diet_plans" class="dropdown-item">All Plans</a></li>
+            </ul>
+        </li>
+
+        <!-- Merchandise Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="#" id="merchandise-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Merchandise
+            </a>
+            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="merchandise-link">
+                <li><a href="{% url 'products' %}?category=activewear" class="dropdown-item">Activewear</a></li>
+                <li><a href="{% url 'products' %}?category=accessories" class="dropdown-item">Accessories</a></li>
+                <li><a href="{% url 'products' %}?category=eco_bottles" class="dropdown-item">Eco Bottles</a></li>
+                <li><a href="{% url 'products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item">All Merchandise</a></li>
+            </ul>
+        </li>
+
+        <!-- Community & Reviews -->
+        <li class="nav-item">
+            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'community' %}" id="community-link">
+                Community
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'reviews' %}" id="reviews-link">
+                Reviews
+            </a>
+        </li>
+
+        <!-- Special Offers -->
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-green" href="#" id="specials-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Special Offers
+            </a>
+            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="specials-link">
+                <li><a href="{% url 'products' %}?category=new_arrivals" class="dropdown-item">New Arrivals</a></li>
+                <li><a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a></li>
+                <li><a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a></li>
+                <li><a href="{% url 'products' %}?category=new_arrivals,deals,clearance" class="dropdown-item">All Specials</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

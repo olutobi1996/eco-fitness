@@ -1,0 +1,59 @@
+<ul class="list-inline d-flex justify-content-end align-items-center">
+    <!-- Mobile Search -->
+    <li class="list-inline-item">
+        <a class="text-green nav-link d-block d-lg-none" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="text-center">
+                <i class="fas fa-search fa-lg"></i>
+                <p class="my-0 small">Search</p>
+            </div>
+        </a>
+        <div class="dropdown-menu border-0 w-100 p-3 rounded shadow-sm" aria-labelledby="mobile-search">
+            <form method="GET" action="{% url 'products' %}">
+                <div class="input-group">
+                    <input class="form-control border-green rounded-start" type="text" name="q" placeholder="Search for fitness gear...">
+                    <button class="btn btn-green rounded-end" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </li>
+
+    <!-- User Account Dropdown -->
+    <li class="list-inline-item dropdown">
+        <a class="text-green nav-link d-block d-lg-none" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="text-center">
+                <i class="fas fa-user fa-lg"></i>
+                <p class="my-0 small">My Account</p>
+            </div>
+        </a>
+        <div class="dropdown-menu border-0 shadow-sm rounded" aria-labelledby="user-options">
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'add_product' %}" class="dropdown-item">Manage Products</a>
+                {% endif %}
+                <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+            {% else %}
+                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+            {% endif %}
+        </div>
+    </li>
+
+    <!-- Shopping Cart -->
+    <li class="list-inline-item">
+        <a class="{% if grand_total %}text-success font-weight-bold{% else %}text-green{% endif %} nav-link d-block d-lg-none" href="{% url 'view_bag' %}">
+            <div class="text-center">
+                <i class="fas fa-shopping-bag fa-lg"></i>
+                <p class="my-0 small">
+                    {% if grand_total %}
+                        ${{ grand_total|floatformat:2 }}
+                    {% else %}
+                        $0.00
+                    {% endif %}
+                </p>
+            </div>
+        </a>
+    </li>
+</ul>
