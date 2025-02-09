@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.sites.models import Site
+from django.utils.timezone import now
 
 class Category(models.Model):
     CATEGORY_CHOICES = [
@@ -32,10 +33,27 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    # Additional fields for fitness and diet plans
-    duration_weeks = models.PositiveIntegerField(null=True, blank=True)  # For plans
-    difficulty_level = models.CharField(max_length=50, null=True, blank=True)  # e.g., Beginner, Intermediate, Advanced
-    
+
+class DietPlan(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    duration_weeks = models.IntegerField(null=True, blank=True)  # Allow NULL values
+    image = models.ImageField(upload_to='dietplan_images/', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class FitnessPlan(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    duration_weeks = models.IntegerField(null=True, blank=True)  
+    image = models.ImageField(upload_to='fitnessplan_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # ✅ Keep only auto_now_add
+    updated_at = models.DateTimeField(auto_now=True)  
+
     def __str__(self):
         return self.name
 
