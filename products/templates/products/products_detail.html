@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container text-center my-4">
+    <h1 class="text-success">{{ product.name }}</h1>
+    <p class="lead">{{ product.category.friendly_name }}</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6 text-center">
+            <div class="image-container">
+                {% if product.image %}
+                <img class="img-fluid rounded shadow-sm" src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <img class="img-fluid rounded shadow-sm" src="{% static 'images/placeholder.jpg' %}" alt="No Image Available">
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <div class="product-details-container">
+                <h2 class="fw-bold">{{ product.name }}</h2>
+                <p class="text-muted">{{ product.description }}</p>
+                <p class="fw-bold text-success h4">${{ product.price }}</p>
+
+                {% if product.rating %}
+                <p class="text-warning"><i class="fas fa-star"></i> {{ product.rating }} / 5</p>
+                {% else %}
+                <p class="text-muted">No Rating Available</p>
+                {% endif %}
+
+                <hr>
+
+                <!-- Additional Details -->
+                {% if product.product_type == "diet_plan" %}
+                <p><strong>Duration:</strong> {{ product.duration_weeks }} weeks</p>
+                {% elif product.product_type == "fitness_plan" %}
+                <p><strong>Duration:</strong> {{ product.duration_weeks }} weeks</p>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success btn-lg w-100">Add to Cart</a>
+                <a href="{% url 'products' %}" class="btn btn-outline-success w-100 mt-2">Back to Shop</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
