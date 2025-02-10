@@ -110,18 +110,6 @@ footer a:hover {
     color: #45c367;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero-section {
-        padding: 60px 10px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 80%;
-    }
-}
 
 body {
     font-family: Arial, sans-serif;
@@ -145,4 +133,28 @@ body {
 .btn-green {
     background-color: #4CAF50;
     color: white;
+}
+
+/* pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 10px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+}
 }
