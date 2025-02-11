@@ -6,6 +6,22 @@
                 Home
             </a>
         </li>
+        
+        <!-- All Products Dropdown with Sorting Options -->
+        <li class="nav-item dropdown">
+            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                All Products
+            </a>
+            <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
+                <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">By Price (Low to High)</a>
+                <a href="{% url 'products' %}?sort=price&direction=desc" class="dropdown-item">By Price (High to Low)</a>
+                <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a>
+                <a href="{% url 'products' %}?sort=name&direction=asc" class="dropdown-item">By Name (A-Z)</a>
+                <a href="{% url 'products' %}?sort=name&direction=desc" class="dropdown-item">By Name (Z-A)</a>
+                <a href="{% url 'products' %}?sort=category&direction=asc" class="dropdown-item">By Category</a>
+                <a href="{% url 'products' %}" class="dropdown-item">All Products</a>
+            </div>
+        </li>
 
         <!-- Fitness Plans Dropdown -->
         <li class="nav-item dropdown">
@@ -55,8 +71,8 @@
                 <li><a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a></li>
                 <li><a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a></li>
                 <li><a href="{% url 'products' %}?category=new_arrivals,deals,clearance" class="dropdown-item">All Specials</a></li>
-                <a href="{% url 'products' %}" class="dropdown-item">All Products</a>
             </ul>
         </li>
     </ul>
 </div>
+

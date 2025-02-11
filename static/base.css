@@ -28,18 +28,33 @@ html, body {
     color: #28a745 !important;
 }
 
+/* Background Overlay */
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+}
+
 /* Buttons */
-.btn-green {
+.btn-green, .shop-now-button {
     background-color: #28a745;
     color: white;
     border-radius: 5px;
+    font-weight: bold;
     transition: background 0.3s ease-in-out;
+    min-width: 260px;
+    padding: 12px 20px;
 }
 
-.btn-green:hover {
+.btn-green:hover, .shop-now-button:hover {
     background-color: #218838;
 }
 
+/* Alternative Button */
 .btn-outline-green {
     border: 2px solid #28a745;
     color: #28a745;
@@ -78,19 +93,34 @@ html, body {
     color: #28a745 !important;
 }
 
-/* Buttons & Links */
-.shop-now-button {
-    background: #28a745;
-    color: white;
-    min-width: 260px;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 5px;
+.text-black {
+    color: #000 !important;
 }
 
-.shop-now-button:hover {
-    background: #218838;
-    color: white;
+.border-black {
+    border: 1px solid black !important;
+}
+
+.bg-black {
+    background: #000 !important;
+}
+
+/* Category Badges */
+a.category-badge > span.badge:hover {
+    background: #212529 !important;
+    color: #fff !important;
+}
+
+/* Product Cards */
+.product-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
 }
 
 /* Footer */
@@ -110,32 +140,44 @@ footer a:hover {
     color: #45c367;
 }
 
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f7f2;
-}
-.hero {
-    background: url('https://source.unsplash.com/1600x600/?fitness,nature') center/cover;
-    color: white;
-    text-align: center;
-    padding: 100px 20px;
-}
-.product-card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-.product-card:hover {
-    transform: translateY(-5px);
-}
-.btn-green {
-    background-color: #4CAF50;
-    color: white;
+/* Back to Top Button */
+.btt-button {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
 }
 
-/* pad the top a bit when navbar is collapsed on mobile */
+.btt-link {
+    cursor: pointer;
+}
+
+/* -------------------------------- Media Queries */
+
+/* Slightly larger container on xl screens */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+}
+
+/* Fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
+
+/* Pad the top a bit when navbar is collapsed on mobile */
 @media (max-width: 991px) {
     .header-container {
         padding-top: 116px;
@@ -144,17 +186,11 @@ body {
     body {
         height: calc(100vh - 116px);
     }
+}
 
-/* Responsive Design */
+/* Responsive Hero Section */
 @media (max-width: 768px) {
     .hero-section {
         padding: 60px 10px;
     }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        max-width: 80%;
-    }
-}
 }
