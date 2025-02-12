@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.contrib import messages
-from .models import Product
+from django.contrib import messages 
+
 
 def add_to_bag(request, product_id):
-    """ Add a quantity of the specified product to the shopping bag """
+    from products.models import Product  
     product = get_object_or_404(Product, pk=product_id)
+
+
     try:
         quantity = int(request.POST.get('quantity', 1))
         if quantity < 1:
