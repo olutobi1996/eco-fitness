@@ -37,6 +37,7 @@
                                                 <a href="{% url 'product_detail' item.product.id %}" class="text-dark font-weight-bold">
                                                     {{ item.product.name }}
                                                 </a>
+                                                <p class="my-0"><strong>Size: </strong>{% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
                                                 <p class="small text-muted">{{ item.product.category.friendly_name }}</p>
                                             </div>
                                         </div>
