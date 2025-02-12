@@ -2,45 +2,48 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from .models import Product
 
-
 def add_to_bag(request, product_id):
     """ Add a quantity of the specified product to the shopping bag """
     product = get_object_or_404(Product, pk=product_id)
-    quantity = int(request.POST.get('quantity', 1))
-    redirect_url = request.POST.get('redirect_url')
+    try:
+        quantity = int(request.POST.get('quantity', 1))
+        if quantity < 1:
+            messages.error(request, "Quantity must be at least 1.")
+            return redirect(reverse('product_detail', args=[product_id]))
+    except ValueError:
+        messages.error(request, "Invalid quantity entered.")
+        return redirect(reverse('product_detail', args=[product_id]))
     
+    redirect_url = request.POST.get('redirect_url', reverse('view_bag'))
     bag = request.session.get('bag', {})
     
-    if product_id in bag:
-        bag[product_id] += quantity
+    if str(product_id) in bag:
+        bag[str(product_id)] += quantity
     else:
-        bag[product_id] = quantity
+        bag[str(product_id)] = quantity
     
     request.session['bag'] = bag
     messages.success(request, f'Added {quantity} x {product.name} to your bag')
     
     return redirect(redirect_url)
 
-
 def view_bag(request):
     """ A view to render the shopping bag page """
     return render(request, 'bag/bag.html')
-
 
 def remove_from_bag(request, product_id):
     """ Remove an item from the shopping bag """
     try:
         bag = request.session.get('bag', {})
-        
-        if product_id in bag:
-            del bag[product_id]
-        
+        if str(product_id) in bag:
+            del bag[str(product_id)]
+            messages.success(request, 'Item removed from your bag')
+        else:
+            messages.error(request, 'Item not found in your bag')
         request.session['bag'] = bag
-        messages.success(request, 'Item removed from your bag')
-        
         return redirect(reverse('view_bag'))
-    
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return redirect(reverse('view_bag'))
+
 
