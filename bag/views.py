@@ -53,3 +53,7 @@ def remove_from_bag(request, product_id):
     except Exception as e:
         messages.error(request, f'Error removing item: {e}')
         return redirect(reverse('view_bag'))
+
+def adjust_bag(request, item_id):
+    # Your logic here
+    return redirect('some-view-name')
