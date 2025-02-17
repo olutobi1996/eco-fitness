@@ -153,6 +153,67 @@ footer a:hover {
     cursor: pointer;
 }
 
+/* General Toast Styles */
+.toast-container {
+    z-index: 1050;
+}
+
+.toast {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    max-width: 400px;
+    opacity: 0.95;
+}
+
+/*  Success Toast (Green) */
+.toast-success {
+    background-color: #2d6a4f;  /* Deep forest green */
+    color: #ffffff;
+    border-left: 5px solid #1b4332;
+}
+
+.toast-success .btn-close {
+    filter: invert(1);
+}
+
+/* Warning Toast (Yellow) */
+.toast-warning {
+    background-color: #ffcc00;  /* Warm sunflower yellow */
+    color: #333;
+    border-left: 5px solid #e6b800;
+}
+
+/* Error Toast (Red) */
+.toast-error {
+    background-color: #d90429;  /* Bold eco-conscious red */
+    color: white;
+    border-left: 5px solid #a0001c;
+}
+
+.toast-error .btn-close {
+    filter: invert(1);
+}
+
+/* Info Toast (Blue) */
+.toast-info {
+    background-color: #0077b6;  /* Ocean blue */
+    color: white;
+    border-left: 5px solid #023e8a;
+}
+
+.toast-info .btn-close {
+    filter: invert(1);
+}
+
+/* Icon Styling */
+.toast .toast-body i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
@@ -192,5 +253,25 @@ footer a:hover {
 @media (max-width: 768px) {
     .hero-section {
         padding: 60px 10px;
+    }
+}
+
+/* 🕒 Fade-in Animation */
+@keyframes fadeInSlide {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.95;
+    }
+}
+
+/* 📱 Mobile-Friendly Adjustments */
+@media (max-width: 768px) {
+    .toast {
+        min-width: 250px;
+        max-width: 320px;
     }
 }
