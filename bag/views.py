@@ -55,5 +55,37 @@ def remove_from_bag(request, product_id):
         return redirect(reverse('view_bag'))
 
 def adjust_bag(request, item_id):
-    # Your logic here
-    return redirect('some-view-name')
+    """ Adjust the quantity of a specific product in the bag """
+    product = get_object_or_404(Product, pk=item_id)
+    try:
+        quantity = int(request.POST.get('quantity', 0))
+    except ValueError:
+        messages.error(request, "Invalid quantity entered.")
+        return redirect(reverse('view_bag'))
+    
+    size = request.POST.get('product_size', None)
+    bag = request.session.get('bag', {})
+    
+    if str(item_id) in bag:
+        if size:
+            if size in bag[str(item_id)]['sizes']:
+                if quantity > 0:
+                    bag[str(item_id)]['sizes'][size] = quantity
+                    messages.success(request, f'Updated {product.name} ({size.upper()}) quantity to {quantity}')
+                else:
+                    del bag[str(item_id)]['sizes'][size]
+                    if not bag[str(item_id)]['sizes']:
+                        del bag[str(item_id)]
+                    messages.success(request, f'Removed {product.name} ({size.upper()}) from your bag')
+        else:
+            if quantity > 0:
+                bag[str(item_id)]['quantity'] = quantity
+                messages.success(request, f'Updated {product.name} quantity to {quantity}')
+            else:
+                del bag[str(item_id)]
+                messages.success(request, f'Removed {product.name} from your bag')
+    else:
+        messages.error(request, "Product not found in your bag.")
+    
+    request.session['bag'] = bag
+    return redirect(reverse('view_bag'))
