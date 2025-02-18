@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-7">
+            <h2 class="mb-4">Secure Checkout</h2>
+            <p class="text-muted">Complete your order and continue your fitness journey sustainably.</p>
+
+            <form method="POST" action="{% url 'checkout' %}" id="checkout-form">
+                {% csrf_token %}
+                
+                <!-- Personal Information -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <strong>Personal Information</strong>
+                    </div>
+                    <div class="card-body">
+                        {{ order_form.full_name.label_tag }}
+                        {{ order_form.full_name }}
+                        {{ order_form.email.label_tag }}
+                        {{ order_form.email }}
+                        {{ order_form.phone_number.label_tag }}
+                        {{ order_form.phone_number }}
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <strong>Shipping Address</strong>
+                    </div>
+                    <div class="card-body">
+                        {{ order_form.street_address1.label_tag }}
+                        {{ order_form.street_address1 }}
+                        {{ order_form.street_address2.label_tag }}
+                        {{ order_form.street_address2 }}
+                        {{ order_form.town_or_city.label_tag }}
+                        {{ order_form.town_or_city }}
+                        {{ order_form.county.label_tag }}
+                        {{ order_form.county }}
+                        {{ order_form.postcode.label_tag }}
+                        {{ order_form.postcode }}
+                        {{ order_form.country.label_tag }}
+                        {{ order_form.country }}
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <strong>Order Summary</strong>
+                    </div>
+                    <div class="card-body">
+                        {% for item in bag_items %}
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                                <strong>{{ item.product.name }}</strong>
+                                <p class="small text-muted mb-0">Qty: {{ item.quantity }} {% if item.product.has_sizes %} | Size: {{ item.size }}{% endif %}</p>
+                            </div>
+                            <p class="text-dark"><strong>${{ item.lineitem_total }}</strong></p>
+                        </div>
+                        {% endfor %}
+                        <hr>
+                        <p class="text-dark d-flex justify-content-between">
+                            <strong>Subtotal:</strong> <span>${{ total|floatformat:2 }}</span>
+                        </p>
+                        <p class="text-dark d-flex justify-content-between">
+                            <strong>Delivery:</strong> <span>${{ delivery_cost|floatformat:2 }}</span>
+                        </p>
+                        <h5 class="d-flex justify-content-between">
+                            <strong>Grand Total:</strong> <span>${{ grand_total|floatformat:2 }}</span>
+                        </h5>
+                    </div>
+                </div>
+
+                <!-- Payment & Checkout -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <i class="fas fa-lock"></i> Complete Order
+                    </button>
+                    <p class="small text-muted mt-2">
+                        Your payment is 100% secure, and we use eco-friendly packaging.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Eco-Friendly Sidebar -->
+        <div class="col-md-5">
+            <div class="text-center">
+                <img src="{% static 'images/eco-packaging.jpg' %}" alt="Eco-friendly packaging" class="img-fluid rounded shadow-sm mb-3">
+                <h4 class="text-success">Sustainable Packaging</h4>
+                <p class="text-muted">
+                    We use biodegradable materials and reusable packaging for every order.
+                </p>
+                <p class="small"><i class="fas fa-seedling text-success"></i> Small changes make a big difference!</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
