@@ -6,7 +6,7 @@ class OrderLineItemAdminInline(admin.TabularInline):
     """ Inline admin for order line items, ensuring clarity and ease of use """
     model = OrderLineItem
     readonly_fields = ('lineitem_total',)
-    extra = 0  # Prevents extra empty fields from appearing
+    extra = 0  
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -28,7 +28,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('created_at', 'grand_total', 'delivery_cost')
     search_fields = ('order_number', 'full_name', 'email')
     
-    ordering = ('-created_at',)  # Newest orders appear first
+    ordering = ('-created_at',)  
 
 
 admin.site.register(Order, OrderAdmin)
