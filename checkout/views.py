@@ -11,7 +11,7 @@ from django.http import JsonResponse
 
 
 def checkout(request):
-    """ Handle checkout process """
+    """ Handle checkout process with Stripe PaymentIntent """
 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -58,14 +58,16 @@ def checkout(request):
             # Update order totals
             order.update_total()
 
-            # Clear session bag after checkout
-            del request.session["bag"]
+            # Create Stripe Payment Intent
+            total = bag_contents(request)["grand_total"]
+            stripe.api_key = stripe_secret_key
+            intent = stripe.PaymentIntent.create(
+                amount=int(total * 100),  # Convert to cents
+                currency="usd",
+            )
 
-            messages.success(request, f"Order placed successfully! Your order number is {order.order_number}.")
-            return redirect(reverse("checkout_success", args=[order.order_number]))
-
-        else:
-            messages.error(request, "There was an error with your form. Please check your details.")
+            # Return JSON response for the frontend to handle payment confirmation
+            return JsonResponse({"clientSecret": intent["client_secret"]})
 
     else:
         bag = request.session.get("bag", {})
@@ -76,6 +78,7 @@ def checkout(request):
         current_bag = bag_contents(request)
         total = current_bag["grand_total"]
         stripe_total = round(total * 100)
+
         stripe.api_key = stripe_secret_key
         intent = stripe.PaymentIntent.create(
             amount=stripe_total,
