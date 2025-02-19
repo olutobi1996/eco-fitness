@@ -10,8 +10,6 @@ import stripe
 from django.http import JsonResponse
 
 
-
-
 def checkout(request):
     """ Handle checkout process """
 
