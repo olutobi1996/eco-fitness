@@ -139,33 +139,74 @@
     </div>
 </div>
 
-<!-- Stripe JavaScript -->
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    var stripe = Stripe("{{ stripe_public_key }}");
-    var elements = stripe.elements();
-    var card = elements.create("card", {
-        style: {
-            base: {
-                fontSize: "16px",
-                color: "#32325d",
-                fontFamily: "Arial, sans-serif",
-                "::placeholder": {
-                    color: "#aab7c4"
+{% block extra_js %}
+    <!-- Stripe JavaScript -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        var stripe = Stripe("{{ stripe_public_key }}");
+        var elements = stripe.elements();
+        var card = elements.create("card", {
+            style: {
+                base: {
+                    fontSize: "16px",
+                    color: "#32325d",
+                    fontFamily: "Arial, sans-serif",
+                    "::placeholder": {
+                        color: "#aab7c4"
+                    }
                 }
             }
-        }
-    });
+        });
 
-    card.mount("#card-element");
+        card.mount("#card-element");
 
-    card.addEventListener("change", function(event) {
-        var displayError = document.getElementById("card-errors");
-        if (event.error) {
-            displayError.textContent = event.error.message;
-        } else {
-            displayError.textContent = "";
-        }
-    });
-</script>
+        card.addEventListener("change", function(event) {
+            var displayError = document.getElementById("card-errors");
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = "";
+            }
+        });
+
+        var form = document.getElementById("checkout-form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Disable submit button to prevent multiple clicks
+            document.getElementById("submit-button").disabled = true;
+
+            fetch("{% url 'checkout' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    payment_method_id: card,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.clientSecret) {
+                    stripe.confirmCardPayment(data.clientSecret, {
+                        payment_method: {
+                            card: card
+                        }
+                    }).then(function(result) {
+                        if (result.error) {
+                            document.getElementById("card-errors").textContent = result.error.message;
+                            document.getElementById("submit-button").disabled = false; // Re-enable button
+                        } else {
+                            form.submit();
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error processing payment:", error);
+                document.getElementById("submit-button").disabled = false; // Re-enable button on error
+            });
+        });
+    </script>
 {% endblock %}
