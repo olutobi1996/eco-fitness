@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
 from django.views.decorators.http import require_POST
-
 from .models import Order, OrderLineItem
 from .forms import OrderForm
 from products.models import Product
 from bag.contexts import bag_contents
-
 import stripe
+from django.http import JsonResponse
+
+
 
 
 def checkout(request):
@@ -107,3 +108,4 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
+
