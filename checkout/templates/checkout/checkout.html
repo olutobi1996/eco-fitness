@@ -10,7 +10,7 @@
 
             <form method="POST" action="{% url 'checkout' %}" id="checkout-form">
                 {% csrf_token %}
-                
+
                 <!-- Personal Information -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-success text-white">
@@ -47,15 +47,15 @@
 
                         <div class="form-check mt-3">
                             {% if user.is_authenticated %}
-                                <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
-                                <label class="form-check-label" for="id-save-info">
-                                    Save this delivery information to my profile
-                                </label>
+                            <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
+                            <label class="form-check-label" for="id-save-info">
+                                Save this delivery information to my profile
+                            </label>
                             {% else %}
-                                <label class="form-check-label" for="id-save-info">
-                                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or 
-                                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
-                                </label>
+                            <label class="form-check-label" for="id-save-info">
+                                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                            </label>
                             {% endif %}
                         </div>
                     </div>
@@ -71,7 +71,8 @@
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <div class="d-flex align-items-center">
                                 <a href="{% url 'product_detail' item.product.id %}">
-                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail mr-2" style="width: 50px;">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                                        class="img-thumbnail mr-2" style="width: 50px;">
                                 </a>
                                 <div>
                                     <strong>{{ item.product.name }}</strong>
@@ -109,6 +110,7 @@
                     </div>
                 </div>
 
+
                 <!-- Checkout Buttons -->
                 <div class="text-center">
                     <a href="{% url 'view_bag' %}" class="btn btn-outline-secondary rounded-0">
@@ -125,10 +127,19 @@
             </form>
         </div>
 
+        <!-- 🔹 Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-message">
+                <div class="spinner"></div>
+                <p>Processing your order...</p>
+            </div>
+        </div>
+
         <!-- Eco-Friendly Sidebar -->
         <div class="col-md-5">
             <div class="text-center">
-                <img src="{% static 'images/eco-packaging.jpg' %}" alt="Eco-friendly packaging" class="img-fluid rounded shadow-sm mb-3">
+                <img src="{% static 'images/eco-packaging.jpg' %}" alt="Eco-friendly packaging"
+                    class="img-fluid rounded shadow-sm mb-3">
                 <h4 class="text-success">Sustainable Packaging</h4>
                 <p class="text-muted">
                     We use biodegradable materials and reusable packaging for every order.
@@ -140,85 +151,95 @@
 </div>
 
 {% block extra_js %}
-    <!-- Stripe JavaScript -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        var stripePublicKey = "{{ stripe_public_key }}";
-        var clientSecret = "{{ client_secret }}";
-        var stripe = Stripe(stripePublicKey);
-        var elements = stripe.elements();
-    
-        var style = {
-            base: {
-                fontSize: "16px",
-                color: "#2c3e50", 
-                fontFamily: "Arial, sans-serif",
-                "::placeholder": {
-                    color: "#aab7c4"
-                }
-            },
-            invalid: {
-                color: "#dc3545",
-                iconColor: "#dc3545"
+<!-- Stripe JavaScript -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripePublicKey = "{{ stripe_public_key }}";
+    var clientSecret = "{{ client_secret }}";
+    var stripe = Stripe(stripePublicKey);
+    var elements = stripe.elements();
+
+    var style = {
+        base: {
+            fontSize: "16px",
+            color: "#2c3e50",
+            fontFamily: "Arial, sans-serif",
+            "::placeholder": {
+                color: "#aab7c4"
             }
-        };
-    
-        var card = elements.create("card", { style: style });
-        card.mount("#card-element");
-    
-        // Handle real-time validation errors
-        card.addEventListener("change", function (event) {
-            var displayError = document.getElementById("card-errors");
-            if (event.error) {
-                var errorHtml = `
+        },
+        invalid: {
+            color: "#dc3545",
+            iconColor: "#dc3545"
+        }
+    };
+
+    var card = elements.create("card", { style: style });
+    card.mount("#card-element");
+
+    // Handle real-time validation errors
+    card.addEventListener("change", function (event) {
+        var displayError = document.getElementById("card-errors");
+        if (event.error) {
+            var errorHtml = `
                     <span class="icon" role="alert">
                         <i class="fas fa-seedling" style="color: #dc3545;"></i> 
                     </span>
                     <span>${event.error.message}</span>
                 `;
-                displayError.innerHTML = errorHtml;
-            } else {
-                displayError.innerHTML = `<i class="fas fa-leaf" style="color: #28a745;"></i> Payment details look good!`;
-            }
-        });
-    
-        // Handle form submission
-        var form = document.getElementById("checkout-form");
-        var submitButton = document.getElementById("submit-button");
-    
-        form.addEventListener("submit", function (event) {
-            event.preventDefault();
-            submitButton.disabled = true;
-            card.update({ disabled: true });
-    
-            stripe.confirmCardPayment(clientSecret, {
-                payment_method: { card: card }
-            }).then(function (result) {
-                if (result.error) {
-                    var errorDiv = document.getElementById("card-errors");
-                    var errorHtml = `
+            displayError.innerHTML = errorHtml;
+        } else {
+            displayError.innerHTML = `<i class="fas fa-leaf" style="color: #28a745;"></i> Payment details look good!`;
+        }
+    });
+
+    // Handle form submission
+    var form = document.getElementById("checkout-form");
+    var submitButton = document.getElementById("submit-button");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        submitButton.disabled = true;
+        card.update({ disabled: true });
+
+        stripe.confirmCardPayment(clientSecret, {
+            payment_method: { card: card }
+        }).then(function (result) {
+            if (result.error) {
+                var errorDiv = document.getElementById("card-errors");
+                var errorHtml = `
                         <span class="icon" role="alert">
                             <i class="fas fa-seedling" style="color: #dc3545;"></i>
                         </span>
                         <span>${result.error.message}</span>
                     `;
-                    errorDiv.innerHTML = errorHtml;
-    
-                    // Re-enable button & card field
-                    submitButton.disabled = false;
-                    card.update({ disabled: false });
-                } else {
-                    if (result.paymentIntent.status === "succeeded") {
-                        document.getElementById("card-errors").innerHTML = `<i class="fas fa-check-circle" style="color: #28a745;"></i> Payment successful!`;
-                        form.submit();
-                    }
-                }
-            }).catch(error => {
-                console.error("Payment error:", error);
+                errorDiv.innerHTML = errorHtml;
+
+                // Re-enable button & card field
                 submitButton.disabled = false;
                 card.update({ disabled: false });
+            } else {
+                if (result.paymentIntent.status === "succeeded") {
+                    document.getElementById("card-errors").innerHTML = `<i class="fas fa-check-circle" style="color: #28a745;"></i> Payment successful!`;
+                    form.submit();
+                }
+            }
+        }).catch(error => {
+            console.error("Payment error:", error);
+            submitButton.disabled = false;
+            card.update({ disabled: false });
+        });
+    });
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkoutForm = document.getElementById("checkout-form");
+            const loadingOverlay = document.getElementById("loading-overlay");
+
+            checkoutForm.addEventListener("submit", function () {
+                // 🔹 Show the loading overlay when form is submitted
+                loadingOverlay.style.display = "flex";
             });
         });
-    </script>
     
+</script>
+
 {% endblock %}
