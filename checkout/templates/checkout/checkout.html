@@ -143,70 +143,82 @@
     <!-- Stripe JavaScript -->
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        var stripe = Stripe("{{ stripe_public_key }}");
+        var stripePublicKey = "{{ stripe_public_key }}";
+        var clientSecret = "{{ client_secret }}";
+        var stripe = Stripe(stripePublicKey);
         var elements = stripe.elements();
-        var card = elements.create("card", {
-            style: {
-                base: {
-                    fontSize: "16px",
-                    color: "#32325d",
-                    fontFamily: "Arial, sans-serif",
-                    "::placeholder": {
-                        color: "#aab7c4"
-                    }
+    
+        var style = {
+            base: {
+                fontSize: "16px",
+                color: "#2c3e50", 
+                fontFamily: "Arial, sans-serif",
+                "::placeholder": {
+                    color: "#aab7c4"
                 }
+            },
+            invalid: {
+                color: "#dc3545",
+                iconColor: "#dc3545"
             }
-        });
-
+        };
+    
+        var card = elements.create("card", { style: style });
         card.mount("#card-element");
-
-        card.addEventListener("change", function(event) {
+    
+        // Handle real-time validation errors
+        card.addEventListener("change", function (event) {
             var displayError = document.getElementById("card-errors");
             if (event.error) {
-                displayError.textContent = event.error.message;
+                var errorHtml = `
+                    <span class="icon" role="alert">
+                        <i class="fas fa-seedling" style="color: #dc3545;"></i> 
+                    </span>
+                    <span>${event.error.message}</span>
+                `;
+                displayError.innerHTML = errorHtml;
             } else {
-                displayError.textContent = "";
+                displayError.innerHTML = `<i class="fas fa-leaf" style="color: #28a745;"></i> Payment details look good!`;
             }
         });
-
+    
+        // Handle form submission
         var form = document.getElementById("checkout-form");
-        form.addEventListener("submit", function(event) {
+        var submitButton = document.getElementById("submit-button");
+    
+        form.addEventListener("submit", function (event) {
             event.preventDefault();
-            
-            // Disable submit button to prevent multiple clicks
-            document.getElementById("submit-button").disabled = true;
-
-            fetch("{% url 'checkout' %}", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    payment_method_id: card,
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.clientSecret) {
-                    stripe.confirmCardPayment(data.clientSecret, {
-                        payment_method: {
-                            card: card
-                        }
-                    }).then(function(result) {
-                        if (result.error) {
-                            document.getElementById("card-errors").textContent = result.error.message;
-                            document.getElementById("submit-button").disabled = false; // Re-enable button
-                        } else {
-                            form.submit();
-                        }
-                    });
+            submitButton.disabled = true;
+            card.update({ disabled: true });
+    
+            stripe.confirmCardPayment(clientSecret, {
+                payment_method: { card: card }
+            }).then(function (result) {
+                if (result.error) {
+                    var errorDiv = document.getElementById("card-errors");
+                    var errorHtml = `
+                        <span class="icon" role="alert">
+                            <i class="fas fa-seedling" style="color: #dc3545;"></i>
+                        </span>
+                        <span>${result.error.message}</span>
+                    `;
+                    errorDiv.innerHTML = errorHtml;
+    
+                    // Re-enable button & card field
+                    submitButton.disabled = false;
+                    card.update({ disabled: false });
+                } else {
+                    if (result.paymentIntent.status === "succeeded") {
+                        document.getElementById("card-errors").innerHTML = `<i class="fas fa-check-circle" style="color: #28a745;"></i> Payment successful!`;
+                        form.submit();
+                    }
                 }
-            })
-            .catch(error => {
-                console.error("Error processing payment:", error);
-                document.getElementById("submit-button").disabled = false; // Re-enable button on error
+            }).catch(error => {
+                console.error("Payment error:", error);
+                submitButton.disabled = false;
+                card.update({ disabled: false });
             });
         });
     </script>
+    
 {% endblock %}
