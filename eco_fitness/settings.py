@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-j1d&r&3bs!lzuf9e%x((0=!u616l9r_5rgb&p9^w!2(j096&wt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu117.gitpod.io']
+ALLOWED_HOSTS = ['8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu117.gitpod.io',
+"localhost",  
+"127.0.0.1",]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu117.gitpod.io"
