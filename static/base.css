@@ -214,7 +214,7 @@ footer a:hover {
     font-size: 1.2rem;
 }
 
-  /* 🔹 Loading Overlay Styling */
+  /* Loading Overlay Styling */
   .loading-overlay {
     position: fixed;
     top: 0;
@@ -235,7 +235,7 @@ footer a:hover {
     font-weight: bold;
 }
 
-/* 🔹 CSS Spinner */
+/* CSS Spinner */
 .spinner {
     border: 5px solid rgba(255, 255, 255, 0.3);
     border-top: 5px solid #fff;
