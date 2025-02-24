@@ -1,0 +1,314 @@
+/* General Styles */
+html, body {
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+    color: #444;
+    background: url('/media/eco_fitness_bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #28a745 !important; /* Eco-friendly green */
+}
+
+.navbar-nav .nav-link {
+    font-size: 1rem;
+    color: #444 !important;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #28a745 !important;
+}
+
+/* Background Overlay */
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+}
+
+/* Buttons */
+.btn-green, .shop-now-button {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+    min-width: 260px;
+    padding: 12px 20px;
+}
+
+.btn-green:hover, .shop-now-button:hover {
+    background-color: #218838;
+}
+
+/* Alternative Button */
+.btn-outline-green {
+    border: 2px solid #28a745;
+    color: #28a745;
+}
+
+.btn-outline-green:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Search Bar */
+.navbar .form-control {
+    border: 2px solid #28a745;
+}
+
+.navbar .btn-outline-success {
+    border-color: #28a745;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    color: white;
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+/* Typography */
+.logo-font {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.text-green {
+    color: #28a745 !important;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.border-black {
+    border: 1px solid black !important;
+}
+
+.bg-black {
+    background: #000 !important;
+}
+
+/* Category Badges */
+a.category-badge > span.badge:hover {
+    background: #212529 !important;
+    color: #fff !important;
+}
+
+/* Product Cards */
+.product-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Footer */
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer a {
+    color: #28a745;
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: #45c367;
+}
+
+/* Back to Top Button */
+.btt-button {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.btt-link {
+    cursor: pointer;
+}
+
+/* General Toast Styles */
+.toast-container {
+    z-index: 1050;
+}
+
+.toast {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    max-width: 400px;
+    opacity: 0.95;
+}
+
+/*  Success Toast (Green) */
+.toast-success {
+    background-color: #2d6a4f;  /* Deep forest green */
+    color: #ffffff;
+    border-left: 5px solid #1b4332;
+}
+
+.toast-success .btn-close {
+    filter: invert(1);
+}
+
+/* Warning Toast (Yellow) */
+.toast-warning {
+    background-color: #ffcc00;  /* Warm sunflower yellow */
+    color: #333;
+    border-left: 5px solid #e6b800;
+}
+
+/* Error Toast (Red) */
+.toast-error {
+    background-color: #d90429;  /* Bold eco-conscious red */
+    color: white;
+    border-left: 5px solid #a0001c;
+}
+
+.toast-error .btn-close {
+    filter: invert(1);
+}
+
+/* Info Toast (Blue) */
+.toast-info {
+    background-color: #0077b6;  /* Ocean blue */
+    color: white;
+    border-left: 5px solid #023e8a;
+}
+
+.toast-info .btn-close {
+    filter: invert(1);
+}
+
+/* Icon Styling */
+.toast .toast-body i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+  /* Loading Overlay Styling */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-message {
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* CSS Spinner */
+.spinner {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* -------------------------------- Media Queries */
+
+/* Slightly larger container on xl screens */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+}
+
+/* Fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
+
+/* Pad the top a bit when navbar is collapsed on mobile */
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
+}
+
+/* Responsive Hero Section */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 10px;
+    }
+}
+
+/* 🕒 Fade-in Animation */
+@keyframes fadeInSlide {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.95;
+    }
+}
+
+/* 📱 Mobile-Friendly Adjustments */
+@media (max-width: 768px) {
+    .toast {
+        min-width: 250px;
+        max-width: 320px;
+    }
+}
