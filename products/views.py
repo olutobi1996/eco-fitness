@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import Product, Category
 
+
 # Create your views here.
 
 def all_products(request):
@@ -40,6 +41,7 @@ def all_products(request):
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -62,9 +64,9 @@ def all_products(request):
 
 
 
+
 def product_detail(request, product_id):
     """ A view to show individual product details """
-
     product = get_object_or_404(Product, pk=product_id)
 
     context = {
@@ -78,7 +80,6 @@ def product_list(request):
     products = Product.objects.all()
     return render(request, 'products/product_list.html', {'products': products})
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'products/product_detail.html', {'product': product})
+
+
 
