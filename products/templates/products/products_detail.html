@@ -17,7 +17,7 @@
                 {% if product.image %}
                 <img class="img-fluid rounded shadow-sm" src="{{ product.image.url }}" alt="{{ product.name }}">
                 {% else %}
-                <img class="img-fluid rounded shadow-sm" src="{% static 'images/placeholder.jpg' %}" alt="No Image Available">
+                <img class="img-fluid rounded shadow-sm" src="{{ product.image.url }}" alt="{{ product.name }}">
                 {% endif %}
             </div>
         </div>
