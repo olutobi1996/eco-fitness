@@ -8,6 +8,31 @@ from products.models import Product
 from bag.contexts import bag_contents
 import stripe
 from django.http import JsonResponse
+import json
+
+
+@require_POST
+def cache_checkout_data(request):
+    """ Cache checkout session data before finalizing Stripe payment """
+    try:
+        
+        pid = request.POST.get('client_secret').split('_secret')[0]
+
+        
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+       
+        stripe.PaymentIntent.modify(pid, metadata={
+            'bag': json.dumps(request.session.get('bag', {})), 
+            'save_info': request.POST.get('save_info'), 
+            'username': request.user.username if request.user.is_authenticated else "Anonymous",  
+        })
+
+        return HttpResponse(status=200)
+
+    except Exception as e:
+        messages.error(request, "Sorry, your payment cannot be processed right now. Please try again later.")
+        return HttpResponse(content=e, status=400)
 
 
 def checkout(request):

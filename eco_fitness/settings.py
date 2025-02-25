@@ -36,8 +36,10 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu117.gitpod.io"
+    "https://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
+    "https://*.gitpod.io",
 ]
+
 
 
 # Application definition
@@ -58,7 +60,7 @@ INSTALLED_APPS = [
     'bag',
     'checkout',
     'profiles',
-    'crispy_forms'
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -176,7 +178,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 STATIC_URL = '/static/'
 
@@ -186,9 +191,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Stripe
 FREE_DELIVERY_THRESHOLD = 50

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 import json
+import stripe
 
 class StripeWH_Handler:
     """Handle Stripe webhooks"""

@@ -1,7 +1,9 @@
 from django.db import models 
 from django.contrib.sites.models import Site
 from django.utils.timezone import now
+from django.db import models
 
+# ---------------- Category Model ----------------
 class Category(models.Model):
     CATEGORY_CHOICES = [
         ('clothing', 'Clothing'),
@@ -14,6 +16,7 @@ class Category(models.Model):
     def __str__(self):
         return self.friendly_name or self.name
 
+# ---------------- Product Model ----------------
 class Product(models.Model):
     PRODUCT_TYPES = [
         ('clothing', 'Clothing'),
@@ -30,22 +33,25 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     rating = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
-    image = models.ImageField(upload_to='product_images/', null=True, blank=True)
+    image = models.ImageField(upload_to='products/', null=True, blank=True)  # ✅ Fix here
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
 
+    def __str__(self):
+        return self.name  # ✅ Add string representation
+
+# ---------------- Diet Plan Model ----------------
 class DietPlan(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    duration_weeks = models.IntegerField(null=True, blank=True)  # Allow NULL values
+    duration_weeks = models.IntegerField(null=True, blank=True)  # ✅ Allow NULL values
     image = models.ImageField(upload_to='dietplan_images/', null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-
+# ---------------- Fitness Plan Model ----------------
 class FitnessPlan(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -57,4 +63,5 @@ class FitnessPlan(models.Model):
 
     def __str__(self):
         return self.name
+
 

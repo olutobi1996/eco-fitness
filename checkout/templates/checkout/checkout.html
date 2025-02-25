@@ -153,93 +153,153 @@
 {% block extra_js %}
 <!-- Stripe JavaScript -->
 <script src="https://js.stripe.com/v3/"></script>
-<script>
-    var stripePublicKey = "{{ stripe_public_key }}";
-    var clientSecret = "{{ client_secret }}";
-    var stripe = Stripe(stripePublicKey);
-    var elements = stripe.elements();
+/*
+    Eco-Friendly Stripe Payment Integration
+    - Securely processes payments using Stripe
+    - Handles real-time validation
+    - Sends order data to Django before payment
+    - Provides eco-friendly UI feedback
+*/
 
-    var style = {
-        base: {
-            fontSize: "16px",
-            color: "#2c3e50",
-            fontFamily: "Arial, sans-serif",
-            "::placeholder": {
-                color: "#aab7c4"
-            }
-        },
-        invalid: {
-            color: "#dc3545",
-            iconColor: "#dc3545"
+var stripePublicKey = "{{ stripe_public_key }}";
+var clientSecret = "{{ client_secret }}";
+var stripe = Stripe(stripePublicKey);
+var elements = stripe.elements();
+
+// Styling to match eco-conscious branding
+var style = {
+    base: {
+        fontSize: "16px",
+        color: "#2c3e50",
+        fontFamily: "Arial, sans-serif",
+        "::placeholder": {
+            color: "#aab7c4"
         }
+    },
+    invalid: {
+        color: "#dc3545",
+        iconColor: "#dc3545"
+    }
+};
+
+// Create Stripe card element
+var card = elements.create("card", { style: style });
+card.mount("#card-element");
+
+// Handle real-time validation errors
+card.addEventListener("change", function (event) {
+    var displayError = document.getElementById("card-errors");
+    if (event.error) {
+        displayError.innerHTML = `
+            <span class="icon" role="alert">
+                <i class="fas fa-seedling" style="color: #dc3545;"></i> 
+            </span>
+            <span>${event.error.message}</span>
+        `;
+    } else {
+        displayError.innerHTML = `
+            <i class="fas fa-leaf" style="color: #28a745;"></i> Payment details look good!
+        `;
+    }
+});
+
+// Handle form submission
+var form = document.getElementById("checkout-form");
+var submitButton = document.getElementById("submit-button");
+
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    // Disable the form while processing payment
+    submitButton.disabled = true;
+    card.update({ disabled: true });
+
+    // Show loading overlay
+    $("#loading-overlay").fadeToggle(100);
+
+    var saveInfo = $("#id-save-info").prop("checked"); // Ensure checkbox is read properly
+    var csrfToken = $("input[name='csrfmiddlewaretoken']").val();
+
+    // Data to send to Django before confirming payment
+    var postData = {
+        "csrfmiddlewaretoken": csrfToken,
+        "client_secret": clientSecret,
+        "save_info": saveInfo
     };
 
-    var card = elements.create("card", { style: style });
-    card.mount("#card-element");
-
-    // Handle real-time validation errors
-    card.addEventListener("change", function (event) {
-        var displayError = document.getElementById("card-errors");
-        if (event.error) {
-            var errorHtml = `
-                    <span class="icon" role="alert">
-                        <i class="fas fa-seedling" style="color: #dc3545;"></i> 
-                    </span>
-                    <span>${event.error.message}</span>
-                `;
-            displayError.innerHTML = errorHtml;
-        } else {
-            displayError.innerHTML = `<i class="fas fa-leaf" style="color: #28a745;"></i> Payment details look good!`;
-        }
-    });
-
-    // Handle form submission
-    var form = document.getElementById("checkout-form");
-    var submitButton = document.getElementById("submit-button");
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        submitButton.disabled = true;
-        card.update({ disabled: true });
-
-        stripe.confirmCardPayment(clientSecret, {
-            payment_method: { card: card }
-        }).then(function (result) {
-            if (result.error) {
-                var errorDiv = document.getElementById("card-errors");
-                var errorHtml = `
+    // Send order details to Django before processing payment
+    $.post("/checkout/cache_checkout_data/", postData)
+        .done(function () {
+            // Confirm payment with Stripe
+            stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: $.trim(form.full_name.value),
+                        phone: $.trim(form.phone_number.value),
+                        email: $.trim(form.email.value),
+                        address: {
+                            line1: $.trim(form.street_address1.value),
+                            line2: $.trim(form.street_address2.value),
+                            city: $.trim(form.town_or_city.value),
+                            country: $.trim(form.country.value),
+                            state: $.trim(form.county.value)
+                        }
+                    }
+                },
+                shipping: {
+                    name: $.trim(form.full_name.value),
+                    phone: $.trim(form.phone_number.value),
+                    address: {
+                        line1: $.trim(form.street_address1.value),
+                        line2: $.trim(form.street_address2.value),
+                        city: $.trim(form.town_or_city.value),
+                        country: $.trim(form.country.value),
+                        postal_code: $.trim(form.postcode.value),
+                        state: $.trim(form.county.value)
+                    }
+                }
+            }).then(function (result) {
+                if (result.error) {
+                    // Show error message
+                    var errorDiv = document.getElementById("card-errors");
+                    errorDiv.innerHTML = `
                         <span class="icon" role="alert">
                             <i class="fas fa-seedling" style="color: #dc3545;"></i>
                         </span>
                         <span>${result.error.message}</span>
                     `;
-                errorDiv.innerHTML = errorHtml;
 
-                // Re-enable button & card field
-                submitButton.disabled = false;
-                card.update({ disabled: false });
-            } else {
-                if (result.paymentIntent.status === "succeeded") {
-                    document.getElementById("card-errors").innerHTML = `<i class="fas fa-check-circle" style="color: #28a745;"></i> Payment successful!`;
-                    form.submit();
+                    // Re-enable form fields
+                    $("#loading-overlay").fadeToggle(100);
+                    submitButton.disabled = false;
+                    card.update({ disabled: false });
+
+                } else {
+                    if (result.paymentIntent.status === "succeeded") {
+                        document.getElementById("card-errors").innerHTML = `
+                            <i class="fas fa-check-circle" style="color: #28a745;"></i> Payment successful!
+                        `;
+                        form.submit();
+                    }
                 }
-            }
-        }).catch(error => {
-            console.error("Payment error:", error);
-            submitButton.disabled = false;
-            card.update({ disabled: false });
-        });
-    });
-        document.addEventListener("DOMContentLoaded", function () {
-            const checkoutForm = document.getElementById("checkout-form");
-            const loadingOverlay = document.getElementById("loading-overlay");
-
-            checkoutForm.addEventListener("submit", function () {
-                // 🔹 Show the loading overlay when form is submitted
-                loadingOverlay.style.display = "flex";
             });
+        })
+        .fail(function () {
+            // Reload the page if an error occurs (Django messages will handle it)
+            location.reload();
         });
-    
-</script>
+});
+
+// Ensure loading overlay appears on form submission
+document.addEventListener("DOMContentLoaded", function () {
+    const checkoutForm = document.getElementById("checkout-form");
+    const loadingOverlay = document.getElementById("loading-overlay");
+
+    checkoutForm.addEventListener("submit", function () {
+        loadingOverlay.style.display = "flex"; // Show loading overlay
+    });
+});
+
 
 {% endblock %}
