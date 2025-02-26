@@ -3,7 +3,6 @@ html, body {
     height: 100%;
     font-family: 'Lato', sans-serif;
     color: #444;
-    background: url('/media/eco_fitness_bg.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 

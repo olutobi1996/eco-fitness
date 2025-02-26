@@ -1,0 +1,87 @@
+[
+    {
+      "pk": 1,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan001",
+        "name": "Beginner Home Workout Plan",
+        "description": "A 4-week eco-conscious fitness plan focusing on bodyweight exercises, requiring no equipment.",
+        "price": 19.99,
+        "category": 1,
+        "rating": 4.8,
+        "image_url": "https://example.com/fitplan1.jpg",
+        "image": "fitplan1.jpg"
+      }
+    },
+    {
+      "pk": 2,
+      "model": "products.product",
+      "fields": {
+        "sku": "dietplan001",
+        "name": "Plant-Based Muscle Gain Diet Plan",
+        "description": "A high-protein, plant-based meal plan designed for muscle growth while maintaining sustainability.",
+        "price": 14.99,
+        "category": 2,
+        "rating": 4.7,
+        "image_url": "https://example.com/dietplan1.jpg",
+        "image": "dietplan1.jpg"
+      }
+    },
+    {
+      "pk": 3,
+      "model": "products.product",
+      "fields": {
+        "sku": "activewear001",
+        "name": "Recycled Polyester Running Shorts",
+        "description": "Breathable, moisture-wicking running shorts made from 100% recycled materials.",
+        "price": 29.99,
+        "category": 3,
+        "rating": 4.6,
+        "image_url": "https://example.com/shorts1.jpg",
+        "image": "shorts1.jpg"
+      }
+    },
+    {
+      "pk": 4,
+      "model": "products.product",
+      "fields": {
+        "sku": "gear001",
+        "name": "Cork Yoga Mat",
+        "description": "Sustainably sourced cork yoga mat with a non-slip natural rubber base for optimal grip.",
+        "price": 49.99,
+        "category": 4,
+        "rating": 4.9,
+        "image_url": "https://example.com/yogamat.jpg",
+        "image": "yogamat.jpg"
+      }
+    },
+    {
+      "pk": 5,
+      "model": "products.product",
+      "fields": {
+        "sku": "supplement001",
+        "name": "Organic Plant-Based Protein Powder",
+        "description": "A vegan-friendly protein powder made with organic pea, rice, and hemp protein.",
+        "price": 39.99,
+        "category": 5,
+        "rating": 4.8,
+        "image_url": "https://example.com/protein.jpg",
+        "image": "protein.jpg"
+      }
+    },
+    {
+      "pk": 6,
+      "model": "products.product",
+      "fields": {
+        "sku": "accessory001",
+        "name": "Biodegradable Resistance Bands",
+        "description": "A set of resistance bands made from biodegradable, eco-friendly materials for strength training.",
+        "price": 24.99,
+        "category": 6,
+        "rating": 4.5,
+        "image_url": "https://example.com/resistancebands.jpg",
+        "image": "resistancebands.jpg"
+      }
+    }
+  ]
+  
