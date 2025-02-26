@@ -2,45 +2,44 @@
     <ul class="navbar-nav w-auto mx-auto">
         <!-- Home Link -->
         <li class="nav-item d-block d-md-none">
-            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'home' %}" id="home-link">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'home' %}" id="home-link">
                 Home
             </a>
         </li>
-        
-        <!-- All Products Dropdown with Sorting Options -->
+
+        <!-- All Products Dropdown -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-black mr-5" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-dark mr-5" href="#" id="all-products-link" data-bs-toggle="dropdown">
                 All Products
             </a>
-            <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
-                <a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">By Price (Low to High)</a>
-                <a href="{% url 'products' %}?sort=price&direction=desc" class="dropdown-item">By Price (High to Low)</a>
-                <a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a>
-                <a href="{% url 'products' %}?sort=name&direction=asc" class="dropdown-item">By Name (A-Z)</a>
-                <a href="{% url 'products' %}?sort=name&direction=desc" class="dropdown-item">By Name (Z-A)</a>
-                <a href="{% url 'products' %}?sort=category&direction=asc" class="dropdown-item">By Category</a>
-                <a href="{% url 'products' %}" class="dropdown-item">All Products</a>
-            </div>
+            <ul class="dropdown-menu border-0 shadow-sm">
+                <li><a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">Price (Low to High)</a></li>
+                <li><a href="{% url 'products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
+                <li><a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
+                <li><a href="{% url 'products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
+                <li><a href="{% url 'products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
+                <li><a href="{% url 'products' %}" class="dropdown-item">All Products</a></li>
+            </ul>
         </li>
 
-        <!-- Fitness Plans Dropdown -->
+        <!-- Fitness Plans -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="#" id="fitness-plans-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="#" id="fitness-plans-link" data-bs-toggle="dropdown">
                 Fitness Plans
             </a>
-            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="fitness-plans-link">
+            <ul class="dropdown-menu border-0 shadow-sm">
                 <li><a href="{% url 'products' %}?category=workout_plans" class="dropdown-item">Workout Plans</a></li>
                 <li><a href="{% url 'products' %}?category=diet_plans" class="dropdown-item">Diet Plans</a></li>
                 <li><a href="{% url 'products' %}?category=workout_plans,diet_plans" class="dropdown-item">All Plans</a></li>
             </ul>
         </li>
 
-        <!-- Merchandise Dropdown -->
+        <!-- Merchandise -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="#" id="merchandise-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="#" id="merchandise-link" data-bs-toggle="dropdown">
                 Merchandise
             </a>
-            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="merchandise-link">
+            <ul class="dropdown-menu border-0 shadow-sm">
                 <li><a href="{% url 'products' %}?category=activewear" class="dropdown-item">Activewear</a></li>
                 <li><a href="{% url 'products' %}?category=accessories" class="dropdown-item">Accessories</a></li>
                 <li><a href="{% url 'products' %}?category=eco_bottles" class="dropdown-item">Eco Bottles</a></li>
@@ -50,29 +49,16 @@
 
         <!-- Community & Reviews -->
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'community' %}" id="community-link">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'community' %}" id="community-link">
                 Community
             </a>
         </li>
-
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-green mr-4" href="{% url 'reviews' %}" id="reviews-link">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'reviews' %}" id="reviews-link">
                 Reviews
             </a>
         </li>
-
-        <!-- Special Offers -->
-        <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-green" href="#" id="specials-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Special Offers
-            </a>
-            <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="specials-link">
-                <li><a href="{% url 'products' %}?category=new_arrivals" class="dropdown-item">New Arrivals</a></li>
-                <li><a href="{% url 'products' %}?category=deals" class="dropdown-item">Deals</a></li>
-                <li><a href="{% url 'products' %}?category=clearance" class="dropdown-item">Clearance</a></li>
-                <li><a href="{% url 'products' %}?category=new_arrivals,deals,clearance" class="dropdown-item">All Specials</a></li>
-            </ul>
-        </li>
     </ul>
 </div>
+
 
