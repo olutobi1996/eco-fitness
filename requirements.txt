@@ -1,6 +1,7 @@
 asgiref==3.8.1
 Django==4.2.8
 django-allauth==65.3.1
+django-countries==7.2.1
 django-crispy-forms==1.14.0
 django-cron==0.6.0
 pillow==11.1.0
