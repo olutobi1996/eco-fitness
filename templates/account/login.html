@@ -1,61 +1,71 @@
-{% extends "account/base_entrance.html" %}
+{% extends "account/base.html" %}
+
 {% load i18n %}
-{% load allauth account %}
-{% block head_title %}
-    {% trans "Sign In" %}
-{% endblock head_title %}
-{% block content %}
-    {% element h1 %}
-        {% trans "Sign In" %}
-    {% endelement %}
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% setvar link %}
-            <a href="{{ signup_url }}">
-            {% endsetvar %}
-            {% setvar end_link %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block inner_content %}
+
+<div class="container text-center mt-5">
+    <hr class="eco-divider">
+    <h2 class="eco-logo-font text-success fw-bold">{% trans "Sign In" %}</h2>
+    <p class="text-muted">{% trans "Welcome back! Sign in to continue your eco-friendly journey." %}</p>
+    <hr class="eco-divider">
+</div>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+    <p class="text-center text-muted">
+        {% blocktrans with site.name as site_name %}
+            Sign in with one of your existing third-party accounts, or 
+            <a href="{{ signup_url }}" class="text-success fw-bold">sign up</a> for a {{ site_name }} account below:
+        {% endblocktrans %}
+    </p>
+
+    <div class="socialaccount_ballot text-center">
+        <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </ul>
+        <div class="login-or">{% trans "or" %}</div>
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+    <p class="text-center text-muted">
+        {% blocktrans %}
+            Don't have an account yet?  
+            <a href="{{ signup_url }}" class="text-success fw-bold">Sign up</a> first.
+        {% endblocktrans %}
+    </p>
+{% endif %}
+
+<div class="d-flex justify-content-center">
+    <form class="login eco-form p-4 rounded shadow-sm" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <a class="btn btn-outline-success rounded-0" href="{% url 'home' %}">
+                <i class="fas fa-home"></i> Home
             </a>
-        {% endsetvar %}
-        {% element p %}
-            {% blocktranslate %}If you have not created an account yet, then please {{ link }}sign up{{ end_link }} first.{% endblocktranslate %}
-        {% endelement %}
-        {% url 'account_login' as login_url %}
-        {% element form form=form method="post" action=login_url tags="entrance,login" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button type="submit" tags="prominent,login" %}
-                    {% trans "Sign In" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button_group vertical=True %}
-            {% if PASSKEY_LOGIN_ENABLED %}
-                {% element button type="submit" form="mfa_login" id="passkey_login" tags="prominent,login,outline,primary" %}
-                    {% trans "Sign in with a passkey" %}
-                {% endelement %}
-            {% endif %}
-            {% if LOGIN_BY_CODE_ENABLED %}
-                {% element button href=request_login_code_url tags="prominent,login,outline,primary" %}
-                    {% trans "Mail me a sign-in code" %}
-                {% endelement %}
-            {% endif %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
-{% endblock content %}
-{% block extra_body %}
-    {{ block.super }}
-    {% if PASSKEY_LOGIN_ENABLED %}
-        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
-    {% endif %}
+            <button class="btn btn-success rounded-0 px-4 py-2" type="submit">
+                <i class="fas fa-sign-in-alt"></i> {% trans "Sign In" %}
+            </button>
+        </div>
+
+        <p class="mt-3 text-center">
+            <a class="text-success fw-bold" href="{% url 'account_reset_password' %}">
+                <i class="fas fa-key"></i> {% trans "Forgot Password?" %}
+            </a>
+        </p>
+    </form>
+</div>
+
 {% endblock %}
