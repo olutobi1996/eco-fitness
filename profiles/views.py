@@ -1,3 +1,53 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import UserProfile
+from checkout.models import Order
+from .forms import UserProfileForm
 
-# Create your views here.
+
+@login_required
+def profile(request):
+    """ Display the user's profile """
+    user_profile = get_object_or_404(UserProfile, username=request.user.username)
+    orders = user_profile.orders.all()  
+
+    context = {
+        'user_profile': user_profile,
+        'orders': orders,
+    }
+    return render(request, 'profiles/profile.html', context)
+
+
+@login_required
+def edit_profile(request):
+    """ Allow users to edit their profile details """
+    user_profile = get_object_or_404(UserProfile, username=request.user.username)
+
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated successfully!")
+            return redirect('profile')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'profiles/edit_profile.html', context)
+
+
+@login_required
+def order_history(request, order_number):
+    """ Display details of a past order """
+    order = get_object_or_404(Order, order_number=order_number, user_profile=request.user)
+
+    context = {
+        'order': order,
+    }
+    return render(request, 'profiles/order_history.html', context)
+

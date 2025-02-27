@@ -18,6 +18,7 @@ urlpatterns = [
     path('bag/', include('bag.urls')),  # Shopping Bag
     path('products/', include('products.urls', namespace="products")),
     path('checkout/', include('checkout.urls')),  # Checkout App
+    path('profile/', include('profiles.urls')),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
