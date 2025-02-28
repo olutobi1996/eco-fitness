@@ -1,7 +1,4 @@
 from django.db import models 
-from django.contrib.sites.models import Site
-from django.utils.timezone import now
-from django.db import models
 
 class Category(models.Model):
     CATEGORY_CHOICES = [
