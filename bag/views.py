@@ -37,7 +37,7 @@ def add_to_bag(request, product_id):
 
 def view_bag(request):
     """ A view to render the shopping bag page """
-    return render(request, 'bag/bag.html')
+    return render(request, "bag.html")
 
 def remove_from_bag(request, product_id):
     """ Remove an item from the shopping bag """
