@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bag_tools %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -17,12 +22,9 @@
                         <strong>Personal Information</strong>
                     </div>
                     <div class="card-body">
-                        {{ order_form.full_name.label_tag }}
-                        {{ order_form.full_name }}
-                        {{ order_form.email.label_tag }}
-                        {{ order_form.email }}
-                        {{ order_form.phone_number.label_tag }}
-                        {{ order_form.phone_number }}
+                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                        {{ order_form.phone_number | as_crispy_field }}
                     </div>
                 </div>
 
@@ -32,30 +34,24 @@
                         <strong>Shipping Address</strong>
                     </div>
                     <div class="card-body">
-                        {{ order_form.street_address1.label_tag }}
-                        {{ order_form.street_address1 }}
-                        {{ order_form.street_address2.label_tag }}
-                        {{ order_form.street_address2 }}
-                        {{ order_form.town_or_city.label_tag }}
-                        {{ order_form.town_or_city }}
-                        {{ order_form.county.label_tag }}
-                        {{ order_form.county }}
-                        {{ order_form.postcode.label_tag }}
-                        {{ order_form.postcode }}
-                        {{ order_form.country.label_tag }}
-                        {{ order_form.country }}
-
+                        {{ order_form.street_address1 | as_crispy_field }}
+                        {{ order_form.street_address2 | as_crispy_field }}
+                        {{ order_form.town_or_city | as_crispy_field }}
+                        {{ order_form.county | as_crispy_field }}
+                        {{ order_form.postcode | as_crispy_field }}
+                        {{ order_form.country | as_crispy_field }}
+                        
                         <div class="form-check mt-3">
                             {% if user.is_authenticated %}
-                            <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
-                            <label class="form-check-label" for="id-save-info">
-                                Save this delivery information to my profile
-                            </label>
+                                <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
+                                <label class="form-check-label" for="id-save-info">
+                                    Save this delivery information to my profile
+                                </label>
                             {% else %}
-                            <label class="form-check-label" for="id-save-info">
-                                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
-                            </label>
+                                <label class="form-check-label" for="id-save-info">
+                                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                                </label>
                             {% endif %}
                         </div>
                     </div>
@@ -82,7 +78,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <p class="text-dark"><strong>${{ item.lineitem_total }}</strong></p>
+                            <p class="text-dark"><strong>${{ item.product.price | calc_subtotal:item.quantity }}</strong></p>
                         </div>
                         {% endfor %}
                         <hr>
@@ -90,10 +86,10 @@
                             <strong>Subtotal:</strong> <span>${{ total|floatformat:2 }}</span>
                         </p>
                         <p class="text-dark d-flex justify-content-between">
-                            <strong>Delivery:</strong> <span>${{ delivery_cost|floatformat:2 }}</span>
+                            <strong>Delivery:</strong> <span>${{ delivery | floatformat:2 }}</span>
                         </p>
                         <h5 class="d-flex justify-content-between">
-                            <strong>Grand Total:</strong> <span>${{ grand_total|floatformat:2 }}</span>
+                            <strong>Grand Total:</strong> <span>${{ grand_total | floatformat:2 }}</span>
                         </h5>
                     </div>
                 </div>
@@ -104,12 +100,11 @@
                         <strong>Payment</strong>
                     </div>
                     <div class="card-body">
-                        <!-- Stripe Card Element -->
                         <div id="card-element" class="form-control"></div>
                         <div id="card-errors" class="text-danger mt-2" role="alert"></div>
+                        <input type="hidden" value="{{ client_secret }}" name="client_secret">
                     </div>
                 </div>
-
 
                 <!-- Checkout Buttons -->
                 <div class="text-center">
@@ -127,7 +122,7 @@
             </form>
         </div>
 
-        <!-- 🔹 Loading Overlay -->
+        <!-- Loading Overlay -->
         <div id="loading-overlay" class="loading-overlay">
             <div class="loading-message">
                 <div class="spinner"></div>
