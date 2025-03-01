@@ -8,13 +8,26 @@ from .forms import UserProfileForm
 
 @login_required
 def profile(request):
-    """ Display the user's profile """
-    user_profile = get_object_or_404(UserProfile, username=request.user.username)
-    orders = user_profile.orders.all()  
+    """ Display and update the user's profile """
+    user_profile = get_object_or_404(UserProfile, user=request.user)  
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated successfully!")
+            return redirect('profile')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    orders = user_profile.orders.all()
 
     context = {
-        'user_profile': user_profile,
+        'form': form,
         'orders': orders,
+        'on_profile_page': True
     }
     return render(request, 'profiles/profile.html', context)
 

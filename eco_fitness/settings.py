@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'checkout',
     'profiles',
     'crispy_forms',
+    'bag.templatetags.custom_filters',
 ]
 
 MIDDLEWARE = [

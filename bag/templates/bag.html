@@ -1,3 +1,4 @@
+{% load bag.templatetags.custom_filters %}
 {% extends "base.html" %}
 {% load static %}
 
@@ -47,8 +48,9 @@
                                         <input type="number" class="form-control w-50 text-center update-quantity" min="1" max="10"
                                                value="{{ item.quantity }}" data-item_id="{{ item.product.id }}">
                                     </td>
-                                    <td class="align-middle font-weight-bold">${{ item.product.price|floatformat:2|mul:item.quantity }}</td>
-                                    <td class="align-middle">
+                                    <td class="align-middle font-weight-bold">
+                                        ${{ item.product.price|multiply:item.quantity|floatformat:2 }}
+                                    </td>                                    
                                         <a href="{% url 'remove_from_bag' item.product.id %}" class="text-danger">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
@@ -78,7 +80,7 @@
                             <span class="text-success">${{ total|floatformat:2 }}</span>
                         </h5>
                         <a href="{% url 'checkout' %}" class="btn btn-green btn-block mt-3">Proceed to Checkout</a>
-                        <a href="{% url 'products' %}" class="btn btn-outline-green btn-block mt-2">
+                        <a href="{% url 'products:all_products' %}" class="btn btn-outline-green btn-block mt-2">
                             <i class="fas fa-chevron-left"></i> Keep Shopping
                         </a>
                     </div>
@@ -88,7 +90,7 @@
     {% else %}
         <div class="text-center py-5">
             <h4 class="text-muted">Your bag is empty.</h4>
-            <a href="{% url 'products' %}" class="btn btn-green mt-3">
+            <a href="{% url 'products:all_products' %}" class="btn btn-green mt-3">
                 <i class="fas fa-chevron-left"></i> Start Shopping
             </a>
         </div>
