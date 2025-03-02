@@ -1,120 +1,129 @@
-{% load bag.templatetags.custom_filters %}
 {% extends "base.html" %}
 {% load static %}
 
 {% block page_header %}
 <div class="container text-center my-4">
-    <h1 class="text-success">Your Shopping Bag</h1>
-    <p class="lead">Review your eco-friendly fitness products before checkout</p>
+    <h1 class="text-success">Eco-Friendly Fitness Store</h1>
+    <p class="lead">Sustainable fitness plans, diet plans, and workout gear</p>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="overlay"></div>
-<div class="container mb-5">
-    {% if bag_items %}
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="table-responsive">
-                    <table class="table table-hover bg-white rounded">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Subtotal</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in bag_items %}
-                                <tr>
-                                    <td class="align-middle">
-                                        <div class="d-flex align-items-center">
-                                            <a href="{% url 'product_detail' item.product.id %}">
-                                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid rounded" style="width: 80px;">
-                                            </a>
-                                            <div class="ml-3">
-                                                <a href="{% url 'product_detail' item.product.id %}" class="text-dark font-weight-bold">
-                                                    {{ item.product.name }}
-                                                </a>
-                                                <p class="my-0"><strong>Size: </strong>{% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
-                                                <p class="small text-muted">{{ item.product.category.friendly_name }}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle">${{ item.product.price }}</td>
-                                    <td class="align-middle">
-                                        <input type="number" class="form-control w-50 text-center update-quantity" min="1" max="10"
-                                               value="{{ item.quantity }}" data-item_id="{{ item.product.id }}">
-                                    </td>
-                                    <td class="align-middle font-weight-bold">
-                                        ${{ item.product.price|multiply:item.quantity|floatformat:2 }}
-                                    </td>                                    
-                                        <a href="{% url 'remove_from_bag' item.product.id %}" class="text-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="font-weight-bold">Order Summary</h4>
-                        <hr>
-                        <p class="d-flex justify-content-between">
-                            <span>Subtotal:</span>
-                            <span class="font-weight-bold">${{ total|floatformat:2 }}</span>
-                        </p>
-                        <p class="d-flex justify-content-between text-muted">
-                            <span>Estimated Shipping:</span>
-                            <span>FREE</span>
-                        </p>
-                        <hr>
-                        <h5 class="d-flex justify-content-between">
-                            <span>Total:</span>
-                            <span class="text-success">${{ total|floatformat:2 }}</span>
-                        </h5>
-                        <a href="{% url 'checkout' %}" class="btn btn-green btn-block mt-3">Proceed to Checkout</a>
-                        <a href="{% url 'products:all_products' %}" class="btn btn-outline-green btn-block mt-2">
-                            <i class="fas fa-chevron-left"></i> Keep Shopping
-                        </a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center mt-3">
+            <h2 class="logo-font">Products</h2>
+            {% for c in current_categories %}
+            <a href="{% url 'products:all_products' %}?category={{ c.name }}" class="text-decoration-none">
+                <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ c.friendly_name }}</span>
+            </a>
+            {% endfor %}
+            <hr class="w-50 mb-1">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="product-container col-10 offset-1">
+            <div class="row mt-1 mb-2">
+                <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                    <div class="sort-select-wrapper w-50">
+                        <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                            <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to high)</option>
+                            <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high to low)</option>
+                            <option value="rating_asc" {% if current_sorting == 'rating_asc' %}selected{% endif %}>Rating (low to high)</option>
+                            <option value="rating_desc" {% if current_sorting == 'rating_desc' %}selected{% endif %}>Rating (high to low)</option>
+                            <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+                            <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+                        </select>
                     </div>
                 </div>
+                <div class="col-12 col-md-6 order-md-first">
+                    <p class="text-muted mt-3 text-center text-md-left">
+                        {% if search_term or current_categories or current_sorting != 'None_None' %}
+                            <span class="small"><a href="{% url 'products:all_products' %}">Products Home</a> | </span>
+                        {% endif %}
+                        {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card h-100 border-0">
+                            <a href="{% url 'product_detail' product.id %}">
+                                {% if product.image %}
+                                    <img class="img-fluid rounded shadow-sm" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                {% else %}
+                                    <img class="img-fluid rounded shadow-sm" src="{% static 'images/default_product.jpg' %}" alt="{{ product.name }}">
+                                {% endif %}
+                            </a>
+                            <div class="card-body pb-0">
+                                <p class="mb-0">{{ product.name }}</p>
+                            </div>
+                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                                <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
+                                {% if product.category %}
+                                    <p class="small mt-1 mb-0">
+                                        <i class="fas fa-tag mr-1"></i>
+                                        <a href="{% url 'products:all_products' %}?category={{ product.category.name }}" class="text-decoration-none">
+                                            {{ product.category.friendly_name }}
+                                        </a>
+                                    </p>
+                                {% endif %}
+                                {% if product.rating %}
+                                    <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} / 5</small>
+                                {% else %}
+                                    <small class="text-muted">No Rating</small>
+                                {% endif %}
+                                {% if request.user.is_superuser %}
+                                    <small class="ml-3">
+                                        <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                                        <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                    </small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center w-100">No products found.</p>
+                {% endfor %}
             </div>
         </div>
-    {% else %}
-        <div class="text-center py-5">
-            <h4 class="text-muted">Your bag is empty.</h4>
-            <a href="{% url 'products:all_products' %}" class="btn btn-green mt-3">
-                <i class="fas fa-chevron-left"></i> Start Shopping
-            </a>
-        </div>
-    {% endif %}
+    </div>
+</div>
+<div class="btt-button shadow-sm rounded-0 border border-black">
+    <a class="btt-link d-flex h-100">
+        <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+    </a>
 </div>
 {% endblock %}
 
 {% block postloadjs %}
-<script>
-    document.querySelectorAll('.update-quantity').forEach(input => {
-        input.addEventListener('change', function() {
-            let itemId = this.dataset.item_id;
-            let newQuantity = this.value;
-            let url = `/update_bag/${itemId}/`;
-            
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({'quantity': newQuantity})
-            }).then(response => location.reload());
+    {{ block.super }}
+    <script type="text/javascript">
+        $('.btt-link').click(function(e) {
+            window.scrollTo(0,0);
         });
-    });
-</script>
+    </script>
+    <script type="text/javascript">
+        $('#sort-selector').change(function() {
+            var selector = $(this);
+            var currentUrl = new URL(window.location);
+            var selectedVal = selector.val();
+            if (selectedVal != "reset") {
+                var sort = selectedVal.split("_")[0];
+                var direction = selectedVal.split("_")[1];
+                currentUrl.searchParams.set("sort", sort);
+                currentUrl.searchParams.set("direction", direction);
+            } else {
+                currentUrl.searchParams.delete("sort");
+                currentUrl.searchParams.delete("direction");
+            }
+            window.location.replace(currentUrl);
+        });
+    </script>
 {% endblock %}
+
