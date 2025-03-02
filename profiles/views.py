@@ -17,10 +17,10 @@ def profile(request):
             messages.success(request, "Your profile has been updated successfully!")
             return redirect('profile')  # Prevents resubmission issues
         else:
-            messages.error(request, "Please correct the errors below.")
+            messages.error(request, "Update failed. Please ensure the form is valid.")
     else:
         form = UserProfileForm(instance=user_profile)
-
+    
     orders = user_profile.orders.all()
 
     context = {
@@ -29,7 +29,6 @@ def profile(request):
         'on_profile_page': True
     }
     return render(request, 'profiles/profile.html', context)
-
 
 @login_required
 def edit_profile(request):
@@ -52,7 +51,6 @@ def edit_profile(request):
     }
     return render(request, 'profiles/edit_profile.html', context)
 
-
 @login_required
 def order_history(request, order_number):
     """ Display details of a past order """
@@ -68,5 +66,6 @@ def order_history(request, order_number):
         'from_profile': True,
     }
     return render(request, 'profiles/order_history.html', context)
+
 
 
