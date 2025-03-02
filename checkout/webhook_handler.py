@@ -4,14 +4,6 @@ from products.models import Product
 import json
 import stripe
 import time 
-
-from django.http import HttpResponse
-from .models import Order, OrderLineItem
-from products.models import Product
-import json
-import stripe
-import time
-
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -20,9 +12,7 @@ from .models import Order, OrderLineItem
 from products.models import Product
 from profiles.models import UserProfile
 
-import json
-import stripe
-import time
+
 
 class StripeWH_Handler:
     """Handle Stripe webhooks"""
