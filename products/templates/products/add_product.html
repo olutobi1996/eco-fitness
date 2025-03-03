@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-12 col-md-6">
                 <hr>
-                <h2 class="logo-font mb-4">Eco-Friendly Product Management</h2>
+                <h2 class="logo-font mb-4 text-green">Eco-Friendly Product Management</h2>
                 <h5 class="text-muted">Add a Sustainable Product</h5>
                 <hr>
             </div>
@@ -25,7 +25,14 @@
             <div class="col-12 col-md-6">
                 <form method="POST" action="{% url 'add_product' %}" class="eco-form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form | crispy }}
+                    {% for field in form %}
+                        {% if field.name != 'image' %}
+                            {{ field | as_crispy_field }}
+                        {% else %}
+                            <label class="text-green">{{ field.label }}</label>
+                            {{ field }}
+                        {% endif %}
+                    {% endfor %}
                     <div class="text-right">
                         <a class="btn btn-outline-green rounded-0" href="{% url 'all_products' %}">Cancel</a>
                         <button class="btn btn-green rounded-0" type="submit">Add Product</button>
@@ -35,3 +42,16 @@
         </div>
     </div>
 {% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        document.getElementById('new-image').addEventListener('change', function() {
+            var file = this.files[0];
+            if (file) {
+                document.getElementById('filename').textContent = `Image will be set to: ${file.name}`;
+            }
+        });
+    </script>
+{% endblock %}
+
