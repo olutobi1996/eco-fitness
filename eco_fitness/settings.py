@@ -13,6 +13,7 @@ import os
 import dj_database_url
 from pathlib import Path
 
+# Load environment variables if env.py exists
 if os.path.isfile('env.py'):
     import env
 
@@ -64,7 +65,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Make sure whitenoise is before other middlewares
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Ensure whitenoise is above other middlewares
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -150,18 +151,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+
+# Ensure STATICFILES_DIRS exists to prevent collectstatic error
+if not os.path.exists(STATICFILES_DIRS[0]):
+    os.makedirs(STATICFILES_DIRS[0])
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Use AWS for Static & Media Files
-if 'USE_AWS' in os.environ:
+USE_AWS = os.getenv('USE_AWS', False)  # Ensure we explicitly check for AWS usage
+
+if USE_AWS:
     # AWS Settings
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', 'eco-fitness1')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+    if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
+        raise ValueError("AWS credentials are missing!")
+
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
     # Static & Media Storage
@@ -171,6 +183,9 @@ if 'USE_AWS' in os.environ:
     # Static & Media URLs
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+else:
+    # Use WhiteNoise for static file serving in production if AWS is not enabled
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Stripe
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
@@ -178,6 +193,7 @@ STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 
 # Custom User Model
 AUTH_USER_MODEL = 'profiles.UserProfile'
+
 
 
 
