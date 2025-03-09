@@ -8,10 +8,12 @@ django-countries==7.6.1
 django-crispy-forms==2.3
 django-storages==1.14.5
 jmespath==1.0.1
+Pillow
 python-dateutil==2.9.0.post0
 s3transfer==0.11.4
 six==1.17.0
 sqlparse==0.5.3
+stripe
 typing_extensions==4.12.2
 urllib3==2.3.0
 whitenoise==6.9.0
