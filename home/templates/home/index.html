@@ -58,35 +58,24 @@
 <section class="container my-5">
     <h2 class="text-center mb-4">Featured Merchandise</h2>
     <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Eco Yoga Mat</h5>
-                    <p class="card-text">$49.99</p>
-                    <a href="/shop" class="btn btn-outline-success">Buy Now</a>
+        {% if products %}
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">${{ product.price }}</p>
+                            <a href="{% url 'products:product_detail' product.id %}" class="btn btn-outline-success">Buy Now</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Recycled Gym Bottle</h5>
-                    <p class="card-text">$19.99</p>
-                    <a href="/shop" class="btn btn-outline-success">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Organic Cotton Tank</h5>
-                    <p class="card-text">$29.99</p>
-                    <a href="/shop" class="btn btn-outline-success">Buy Now</a>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No featured products available at the moment.</p>
+        {% endif %}
     </div>
 </section>
+
 
 <!-- Testimonials Section -->
 <section class="bg-light py-5">

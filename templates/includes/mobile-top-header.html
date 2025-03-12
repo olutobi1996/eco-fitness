@@ -8,7 +8,7 @@
             </div>
         </a>
         <div class="dropdown-menu border-0 w-100 p-3 rounded shadow-sm">
-            <form method="GET" action="{% url 'products' %}">
+            <form method="GET" action="{% url 'products:all_products' %}">
                 <div class="input-group">
                     <input class="form-control border-success rounded-start" type="text" name="q"
                         placeholder="Search for fitness gear...">

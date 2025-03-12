@@ -1,9 +1,9 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from products.models import Product  
 
 def index(request):
-    return render(request, "home/index.html")  
+    product = get_object_or_404(Product, id=1)  
+    return render(request, 'home/index.html', {'product': product})
 
 
 def plans(request):
