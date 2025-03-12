@@ -13,12 +13,13 @@
                 All Products
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products' %}?sort=price&direction=asc" class="dropdown-item">Price (Low to High)</a></li>
-                <li><a href="{% url 'products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
-                <li><a href="{% url 'products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
-                <li><a href="{% url 'products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
-                <li><a href="{% url 'products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
-                <li><a href="{% url 'products' %}" class="dropdown-item">All Products</a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc" class="dropdown-item">Price (Low to High)</a></li>
+<li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
+<li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
+<li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
+<li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
+<li><a href="{% url 'products:all_products' %}" class="dropdown-item">All Products</a></li>
+
             </ul>
         </li>
 
@@ -28,9 +29,9 @@
                 Fitness Plans
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products' %}?category=workout_plans" class="dropdown-item">Workout Plans</a></li>
-                <li><a href="{% url 'products' %}?category=diet_plans" class="dropdown-item">Diet Plans</a></li>
-                <li><a href="{% url 'products' %}?category=workout_plans,diet_plans" class="dropdown-item">All Plans</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans" class="dropdown-item">Workout Plans</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item">Diet Plans</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans,diet_plans" class="dropdown-item">All Plans</a></li>
             </ul>
         </li>
 
@@ -40,10 +41,10 @@
                 Merchandise
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products' %}?category=activewear" class="dropdown-item">Activewear</a></li>
-                <li><a href="{% url 'products' %}?category=accessories" class="dropdown-item">Accessories</a></li>
-                <li><a href="{% url 'products' %}?category=eco_bottles" class="dropdown-item">Eco Bottles</a></li>
-                <li><a href="{% url 'products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item">All Merchandise</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear" class="dropdown-item">Activewear</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=accessories" class="dropdown-item">Accessories</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=eco_bottles" class="dropdown-item">Eco Bottles</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item">All Merchandise</a></li>
             </ul>
         </li>
 
