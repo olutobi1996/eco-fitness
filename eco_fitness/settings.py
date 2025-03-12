@@ -84,7 +84,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),  # <---- Add this!
             os.path.join(BASE_DIR, 'templates', 'allauth'),
         ],
         'APP_DIRS': True,
@@ -104,6 +104,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 # Authentication
 AUTHENTICATION_BACKENDS = [
@@ -152,15 +153,12 @@ AUTH_USER_MODEL = 'profiles.UserProfile'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static & Media Files
-
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-# Ensure STATICFILES_DIRS exists to prevent collectstatic error
-if not os.path.exists(STATICFILES_DIRS[0]):
-    os.makedirs(STATICFILES_DIRS[0])
+# Set STATIC_ROOT to an absolute path
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Ensure this is set
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
