@@ -15,6 +15,9 @@ class Category(models.Model):
     def __str__(self):
         return self.friendly_name or self.name
 
+    def get_friendly_name(self):
+        return self.friendly_name or dict(self.CATEGORY_CHOICES).get(self.name, self.name)
+
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
