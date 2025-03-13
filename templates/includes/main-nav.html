@@ -9,23 +9,22 @@
 
         <!-- All Products Dropdown -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-dark mr-5" href="#" id="all-products-link" data-bs-toggle="dropdown">
+            <a class="logo-font font-weight-bold nav-link text-dark mr-5 dropdown-toggle" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-expanded="false">
                 All Products
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
                 <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc" class="dropdown-item">Price (Low to High)</a></li>
-<li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
-<li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
-<li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
-<li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
-<li><a href="{% url 'products:all_products' %}" class="dropdown-item">All Products</a></li>
-
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
+                <li><a href="{% url 'products:all_products' %}" class="dropdown-item">All Products</a></li>
             </ul>
         </li>
 
         <!-- Fitness Plans -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="#" id="fitness-plans-link" data-bs-toggle="dropdown">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="fitness-plans-link" data-bs-toggle="dropdown" aria-expanded="false">
                 Fitness Plans
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
@@ -37,7 +36,7 @@
 
         <!-- Merchandise -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="#" id="merchandise-link" data-bs-toggle="dropdown">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="merchandise-link" data-bs-toggle="dropdown" aria-expanded="false">
                 Merchandise
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
@@ -61,5 +60,6 @@
         </li>
     </ul>
 </div>
+
 
 

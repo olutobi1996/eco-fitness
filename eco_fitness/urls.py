@@ -10,18 +10,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin Panel
     path('accounts/', include('allauth.urls')),  # User Authentication
     path('', include('home.urls')),  # Home App
     path('bag/', include('bag.urls')),  # Shopping Bag
-    path('products/', include('products.urls', namespace="products")),
+    path('products/', include('products.urls', namespace="products")),  # Products (with namespace)
     path('checkout/', include('checkout.urls')),  # Checkout App
-    path('profile/', include('profiles.urls')),
-] 
+    path('profile/', include('profiles.urls')),  # User Profiles
+]
+
+# Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  
+
+
 
 
