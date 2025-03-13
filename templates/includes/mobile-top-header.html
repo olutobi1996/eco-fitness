@@ -1,7 +1,7 @@
 <ul class="list-inline d-flex justify-content-end align-items-center">
     <!-- Mobile Search -->
     <li class="list-inline-item dropdown">
-        <a class="text-success nav-link d-block d-lg-none" href="#" id="mobile-search" data-bs-toggle="dropdown">
+        <a class="text-success nav-link d-block d-lg-none dropdown-toggle" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="text-center">
                 <i class="fas fa-search fa-lg"></i>
                 <p class="my-0 small">Search</p>
@@ -10,8 +10,7 @@
         <div class="dropdown-menu border-0 w-100 p-3 rounded shadow-sm">
             <form method="GET" action="{% url 'products:all_products' %}">
                 <div class="input-group">
-                    <input class="form-control border-success rounded-start" type="text" name="q"
-                        placeholder="Search for fitness gear...">
+                    <input class="form-control border-success rounded-start" type="text" name="q" placeholder="Search for fitness gear...">
                     <button class="btn btn-success rounded-end" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -22,7 +21,7 @@
 
     <!-- User Account Dropdown -->
     <li class="list-inline-item dropdown">
-        <a class="text-success nav-link d-block d-lg-none" href="#" id="user-options" data-bs-toggle="dropdown">
+        <a class="text-success nav-link d-block d-lg-none dropdown-toggle" href="#" id="user-options" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="text-center">
                 <i class="fas fa-user fa-lg"></i>
                 <p class="my-0 small">My Account</p>
@@ -30,14 +29,14 @@
         </a>
         <div class="dropdown-menu border-0 shadow-sm rounded">
             {% if request.user.is_authenticated %}
-            {% if request.user.is_superuser %}
-            <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
-            {% endif %}
-            <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
-            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
+                {% endif %}
+                <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
             {% else %}
-            <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-            <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
             {% endif %}
         </div>
     </li>
