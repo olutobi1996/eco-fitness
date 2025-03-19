@@ -5,12 +5,9 @@ def index(request):
     product = get_object_or_404(Product, id=1)  
     return render(request, 'home/index.html', {'product': product})
 
-
 def plans(request):
     return render(request, 'plans.html')
 
-def reviews(request):
-    return render(request, 'reviews.html')
 
 def shop(request):
     return render(request, 'shop.html')
