@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models 
+from django.conf import settings  
 
 class Category(models.Model):
     CATEGORY_CHOICES = [
@@ -35,3 +37,12 @@ class Product(models.Model):
         return self.name
 
 
+class Review(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, related_name="reviews")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ Use AUTH_USER_MODEL
+    rating = models.PositiveIntegerField(default=5)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user.username} for {self.product.name}"

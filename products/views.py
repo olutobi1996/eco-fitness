@@ -3,11 +3,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
-
+from .forms import ReviewForm  
 from .models import Product, Category
 from .forms import ProductForm
 
-# Create your views here.
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
@@ -51,11 +50,38 @@ def all_products(request):
 
     return render(request, 'products/products.html', context)
 
-def product_detail(request, product_id):
-    """ A view to show individual product details """
+def product_reviews(request, product_id):
+    """ Render reviews and allow users to submit a review """
     product = get_object_or_404(Product, pk=product_id)
-    context = {'product': product}
-    return render(request, 'products/product_detail.html', context)
+    reviews = Review.objects.filter(product=product).order_by('-created_at')
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            messages.error(request, "You must be logged in to leave a review.")
+            return redirect('account_login')
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            messages.success(request, "Your review has been submitted!")
+            return redirect('product_reviews', product_id=product.id)
+        else:
+            messages.error(request, "There was an error with your review. Please check your input.")
+
+    else:
+        form = ReviewForm()
+
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'form': form,  
+    }
+
+    return render(request, "products/reviews.html", context)
+
 
 @login_required
 def add_product(request):
@@ -120,6 +146,46 @@ def product_list(request):
     products = Product.objects.all()
     return render(request, 'products/products_list.html', {'products': products})
 
+def product_reviews(request, product_id):
+    """ Render reviews and allow users to submit a review """
+    product = get_object_or_404(Product, pk=product_id)
+    reviews = Review.objects.filter(product=product).order_by('-created_at')
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            messages.error(request, "You must be logged in to leave a review.")
+            return redirect('account_login')
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            messages.success(request, "Your review has been submitted!")
+            return redirect('products:product_detail', product_id=product.id)
+        else:
+            messages.error(request, "There was an error with your review. Please check your input.")
+
+    else:
+        form = ReviewForm()
+
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'form': form,  
+    }
+
+    return render(request, "products/product_detail.html", context)
+
+
+def reviews(request):
+    context = {} 
+    return render(request, "products/reviews.html", context)
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'products/product_detail.html', {'product': product})
 
 
 
