@@ -6,8 +6,11 @@ from django.db.models.functions import Lower
 from products.models import Product, Category
 from products.forms import ProductForm
 from .forms import UserProfileForm
-from checkout.models import Order
-
+from checkout.models import Order 
+from django.urls import reverse
+from .models import UserProfile
+from .forms import UserProfileForm
+ 
 # Create your views here.
 
 def all_products(request):
@@ -124,7 +127,8 @@ def product_list(request):
 @login_required
 def profile(request):
     """ Display and update the user's profile """
-    user_profile = get_object_or_404(UserProfile, user=request.user)  
+    
+    user_profile = get_object_or_404(UserProfile, username=request.user.username)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
@@ -136,10 +140,15 @@ def profile(request):
             messages.error(request, "Update failed. Please ensure the form is valid.")
     else:
         form = UserProfileForm(instance=user_profile)
-    
-    orders = user_profile.orders.all()
+
+   
+    orders = Order.objects.filter(user_profile=user_profile).order_by('-created_at')
+
+    print("User Profile Loaded:", user_profile)
+    print("Orders Retrieved:", orders)
 
     context = {
+        'user_profile': user_profile,  # Make sure this is passed to the template
         'form': form,
         'orders': orders,
         'on_profile_page': True
@@ -149,7 +158,7 @@ def profile(request):
 @login_required
 def edit_profile(request):
     """ Allow users to edit their profile details """
-    user_profile = get_object_or_404(UserProfile, user=request.user)
+    user_profile = request.user 
 
     if request.method == "POST":
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
@@ -170,7 +179,7 @@ def edit_profile(request):
 @login_required
 def order_history(request, order_number):
     """ Display details of a past order """
-    order = get_object_or_404(Order, order_number=order_number, user_profile__user=request.user)
+    order = get_object_or_404(Order, order_number=order_number, user_profile=request.user)
 
     messages.info(request, (
         f'This is a past confirmation for order number {order_number}. '
