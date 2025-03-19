@@ -6,6 +6,8 @@ from django.db.models.functions import Lower
 from .forms import ReviewForm  
 from .models import Product, Category
 from .forms import ProductForm
+from .models import Review
+
 
 
 def all_products(request):
