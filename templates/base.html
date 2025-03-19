@@ -45,7 +45,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}">Plans</a></li>
-                    <li class="nav-link" href="{% url 'products:product_reviews' 1 %}">Reviews</li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products:product_reviews' 1 %}">Reviews</a>
+                    </li>                    
                     <li class="nav-item"><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'community' %}">Community</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
