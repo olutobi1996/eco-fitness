@@ -94,6 +94,247 @@
         "image_url": "https://example.com/resistancebands.jpg",
         "image": "resistancebands.jpg"
       }
+    },
+    {
+      "pk": 7,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan002",
+        "name": "Speed Training",
+        "description": "speed training, to get yourself in the best anerobic condition possible.",
+        "price": 19.99,
+        "category": 1,
+        "rating": 4.8,
+        "created_at": "2024-03-04T12:00:00Z",
+        "updated_at": "2024-03-04T12:00:00Z",
+        "image_url": "https://example.com/fitplan1.jpg",
+        "image": "fitplan1.jpg"
+      }
+    },
+    {
+      "pk": 8,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan003",
+        "name": "Advanced Strength Training Program",
+        "description": "A comprehensive 8-week strength-building program using sustainable equipment.",
+        "price": 29.99,
+        "category": 1,
+        "rating": 4.9,
+        "created_at": "2024-03-05T12:00:00Z",
+        "updated_at": "2024-03-05T12:00:00Z",
+        "image_url": "https://example.com/fitplan2.jpg",
+        "image": "fitplan2.jpg"
+      }
+    },
+    {
+      "pk": 9,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan004",
+        "name": "Eco-Friendly Yoga & Meditation Plan",
+        "description": "A 6-week holistic yoga and mindfulness plan to promote sustainability and wellness.",
+        "price": 24.99,
+        "category": 1,
+        "rating": 4.7,
+        "created_at": "2024-03-06T12:00:00Z",
+        "updated_at": "2024-03-06T12:00:00Z",
+        "image_url": "https://example.com/fitplan3.jpg",
+        "image": "fitplan3.jpg"
+      }
+    },
+    {
+      "pk": 10,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan005",
+        "name": "Zero-Waste Cardio Challenge",
+        "description": "A high-intensity cardio program using zero-waste principles and bodyweight exercises.",
+        "price": 14.99,
+        "category": 1,
+        "rating": 4.6,
+        "created_at": "2024-03-07T12:00:00Z",
+        "updated_at": "2024-03-07T12:00:00Z",
+        "image_url": "https://example.com/fitplan4.jpg",
+        "image": "fitplan4.jpg"
+      }
+    },
+    {
+      "pk": 11,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan006",
+        "name": "Outdoor Bootcamp Workout",
+        "description": "A sustainable outdoor fitness program using nature-based exercises.",
+        "price": 22.99,
+        "category": 1,
+        "rating": 4.8,
+        "created_at": "2024-03-08T12:00:00Z",
+        "updated_at": "2024-03-08T12:00:00Z",
+        "image_url": "https://example.com/fitplan5.jpg",
+        "image": "fitplan5.jpg"
+      }
+    },
+    {
+      "pk": 12,
+      "model": "products.product",
+      "fields": {
+        "sku": "dietplan002",
+        "name": "Plant-Based Muscle Gain Diet Plan",
+        "description": "A high-protein, plant-based meal plan designed for muscle growth while maintaining sustainability.",
+        "price": 14.99,
+        "category": 2,
+        "rating": 4.7,
+        "created_at": "2024-03-04T12:00:00Z",
+        "updated_at": "2024-03-04T12:00:00Z",
+        "image_url": "https://example.com/dietplan1.jpg",
+        "image": "dietplan1.jpg"
+      }
+    },
+    {
+      "pk": 13,
+      "model": "products.product",
+      "fields": {
+        "sku": "dietplan003",
+        "name": "Zero-Waste Vegan Meal Plan",
+        "description": "A sustainable meal plan using zero-waste cooking techniques and plant-based ingredients.",
+        "price": 12.99,
+        "category": 2,
+        "rating": 4.6,
+        "created_at": "2024-03-06T12:00:00Z",
+        "updated_at": "2024-03-06T12:00:00Z",
+        "image_url": "https://example.com/dietplan2.jpg",
+        "image": "dietplan2.jpg"
+      }
+    },
+    {
+      "pk": 14,
+      "model": "products.product",
+      "fields": {
+        "sku": "activewear002",
+        "name": "Recycled Polyester Running Shorts",
+        "description": "Breathable, moisture-wicking running shorts made from 100% recycled materials.",
+        "price": 29.99,
+        "category": 3,
+        "rating": 4.6,
+        "created_at": "2024-03-04T12:00:00Z",
+        "updated_at": "2024-03-04T12:00:00Z",
+        "image_url": "https://example.com/shorts1.jpg",
+        "image": "shorts1.jpg"
+      }
+    },
+    {
+      "pk": 15,
+      "model": "products.product",
+      "fields": {
+        "sku": "gear002",
+        "name": "Cork Yoga Mat",
+        "description": "Sustainably sourced cork yoga mat with a non-slip natural rubber base for optimal grip.",
+        "price": 49.99,
+        "category": 4,
+        "rating": 4.9,
+        "created_at": "2024-03-04T12:00:00Z",
+        "updated_at": "2024-03-04T12:00:00Z",
+        "image_url": "https://example.com/yogamat.jpg",
+        "image": "yogamat.jpg"
+      }
+    },
+    {
+      "pk": 16,
+      "model": "products.product",
+      "fields": {
+        "sku": "supplement002",
+        "name": "Organic Plant-Based Protein Powder",
+        "description": "A vegan-friendly protein powder made with organic pea, rice, and hemp protein.",
+        "price": 39.99,
+        "category": 2,
+        "rating": 4.8,
+        "created_at": "2024-03-04T12:00:00Z",
+        "updated_at": "2024-03-04T12:00:00Z",
+        "image_url": "https://example.com/protein.jpg",
+        "image": "protein.jpg"
+      }
+    },
+    {
+      "pk": 17,
+      "model": "products.product",
+      "fields": {
+        "sku": "activewear003",
+        "name": "Eco-Friendly Yoga Leggings",
+        "description": "Stretchable and comfortable leggings made from sustainable bamboo fabric.",
+        "price": 34.99,
+        "category": 3,
+        "rating": 4.7,
+        "created_at": "2024-03-09T12:00:00Z",
+        "updated_at": "2024-03-09T12:00:00Z",
+        "image_url": "https://example.com/leggings.jpg",
+        "image": "leggings.jpg"
+      }
+    },
+    {
+      "pk": 18,
+      "model": "products.product",
+      "fields": {
+        "sku": "gear003",
+        "name": "Bamboo Pilates Ring",
+        "description": "A lightweight and durable pilates ring made from natural bamboo fibers.",
+        "price": 27.99,
+        "category": 4,
+        "rating": 4.8,
+        "created_at": "2024-03-09T12:00:00Z",
+        "updated_at": "2024-03-09T12:00:00Z",
+        "image_url": "https://example.com/pilatesring.jpg",
+        "image": "pilatesring.jpg"
+      }
+    },
+    {
+      "pk": 19,
+      "model": "products.product",
+      "fields": {
+        "sku": "supplement004",
+        "name": "Organic Green Superfood Powder",
+        "description": "A nutrient-dense blend of organic greens, fruits, and antioxidants.",
+        "price": 44.99,
+        "category": 2,
+        "rating": 4.7,
+        "created_at": "2024-03-09T12:00:00Z",
+        "updated_at": "2024-03-09T12:00:00Z",
+        "image_url": "https://example.com/superfood.jpg",
+        "image": "superfood.jpg"
+      }
+    },
+    {
+      "pk": 20,
+      "model": "products.product",
+      "fields": {
+        "sku": "accessory003",
+        "name": "Recycled Aluminum Water Bottle",
+        "description": "A lightweight, BPA-free water bottle made from 100% recycled aluminum.",
+        "price": 19.99,
+        "category": 6,
+        "rating": 4.9,
+        "created_at": "2024-03-09T12:00:00Z",
+        "updated_at": "2024-03-09T12:00:00Z",
+        "image_url": "https://example.com/waterbottle.jpg",
+        "image": "waterbottle.jpg"
+      }
+    },
+    {
+      "pk": 21,
+      "model": "products.product",
+      "fields": {
+        "sku": "fitplan007",
+        "name": "Eco-Friendly HIIT Workout Plan",
+        "description": "A 6-week high-intensity interval training plan using sustainable practices.",
+        "price": 21.99,
+        "category": 1,
+        "rating": 4.8,
+        "created_at": "2024-03-10T12:00:00Z",
+        "updated_at": "2024-03-10T12:00:00Z",
+        "image_url": "https://example.com/hiitplan.jpg",
+        "image": "hiitplan.jpg"
+      }
     }
-  ]
+]
+
   
