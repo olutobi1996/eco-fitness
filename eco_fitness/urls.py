@@ -17,7 +17,8 @@ urlpatterns = [
     path('', include('home.urls')),  # Home App
     path('bag/', include('bag.urls')),  # Shopping Bag
     path('products/', include('products.urls', namespace="products")),  # Products (with namespace)
-    path('checkout/', include('checkout.urls')),  # Checkout App
+    path('checkout/', include('checkout.urls')), # Checkout App
+    path("community/", include("community.urls")),  # Community Page
     
 ]
 
