@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'products',
     'bag',
     'checkout',
+    'community',
     'profiles',
     'bag.templatetags.custom_filters',
 ]
