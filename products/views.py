@@ -4,11 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
 from .forms import ReviewForm  
-from .models import Product, Category
-from .forms import ProductForm
-from .models import Review
-
-
+from .models import Product, Category, Bundle
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
@@ -188,6 +184,37 @@ def reviews(request):
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render(request, 'products/product_detail.html', {'product': product})
+
+
+def shop_view(request):
+    """ A view to display the shop homepage with featured products, categories, and bundles. """
+    featured_products = Product.objects.filter(is_featured=True)  # ✅ This will now work
+    categories = Category.objects.all()
+
+    context = {
+        "featured_products": featured_products,
+        "categories": categories,
+    }
+
+    return render(request, "products/shop.html", context)
+
+
+def category_products(request, category_slug):
+    """ Display products for a specific category """
+    category = get_object_or_404(Category, slug=category_slug)
+    products = Product.objects.filter(category=category)
+
+    context = {
+        "category": category,
+        "products": products,
+    }
+
+    return render(request, "products/category_products.html", context)
+
+
+
+
+
 
 
 

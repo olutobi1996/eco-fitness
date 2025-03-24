@@ -3,7 +3,7 @@
 {% block content %}
 <style>
     body {
-        background-color: #e8f5e9; /* Light green background */
+        background-color: #e8f5e9; 
         font-family: 'Poppins', sans-serif;
     }
 
@@ -29,20 +29,7 @@
         transform: scale(1.05);
     }
 
-    .hidden {
-        display: none;
-    }
-
-    textarea {
-        width: 100%;
-        min-height: 150px;
-        resize: vertical;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-
-    input, textarea {
+    textarea, input {
         width: 100%;
         border-radius: 8px;
         border: 1px solid #ccc;
@@ -65,28 +52,9 @@
             <p class="text-muted">Share your fitness journey & inspire the community!</p>
         </div>
 
-        <!-- Success Message -->
-        <div id="successMessage" class="alert alert-success hidden text-center">
-            🎉 Your post has been published successfully!
-        </div>
-
-        <form id="postForm" method="POST" enctype="multipart/form-data" class="mt-4">
+        <form method="POST" enctype="multipart/form-data" class="mt-4">
             {% csrf_token %}
-
-            <div class="mb-3">
-                <label for="id_title" class="form-label fw-bold text-success">Title</label>
-                <input type="text" id="id_title" name="title" placeholder="Enter your blog title" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="id_content" class="form-label fw-bold text-success">Content</label>
-                <textarea id="id_content" name="content" placeholder="Write your blog post here..." required></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="id_image" class="form-label fw-bold text-success">Upload an Image</label>
-                <input type="file" id="id_image" name="image" accept="image/*">
-            </div>
+            {{ form.as_p }}
 
             <div class="text-center">
                 <button type="submit" class="btn btn-lg btn-success">
@@ -96,22 +64,8 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.getElementById("postForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        // Simulate a successful submission
-        document.getElementById("successMessage").classList.remove("hidden");
-
-        // Clear form fields
-        setTimeout(() => {
-            document.getElementById("successMessage").classList.add("hidden");
-            document.getElementById("postForm").reset();
-        }, 3000);
-    });
-</script>
 {% endblock %}
+
 
 
 

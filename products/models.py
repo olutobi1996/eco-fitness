@@ -32,6 +32,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_featured = models.BooleanField(default=False)  
 
     def __str__(self):
         return self.name
@@ -46,3 +47,14 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.user.username} for {self.product.name}"
+        
+
+class Bundle(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to="bundles/")
+    original_price = models.DecimalField(max_digits=6, decimal_places=2)
+    discounted_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.name
