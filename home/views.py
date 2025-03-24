@@ -12,6 +12,7 @@ def plans(request):
 def shop(request):
     return render(request, 'shop.html')
 
+
 def community(request):
     return render(request, 'community/community.html')
 

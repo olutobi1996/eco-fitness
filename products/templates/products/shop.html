@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-success text-center">Eco-Friendly Fitness Shop</h2>
+    <hr>
+
+    <!-- Featured/Bestselling Products Carousel -->
+    <h3 class="text-center text-primary">Best Sellers & Featured Products</h3>
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for product in featured_products %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ product.image.url }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+                <div class="carousel-caption bg-dark bg-opacity-50 rounded">
+                    <h5>{{ product.name }}</h5>
+                    <p>${{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-light">View Product</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <hr>
+
+    <!-- Product Categories -->
+    <h3 class="text-center text-primary">Shop by Category</h3>
+    <div class="row text-center">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'products:all_products' %}?category={{ c.name }}" class="text-decoration-none">
+                <div class="card shadow">
+                    <img src="{{ category.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">{{ category.name }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <!-- Special Bundles & Discounts -->
+    <h3 class="text-center text-primary">Exclusive Bundles & Discounts</h3>
+    <div class="row">
+        {% for bundle in bundles %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <img src="{{ bundle.image.url }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ bundle.name }}</h5>
+                    <p class="text-muted"><del>${{ bundle.original_price }}</del> <strong>${{ bundle.discounted_price }}</strong></p>
+                    <a href="{% url 'bundle_detail' bundle.id %}" class="btn btn-outline-success">View Bundle</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+
