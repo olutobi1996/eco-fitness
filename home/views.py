@@ -8,15 +8,6 @@ def index(request):
 def plans(request):
     return render(request, 'plans.html')
 
-
-def shop(request):
-    return render(request, 'shop.html')
-
-
-def community(request):
-    return render(request, 'community/community.html')
-
-
 def contact(request):
     return render(request, 'contact.html')
 

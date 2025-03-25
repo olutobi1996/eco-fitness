@@ -4,7 +4,8 @@ from .forms import BlogPostForm
 from django.contrib.auth.decorators import login_required
 
 def community_home(request):
-    posts = BlogPost.objects.all().order_by('-created_at')  # Ensure posts are retrieved
+    posts = BlogPost.objects.all().order_by('-created_at')
+    print("Posts retrieved: ", posts)
     return render(request, 'community/community.html', {'posts': posts})
 
 
