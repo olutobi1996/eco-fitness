@@ -10,7 +10,6 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from .models import Order, OrderLineItem
 from products.models import Product
-from profiles.models import UserProfile
 
 
 
@@ -72,8 +71,8 @@ class StripeWH_Handler:
         profile = None
         username = intent.metadata.get('username', 'AnonymousUser')
         if username != 'AnonymousUser':
-            profile = UserProfile.objects.get(user__username=username)
-            if save_info:
+          ## profile = UserProfile.objects.get(user__username=username)
+            if save_info and profile:
                 profile.default_phone_number = shipping_details.phone
                 profile.default_country = shipping_details.address.country
                 profile.default_postcode = shipping_details.address.postal_code

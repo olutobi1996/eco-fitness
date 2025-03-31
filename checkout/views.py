@@ -7,6 +7,7 @@ from .forms import OrderForm
 from products.models import Product
 from bag.contexts import bag_contents
 import stripe
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 import json
 
@@ -37,7 +38,7 @@ def checkout(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     if request.user.is_authenticated:
         try:
-            profile = UserProfile.objects.get(user=request.user)
+            profile = User.objects.get(user=request.user)
             order_form = OrderForm(initial={
             'full_name': profile.user.get_full_name(),
             'email': profile.user.email,
@@ -49,7 +50,7 @@ def checkout(request):
             'street_address2': profile.default_street_address2,
             'county': profile.default_county,
         })
-        except UserProfile.DoesNotExist:
+        except User.DoesNotExist:
                         order_form = OrderForm()
         else:
              order_form = OrderForm()
@@ -124,7 +125,7 @@ def checkout(request):
 
 def checkout_success(request, order_number):
  if request.user.is_authenticated:
-    profile = UserProfile.objects.get(user=request.user)
+    profile = User.objects.get(user=request.user)
     order.user_profile = profile
     order.save()
 
@@ -138,9 +139,9 @@ def checkout_success(request, order_number):
             'default_street_address2': order.street_address2,
             'default_county': order.county,
         }
-        user_profile_form = UserProfileForm(profile_data, instance=profile)
-        if user_profile_form.is_valid():
-            user_profile_form.save()
+        ## user_profile_form = UserProfileForm(profile_data, instance=profile)
+        ## if user_profile_form.is_valid():
+           ## user_profile_form.save()
 
     template = 'checkout/checkout_success.html'
     context = {'order': order}

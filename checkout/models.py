@@ -4,15 +4,14 @@ from django.db.models import Sum
 from django.conf import settings
 from products.models import Product
 from django_countries.fields import CountryField
-
+from django.contrib.auth.models import User
 from products.models import Product
-from profiles.models import UserProfile
 
 
 class Order(models.Model):
     """ Model to store customer orders """
     order_number = models.CharField(max_length=32, unique=True, editable=False)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+    user = models.ForeignKey(User, on_delete=models.SET_NULL,
      null=True, blank=True, related_name='orders')
     full_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)

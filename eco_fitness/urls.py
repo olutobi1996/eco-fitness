@@ -13,7 +13,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin Panel
     path('accounts/', include('allauth.urls')),  # User Authentication
-    path('profile/', include('profiles.urls')),  # User Profiles
     path('', include('home.urls')),  # Home App
     path('bag/', include('bag.urls')),  # Shopping Bag
     path('products/', include('products.urls', namespace="products")),  # Products (with namespace)
