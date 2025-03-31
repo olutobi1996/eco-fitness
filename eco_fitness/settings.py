@@ -14,7 +14,7 @@ import dj_database_url
 from pathlib import Path
 
 # Load environment variables if env.py exists
-if os.path.isfile('env.py'):
+if os.path.exists(os.path.join(os.path.dirname(__file__), "../env.py")):
     import env
 
 # Paths
@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')  # Use env variable in production
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = os.getenv('DEVELOPMENT', 'False').lower() == 'true'  # Ensure it's a boolean
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
+    "http://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io/",
     "https://*.gitpod.io",
 ]
 
@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'bag',
     'checkout',
     'community',
-    'profiles',
     'bag.templatetags.custom_filters',
 ]
 
@@ -106,7 +105,6 @@ TEMPLATES = [
     },
 ]
 
-
 # Authentication
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -116,12 +114,12 @@ SITE_ID = 1
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-
-
 # Database
-if 'DATABASE_URL' in os.environ:
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        'default': dj_database_url.parse(DATABASE_URL)
     }
 else:
     DATABASES = {
@@ -146,29 +144,21 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Custom User Model
-AUTH_USER_MODEL = 'profiles.UserProfile'
-
-
 # Default Primary Key
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static & Media Files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# Set STATIC_ROOT to an absolute path
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Ensure this is set
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Use AWS for Static & Media Files
-USE_AWS = os.getenv('USE_AWS', False)  # Ensure we explicitly check for AWS usage
+USE_AWS = os.getenv('USE_AWS', 'False').lower() == 'true'  # Convert to boolean
 
 if USE_AWS:
-    # AWS Settings
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', 'eco-fitness1')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -189,13 +179,10 @@ if USE_AWS:
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-    # Static & Media URLs
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 else:
-    # Use WhiteNoise for static file serving in production if AWS is not enabled
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # Stripe
 FREE_DELIVERY_THRESHOLD = 50
@@ -204,27 +191,22 @@ STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+
+# Email Settings
 DEFAULT_FROM_EMAIL = 'helloecobubba@gmail.com'
 
-if 'DEVELOPMENT' in os.environ:
+if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = 'helloecobubba@gmail.com'
-
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = True
     EMAIL_PORT = 587
     EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
+# Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
