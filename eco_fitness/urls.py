@@ -18,7 +18,7 @@ urlpatterns = [
     path('products/', include('products.urls', namespace="products")),  # Products (with namespace)
     path('checkout/', include('checkout.urls')), # Checkout App
     path("community/", include("community.urls")),  # Community Page
-    
+    path('subscriptions/', include('subscriptions.urls')),
 ]
 
 # Serve media files in development

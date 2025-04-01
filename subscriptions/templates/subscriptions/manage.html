@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-success text-center">Manage Your Subscription</h2>
+    <hr>
+    <p><strong>Status:</strong> {{ subscription.status }}</p>
+
+    {% if subscription.status == "active" %}
+        <a href="{% url 'cancel_subscription' %}" class="btn btn-danger">Cancel Subscription</a>
+    {% else %}
+        <p>Your subscription is not active.</p>
+    {% endif %}
+</div>
+{% endblock %}
