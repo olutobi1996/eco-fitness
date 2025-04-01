@@ -16,7 +16,7 @@
                         <li>🥗 Nutrition Tips</li>
                         <li>📄 Weekly Health Guides</li>
                     </ul>
-                    <a href="{% url 'create_checkout_session' 'price_id_for_basic_plan' %}" class="btn btn-outline-success">Choose Basic Plan</a>
+                    <a href="{% url 'checkout' 'basic' %}" class="btn btn-outline-success">Choose Basic Plan</a>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <li>📊 Progress Tracking</li>
                         <li>💬 Access to Fitness Coaches</li>
                     </ul>
-                    <a href="{% url 'create_checkout_session' 'price_id_for_pro_plan' %}" class="btn btn-success">Choose Pro Plan</a>
+                    <a href="{% url 'checkout' 'pro' %}" class="btn btn-success">Choose Pro Plan</a>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                         <li>🎁 Monthly Eco-Friendly Gifts</li>
                         <li>📞 24/7 Priority Support</li>
                     </ul>
-                    <a href="{% url 'create_checkout_session' 'price_id_for_premium_plan' %}" class="btn btn-dark">Choose Premium Plan</a>
+                    <a href="{% url 'checkout' 'premium' %}" class="btn btn-dark text-white">Choose Premium Plan</a>
                 </div>
             </div>
         </div>
