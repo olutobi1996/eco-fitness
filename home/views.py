@@ -7,9 +7,9 @@ def index(request):
         return render(request, 'home/index.html', {'error': 'No products available'})
     return render(request, 'home/index.html', {'products': products})
 
-
 def plans(request):
-    return render(request, 'plans.html')
+    return render(request, 'home/plans.html') 
+
 
 def contact(request):
     return render(request, 'contact.html')

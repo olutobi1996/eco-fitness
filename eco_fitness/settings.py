@@ -60,7 +60,9 @@ INSTALLED_APPS = [
     'bag',
     'checkout',
     'community',
+    'subscriptions',
     'bag.templatetags.custom_filters',
+    'djstripe',
 ]
 
 # Middleware
@@ -191,6 +193,14 @@ STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"  
+
+STRIPE_PRICE_IDS = {
+    "basic": "prod_S3GfRzaYjjpnOk",
+    "pro": "prod_S3GjCjvGJuWc15",
+    "premium": "prod_S3GloCQcQMYQvo",
+}
+
 
 # Email Settings
 DEFAULT_FROM_EMAIL = 'helloecobubba@gmail.com'
