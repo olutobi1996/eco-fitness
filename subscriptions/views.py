@@ -5,51 +5,49 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt 
+import os
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
-@login_required
-def create_checkout_session(request, price_id):
-    """Creates a Stripe checkout session for subscription"""
-    checkout_session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        mode='subscription',  # This enables subscription mode
-        customer_email=request.user.email,  
-        line_items=[{
-            'price': price_id,  # Stripe price ID from your Stripe product
-            'quantity': 1,
-        }],
-        success_url=request.build_absolute_uri(reverse('subscription_success')),
-        cancel_url=request.build_absolute_uri(reverse('subscription_cancel')),
-    )
-    return redirect(checkout_session.url)
-
-def plans_view(request):
-    return render(request, 'subscriptions/plans.html')  
-
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import stripe
+# Load Stripe API key
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @csrf_exempt
-def stripe_webhook(request):
-    payload = request.body
-    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
-    event = None
-
+def create_checkout_session(request, price_id):
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, settings.DJSTRIPE_WEBHOOK_SECRET
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price': price_id,
+                'quantity': 1,
+            }],
+            mode='subscription',
+            success_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/success/",  # ✅ Change this
+            cancel_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/cancel/",   # ✅ Change this
         )
-    except ValueError:
-        return JsonResponse({"error": "Invalid payload"}, status=400)
-    except stripe.error.SignatureVerificationError:
-        return JsonResponse({"error": "Invalid signature"}, status=400)
+        
+        return redirect(checkout_session.url)  # ✅ Redirect to Stripe Checkout page
 
-    # Handle subscription events
-    if event["type"] == "invoice.payment_succeeded":
-        print("Subscription payment received!")
-    elif event["type"] == "customer.subscription.deleted":
-        print("Subscription canceled!")
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
-    return JsonResponse({"status": "success"})
+
+
+def plans_view(request):
+    try:
+        # Fetch all prices from Stripe
+        stripe_prices = stripe.Price.list()
+
+        # Create a mapping of product IDs to prices
+        price_map = {price.product: price.id for price in stripe_prices.data}
+
+        # Define plans using settings
+        plans = [
+            {"name": "Basic Plan", "price_id": price_map.get(settings.STRIPE_PRICE_IDS["basic"]), "amount": 9.99},
+            {"name": "Pro Plan", "price_id": price_map.get(settings.STRIPE_PRICE_IDS["pro"]), "amount": 19.99},
+            {"name": "Premium Plan", "price_id": price_map.get(settings.STRIPE_PRICE_IDS["premium"]), "amount": 29.99},
+        ]
+
+        return render(request, "subscriptions/plans.html", {"plans": plans})
+
+    except stripe.error.StripeError as e:
+        return JsonResponse({"error": str(e)}, status=500)
