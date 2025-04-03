@@ -10,24 +10,16 @@ def contact_view(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Save the message in the database
-            contact_message = ContactMessage.objects.create(
-                name=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
-                message=form.cleaned_data['message']
-            )
-
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
 
             try:
-                # Send the email
                 send_mail(
                     f"Message from {name}",
                     message,
-                    email,  # Sender's email
-                    [settings.CONTACT_EMAIL],  # Where the email should be sent
+                    email,
+                    ['your-business-email@example.com'],  # Replace with your business email
                     fail_silently=False,
                 )
                 messages.success(request, 'Your message has been sent successfully!')
@@ -35,9 +27,12 @@ def contact_view(request):
             except Exception as e:
                 messages.error(request, f"Error: {str(e)}")
                 return redirect('contact')
+        else:
+            messages.error(request, 'Please correct the errors in the form.')
+            return render(request, 'contact/contact.html', {'form': form})
     else:
         form = ContactForm()
-
     return render(request, 'contact/contact.html', {'form': form})
+
 
 
