@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     "crispy_bootstrap5",
-    'storages',
+    'storages',  # for handling static files with AWS
 
     # Custom apps
     'home',
@@ -60,9 +60,10 @@ INSTALLED_APPS = [
     'bag',
     'checkout',
     'community',
+    'contact',
     'subscriptions',
     'bag.templatetags.custom_filters',
-    'djstripe',
+    'djstripe',  # Make sure djstripe is installed
 ]
 
 # Middleware
@@ -183,24 +184,34 @@ if USE_AWS:
 
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Stripe
-FREE_DELIVERY_THRESHOLD = 50
-STANDARD_DELIVERY_PERCENTAGE = 10
-STRIPE_CURRENCY = 'usd'
-STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
-STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
-DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"  
 
+# Stripe API Keys
+STRIPE_CURRENCY = 'usd'
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')  # For frontend only
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')  # For API calls
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')  # Webhook Secret
+
+# dj-stripe settings (Ensure only secret key is used)
+DJSTRIPE_FOREIGN_KEY_TO_FIELD = "id"
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
+DJSTRIPE_TEST_API_KEY = STRIPE_SECRET_KEY  # Use secret key for test mode
+DJSTRIPE_LIVE_API_KEY = STRIPE_SECRET_KEY   # Use secret key for live mode
+DJSTRIPE_WEBHOOK_SECRET = STRIPE_WH_SECRET  # Webhook secret
+
+# Your Stripe Price IDs
 STRIPE_PRICE_IDS = {
-    "basic": "prod_S3GfRzaYjjpnOk",
-    "pro": "prod_S3GjCjvGJuWc15",
-    "premium": "prod_S3GloCQcQMYQvo",
+    "basic": "price_1R9A7oF3sMCxmWUJw7Mbtfe5",  
+    "pro": "price_1R9ACPF3sMCxmWUJCc6dhGlX",
+    "premium": "price_1R9AEAF3sMCxmWUJTxYICiMB",
 }
 
+# Default values (Modify as needed)
+FREE_DELIVERY_THRESHOLD = 50  
+STANDARD_DELIVERY_PERCENTAGE = 10 
 
 # Email Settings
 DEFAULT_FROM_EMAIL = 'helloecobubba@gmail.com'
@@ -216,9 +227,12 @@ else:
     EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
     DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
+CONTACT_EMAIL = 'helloecobubba@gmail.com'
+
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 
 
 
