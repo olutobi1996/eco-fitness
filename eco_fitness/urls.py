@@ -19,6 +19,7 @@ urlpatterns = [
     path('checkout/', include('checkout.urls')), # Checkout App
     path("community/", include("community.urls")),  # Community Page
     path('subscriptions/', include('subscriptions.urls')),
+    path('contact/', include('contact.urls')), 
 ]
 
 # Serve media files in development

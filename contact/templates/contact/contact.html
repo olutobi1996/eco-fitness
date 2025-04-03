@@ -1,22 +1,23 @@
 {% extends "base.html" %}
+
 {% block content %}
 <div class="container py-5">
     <h2 class="text-success text-center">Contact Us</h2>
     <hr>
 
-    <form method="POST">
+    <form method="POST" action="{% url 'contact' %}">
         {% csrf_token %}
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" required>
+            <input type="text" class="form-control" required name="name">
         </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control" required>
+            <input type="email" class="form-control" required name="email">
         </div>
         <div class="mb-3">
             <label class="form-label">Message</label>
-            <textarea class="form-control" rows="4" required></textarea>
+            <textarea class="form-control" rows="4" required name="message"></textarea>
         </div>
         <button type="submit" class="btn btn-success">Send Message</button>
     </form>

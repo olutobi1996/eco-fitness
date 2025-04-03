@@ -12,7 +12,8 @@ def plans(request):
 
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'contact/contact.html')  
+
 
 def profile(request):
     return render(request, 'profile.html')
