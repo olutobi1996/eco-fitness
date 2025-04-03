@@ -5,21 +5,30 @@
     <h2 class="text-success text-center">Contact Us</h2>
     <hr>
 
+    {% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <form method="POST" action="{% url 'contact' %}">
         {% csrf_token %}
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" required name="name">
+            <input type="text" class="form-control" required name="name" value="{{ request.POST.name }}">
         </div>
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control" required name="email">
+            <input type="email" class="form-control" required name="email" value="{{ request.POST.email }}">
         </div>
         <div class="mb-3">
             <label class="form-label">Message</label>
-            <textarea class="form-control" rows="4" required name="message"></textarea>
+            <textarea class="form-control" rows="4" required name="message">{{ request.POST.message }}</textarea>
         </div>
         <button type="submit" class="btn btn-success">Send Message</button>
     </form>
 </div>
 {% endblock %}
+
