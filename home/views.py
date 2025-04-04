@@ -11,10 +11,6 @@ def plans(request):
     return render(request, 'home/plans.html') 
 
 
-def contact(request):
-    return render(request, 'contact/contact.html')  
-
-
 def profile(request):
     return render(request, 'profile.html')
 

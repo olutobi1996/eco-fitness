@@ -14,27 +14,35 @@ def contact_view(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
+            
+            # ✅ Ensure you use a verified sender email
+            sender_email = settings.DEFAULT_FROM_EMAIL  
 
             try:
                 send_mail(
                     subject=f"New Contact Form Submission from {name}",
-                    message=message,
-                    from_email=settings.EMAIL_HOST_USER,  # ✅ Fixed sender email
-                    recipient_list=[settings.CONTACT_EMAIL],  # ✅ Uses contact email from settings
-                    fail_silently=False,
+                    message=f"From: {email}\n\n{message}",  # ✅ Include sender's email
+                    from_email=sender_email,  # ✅ Use verified email
+                    recipient_list=[settings.CONTACT_EMAIL],  # ✅ Ensure this is correct
+                    fail_silently=False,  # Will raise errors in logs
                 )
+
                 messages.success(request, 'Your message has been sent successfully!')
                 return redirect('contact')
+
             except Exception as e:
-                messages.error(request, f"Error sending email: {str(e)}")
+                print(f"❌ Email Error: {e}")  # ✅ Logs errors to console
+                messages.error(request, "There was an error sending your message.")
                 return redirect('contact')
+
         else:
             messages.error(request, 'Please correct the errors in the form.')
-    
+
     else:
         form = ContactForm()
 
     return render(request, 'contact/contact.html', {'form': form})
+
 
 
 
