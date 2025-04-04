@@ -219,13 +219,13 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "apikey"  # Always use "apikey" as the username for SendGrid
-EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Fetch API key from env
-DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")  # Must be a verified sender
+EMAIL_HOST_USER = "apikey"  # Always use "apikey" as the username
+EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Use environment variable
+DEFAULT_FROM_EMAIL = "helloecobubba@gmail.com"
+
 
 # Contact Email (for app notifications)
 CONTACT_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")
-
 
 
 # Crispy Forms
