@@ -214,20 +214,17 @@ FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10 
 
 # Email Settings
-DEFAULT_FROM_EMAIL = 'helloecobubba@gmail.com'
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS')
-    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'helloecobubba@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASS', 'hiyh onrm rbem rxzr')  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  
 
-CONTACT_EMAIL = 'helloecobubba@gmail.com'
+CONTACT_EMAIL = 'helloecobubba@gmail.com'  
+
 
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
