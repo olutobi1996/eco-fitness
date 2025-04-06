@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Profile Section -->
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>Welcome, {{ user.first_name }}!</h1>
+    <p>Your Eco-Friendly Fitness Journey Starts Here!</p>
+  </div>
+
+  <div class="profile-content">
+    <!-- Profile Details Section -->
+    <div class="profile-details">
+      <h2>Your Profile</h2>
+      <div class="profile-item">
+        <strong>Email:</strong> {{ user.email }}
+      </div>
+      <div class="profile-item">
+        <strong>Member Since:</strong> {{ user.date_joined|date:"F d, Y" }}
+      </div>
+      <div class="profile-item">
+        <strong>Shipping Address:</strong>
+        {% if user.profile.shipping_address %}
+          <p>{{ user.profile.shipping_address }}</p>
+        {% else %}
+          <p>No shipping address added yet.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Order History Section -->
+    <div class="order-history">
+      <h2>Your Order History</h2>
+      {% if orders %}
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Order Number</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date_ordered|date:"F d, Y" }}</td>
+                <td>${{ order.total }}</td>
+                <td>{{ order.status }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>You haven't made any orders yet. Start shopping!</p>
+      {% endif %}
+    </div>
+
+    <!-- Eco-Friendly Tips Section -->
+    <div class="eco-tips">
+      <h2>Eco-Friendly Fitness Tips</h2>
+      <ul>
+        <li>Choose sustainable, eco-friendly products for your fitness routine.</li>
+        <li>Switch to reusable water bottles and gym gear made from natural materials.</li>
+        <li>Consider digital fitness classes to reduce your carbon footprint.</li>
+        <li>Recycle your old workout gear and help reduce waste.</li>
+        <li>Support eco-conscious brands in the fitness industry.</li>
+      </ul>
+    </div>
+
+    <!-- Profile Edit Section -->
+    <div class="profile-edit">
+      <h2>Edit Your Profile</h2>
+      <form method="POST" action="{% url 'profile_edit' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="first_name">First Name:</label>
+          <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="last_name">Last Name:</label>
+          <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label for="shipping_address">Shipping Address:</label>
+          <textarea name="shipping_address" id="shipping_address" class="form-control">{{ user.profile.shipping_address }}</textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+  .profile-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #f0f8f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #4CAF50;
+  }
+
+  .profile-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .profile-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .profile-details, .order-history, .eco-tips, .profile-edit {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    color: #4CAF50;
+  }
+
+  .profile-item {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .order-table th, .order-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .order-table th {
+    background-color: #f2f2f2;
+  }
+
+  .eco-tips ul {
+    list-style-type: square;
+    padding-left: 20px;
+  }
+
+  .eco-tips li {
+    margin: 10px 0;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  .btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}

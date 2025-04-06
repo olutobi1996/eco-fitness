@@ -21,8 +21,8 @@ def create_checkout_session(request, price_id):
                 'quantity': 1,
             }],
             mode='subscription',
-            success_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/success/",  # ✅ Change this
-            cancel_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/cancel/",   # ✅ Change this
+            success_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/success/", 
+            cancel_url="https://eco-fitness-2b6c5d715c47.herokuapp.com/cancel/",   
         )
         
         return redirect(checkout_session.url)  # ✅ Redirect to Stripe Checkout page
@@ -39,7 +39,7 @@ def plans_view(request):
 
         # Create a mapping of product IDs to prices
         price_map = {price.product: price.id for price in stripe_prices.data}
-
+        print(price_map)
         # Define plans using settings
         plans = [
             {"name": "Basic Plan", "price_id": price_map.get(settings.STRIPE_PRICE_IDS["basic"]), "amount": 9.99},

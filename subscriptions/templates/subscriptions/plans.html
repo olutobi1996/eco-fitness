@@ -29,13 +29,13 @@
                         <li>📞 24/7 Priority Support</li>
                         {% endif %}
                     </ul>
-                    <button class="btn btn-success" onclick="redirectToCheckout('{{ plan.price_id }}')">
+                    <a class="btn btn-success" href="{% url 'subscriptions-checkout' price_id=plan.price_id %}">
                         Choose {{ plan.name }}
-                    </button>
+                    </a>
                     
                     <script>
                         function redirectToCheckout(priceId) {
-                            fetch(`/checkout/${priceId}/`, { method: "POST" })
+                            fetch(`../checkout/${priceId}/`, { method: "POST" })
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.sessionId) {

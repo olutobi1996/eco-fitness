@@ -204,9 +204,9 @@ DJSTRIPE_WEBHOOK_SECRET = STRIPE_WH_SECRET  # Webhook secret
 
 # Your Stripe Price IDs
 STRIPE_PRICE_IDS = {
-    "basic": "price_1R9A7oF3sMCxmWUJw7Mbtfe5",  
-    "pro": "price_1R9ACPF3sMCxmWUJCc6dhGlX",
-    "premium": "price_1R9AEAF3sMCxmWUJTxYICiMB",
+    "basic": "prod_S3GfRzaYjjpnOk",  
+    "pro": "prod_S3GjCjvGJuWc15",
+    "premium": "prod_S3GloCQcQMYQvo",
 }
 
 # Default values (Modify as needed)
