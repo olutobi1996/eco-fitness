@@ -13,14 +13,15 @@ from contact.views import contact_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin Panel
-    path('accounts/', include('allauth.urls')),  # User Authentication
     path('', include('home.urls')),  # Home App
     path('bag/', include('bag.urls')),  # Shopping Bag
     path('products/', include('products.urls', namespace="products")),  # Products (with namespace)
     path('checkout/', include('checkout.urls')), # Checkout App
     path("community/", include("community.urls")),  # Community Page
     path('subscriptions/', include('subscriptions.urls')),
+    path('profile/', include('accounts.urls')),
     path('contact/', include('contact.urls')), 
+     path('accounts/', include('allauth.urls')),
 ]
 
 # Serve media files in development

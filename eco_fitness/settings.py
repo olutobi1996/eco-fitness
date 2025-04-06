@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'storages',  # for handling static files with AWS
 
     # Custom apps
+    'accounts',
     'home',
     'products',
     'bag',

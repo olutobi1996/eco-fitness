@@ -72,7 +72,7 @@
     <!-- Profile Edit Section -->
     <div class="profile-edit">
       <h2>Edit Your Profile</h2>
-      <form method="POST" action="{% url 'profile_edit' %}">
+      <form method="POST" action="{% url 'edit_profile' %}">
         {% csrf_token %}
         <div class="form-group">
           <label for="first_name">First Name:</label>
@@ -197,3 +197,4 @@
   }
 </style>
 {% endblock %}
+

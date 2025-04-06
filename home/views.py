@@ -12,7 +12,7 @@ def plans(request):
 
 
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'accounts/profile.html')
 
 def cart(request):
     return render(request, 'cart.html')
