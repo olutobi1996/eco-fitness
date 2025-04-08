@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'accounts',
+    'about_us',
     'home',
     'products',
     'bag',

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">About Us</h1>
+
+    {% if about_us %}
+        <div class="row">
+            <div class="col-md-6">
+                {% if about_us.image %}
+                    <img class="img-fluid" src="{{ about_us.image.url }}" alt="About Us Image">
+                {% else %}
+                    <img class="img-fluid" src="{% static 'images/default_about_us.jpg' %}" alt="About Us Image">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p>Welcome to [Your Store Name], an eco-conscious fitness brand dedicated to helping you improve both your health and the planet. Our mission is simple: to provide high-quality, sustainable fitness products that promote physical well-being while reducing environmental impact. We believe that fitness is not just about the body but also about the world around us.</p>
+
+                <p>As part of our commitment to sustainability, we carefully choose the materials for our fitness products. Whether it’s eco-friendly yoga mats, biodegradable resistance bands, or sustainable apparel, we ensure that every product we offer is made with the planet in mind. We strive to minimize waste, use recyclable packaging, and support ethical production practices that benefit not only the environment but also the people involved in the creation of our products.</p>
+
+                <p>Our goal is to make it easy for fitness enthusiasts to make environmentally friendly choices without compromising on quality. When you shop with us, you're not only investing in products that will enhance your physical health but also contributing to the improvement of the planet. Every step you take towards a healthier you is a step towards a healthier planet.</p>
+
+                <p>We are dedicated to creating a space where fitness meets sustainability. Through our products and community, we aim to inspire people to live a healthier and more eco-conscious lifestyle. Join us in making a difference—because together, we can build a better, greener world, one workout at a time.</p>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center text-muted">Information about us is not available at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

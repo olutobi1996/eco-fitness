@@ -21,7 +21,8 @@ urlpatterns = [
     path('subscriptions/', include('subscriptions.urls')),
     path('profile/', include('accounts.urls')),
     path('contact/', include('contact.urls')), 
-     path('accounts/', include('allauth.urls')),
+    path('about-us/', include('about_us.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 # Serve media files in development

@@ -16,10 +16,19 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     prepopulated_fields = {'sku': ('name',)}
 
+from .models import Review
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user', 'rating', 'created_at')
+    search_fields = ('product__name', 'user__username', 'comment')
+    list_filter = ('rating', 'created_at')
+
+
+
 # Register models
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-
+admin.site.register(Review, ReviewAdmin)
 
 
 

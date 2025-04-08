@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <h2 class="text-center">Customer Reviews</h2>
-        
+
         {% for review in reviews %}
             <div class="border p-3 my-3 rounded shadow-sm">
                 <strong class="text-primary">{{ review.user.username }}</strong> 
@@ -19,21 +20,13 @@
 
         {% if user.is_authenticated %}
             <h3 class="text-center">Leave a Review</h3>
+
             <form method="POST" class="border p-4 rounded shadow-sm">
                 {% csrf_token %}
-
-                <div class="mb-3">
-                    <label class="form-label">Rating (1-5):</label>
-                    {{ form.rating }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Your Review:</label>
-                    {{ form.comment }}
-                </div>
-
+                {{ form|crispy }}
                 <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-3">Submit Review</button>
             </form>
+            
         {% else %}
             <p class="text-center mt-3">
                 <a href="{% url 'account_login' %}" class="btn btn-outline-primary">Log in</a> to leave a review.
@@ -42,3 +35,4 @@
     </div>
 </div>
 {% endblock %}
+
