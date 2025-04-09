@@ -52,8 +52,11 @@
             <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'community' %}" id="community-link">
                 Community
             </a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'products:product_reviews' 1 %}">Reviews</a></li>
+            <li class="nav-item">
+                {% if product and product.id %}
+                    <a class="nav-link" href="{% url 'products:product_reviews_by_id' product.id %}">Reviews</a>
+                {% endif %}
+            </li>            
     </ul>
 </div>
 

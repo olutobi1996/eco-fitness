@@ -34,68 +34,72 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
-                Eco-Fitness
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}">Pricing Plans</a></li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:product_reviews' 1 %}">Reviews</a>
-                    </li>                    
-                    <li class="nav-item"><a class="nav-link" href="{% url 'products:shop' %}">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'community' %}">Community</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'products:all_products' %}">Products</a></li>
-                </ul>
-                <!-- User & Cart -->
-                <ul class="navbar-nav ms-3">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> Account
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {% if request.user.is_authenticated %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
+            Eco-Fitness
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}">Pricing Plans</a></li>
+                
+                <!-- Always Show the "Reviews" Link -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'products:product_reviews' %}">Reviews</a>
+                </li>
+
+                <li class="nav-item"><a class="nav-link" href="{% url 'products:shop' %}">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'community' %}">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'products:all_products' %}">Products</a></li>
+            </ul>
+            <!-- User & Cart -->
+            <ul class="navbar-nav ms-3">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                            <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
+                                <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
                             {% endif %}
                             <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
                             <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-                            {% else %}
-                                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
-                                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
-                            {% endif %}
-                        </ul>                        
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_bag' %}">
-                            <div class="text-center">
-                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                                <p class="my-0">
-                                    {% if grand_total %}
-                                        ${{ grand_total|floatformat:2 }}
-                                    {% else %}
-                                        $0.00
-                                    {% endif %}
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cart' %}">
-                            <i class="fas fa-shopping-cart"></i> Cart
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>                        
+                </li>
+                <li class="list-inline-item">
+                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_bag' %}">
+                        <div class="text-center">
+                            <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                            <p class="my-0">
+                                {% if grand_total %}
+                                    ${{ grand_total|floatformat:2 }}
+                                {% else %}
+                                    $0.00
+                                {% endif %}
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-cart"></i> Cart
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     {% include 'includes/mobile-top-header.html' %}
     {% include 'includes/main-nav.html' %}

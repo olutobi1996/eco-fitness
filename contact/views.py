@@ -1,11 +1,9 @@
-# views.py
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from .forms import ContactForm
 from .models import ContactMessage
-
 
 def contact_view(request):
     if request.method == 'POST':
@@ -14,11 +12,9 @@ def contact_view(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            
-           
+
             ContactMessage.objects.create(name=name, email=email, message=message)
 
-           
             sender_email = settings.DEFAULT_FROM_EMAIL  
 
             try:
@@ -45,6 +41,8 @@ def contact_view(request):
         form = ContactForm()
 
     return render(request, 'contact/contact.html', {'form': form})
+
+
 
 
 

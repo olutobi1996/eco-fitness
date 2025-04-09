@@ -48,15 +48,39 @@ def all_products(request):
 
     return render(request, 'products/products.html', context)
 
-def product_reviews(request, product_id):
-    """ Render reviews and allow users to submit a review """
-    product = get_object_or_404(Product, pk=product_id)
-    reviews = Review.objects.filter(product=product).order_by('-created_at')
 
+def product_reviews(request, product_id=None):
+    """ Render reviews and allow users to submit a review, including a product search """
+
+    if product_id:
+        product = get_object_or_404(Product, pk=product_id)
+        reviews = Review.objects.filter(product=product).order_by('-created_at')
+    else:
+        product = None
+        reviews = []
+
+    # Handle the search query
+    query = request.GET.get('search', '').strip()  # Get the search query from the URL
+    if query:
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+    else:
+        products = Product.objects.all()  # Show all products if no search term is provided
+    
     if request.method == "POST":
         if not request.user.is_authenticated:
             messages.error(request, "You must be logged in to leave a review.")
             return redirect('account_login')
+
+        if not product:
+            messages.error(request, "Please select a product to review.")
+            return redirect(reverse('products:product_reviews'))  
+
+        existing_review = Review.objects.filter(product=product, user=request.user).first()
+        if existing_review:
+            messages.error(request, "You've already left a review for this product.")
+            return redirect(reverse('products:product_reviews_by_id', args=[product.id]))  
 
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -65,20 +89,21 @@ def product_reviews(request, product_id):
             review.user = request.user
             review.save()
             messages.success(request, "Your review has been submitted!")
-            return redirect(reverse('products:product_detail', args=[product.id]))
+            return redirect(reverse('products:product_reviews_by_id', args=[product.id]))  
         else:
             messages.error(request, "There was an error with your review. Please check your input.")
-
     else:
         form = ReviewForm()
 
     context = {
         'product': product,
         'reviews': reviews,
-        'form': form,  
+        'form': form,
+        'products': products,  
     }
 
     return render(request, "products/reviews.html", context)
+
 
 @login_required
 def add_product(request):
@@ -135,9 +160,35 @@ def delete_product(request, product_id):
     return redirect(reverse('products:all_products'))
 
 def product_detail(request, product_id):
-    """ View details of a specific product """
-    product = get_object_or_404(Product, id=product_id)
-    return render(request, 'products/product_detail.html', {'product': product})
+    product = get_object_or_404(Product, pk=product_id)
+    reviews = Review.objects.filter(product=product).order_by('-created_at')
+
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            messages.error(request, "You must be logged in to leave a review.")
+            return redirect('account_login')
+
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            messages.success(request, "Your review has been submitted!")
+            return redirect(reverse('products:product_detail', args=[product.id]))
+        else:
+            messages.error(request, "There was an error with your review. Please check your input.")
+    else:
+        form = ReviewForm()
+
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'form': form,
+    }
+
+    return render(request, 'products/product_detail.html', context)
+
 
 def shop_view(request):
     """ A view to display the shop homepage with featured products, categories, and bundles. """

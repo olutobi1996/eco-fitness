@@ -29,7 +29,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Workout Reviews</h5>
                     <p class="card-text">See how others are progressing and share your journey.</p>
-                    <a href="{% url 'products:product_reviews' 1%}" class="btn btn-success">View Reviews</a>
+                    {% if product and product.id %}
+                        <a class="btn btn-success" href="{% url 'products:product_reviews_by_id' product.id %}">View Reviews</a>
+                    {% else %}
+                        <p>No product available to view reviews.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -53,6 +57,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Featured Products -->
 <section class="container my-5">

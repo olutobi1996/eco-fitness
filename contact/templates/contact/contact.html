@@ -29,9 +29,25 @@
             <label class="form-label">Message</label>
             <textarea class="form-control" rows="4" required name="message">{% if request.POST.message %}{{ request.POST.message }}{% endif %}</textarea>
         </div>
-        <button type="submit" class="btn btn-success">Send Message</button>
+        <button type="submit" class="btn btn-success">
+            Send Message
+        </button>
+        
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const submitButton = form.querySelector('button[type="submit"]');
+        
+        form.addEventListener('submit', function () {
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Sending... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        });
+    });
+    </script>
+    
 {% endblock %}
 
 

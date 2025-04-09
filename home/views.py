@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from products.models import Product  
 
 def index(request):
-    products = Product.objects.all()  # Get all products
-    if not products:
-        return render(request, 'home/index.html', {'error': 'No products available'})
-    return render(request, 'home/index.html', {'products': products})
+    product = Product.objects.first()  
+    context = {
+        'product': product, 
+    }
+    return render(request, 'home/index.html', context)
+
 
 def plans(request):
     return render(request, 'home/plans.html') 
