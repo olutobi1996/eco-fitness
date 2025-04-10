@@ -216,18 +216,36 @@ FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10 
 
 
+import os
+
 # Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "apikey"  # Always use "apikey" as the username
-EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Use environment variable
-DEFAULT_FROM_EMAIL = "helloecobubba@gmail.com"
+if 'DEVELOPMENT' in os.environ:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'boutiqueado@example.com'
+    CONTACT_EMAIL = 'boutiqueado@example.com'
+else:
+    # Choose either Gmail or SendGrid setup:
 
+    # --- Gmail SMTP Settings ---
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_USE_TLS = True
+    # EMAIL_PORT = 587
+    # EMAIL_HOST = 'smtp.gmail.com'
+    # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+    # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+    # CONTACT_EMAIL = EMAIL_HOST_USER
 
-# Contact Email (for app notifications)
-CONTACT_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")
+    # --- SendGrid SMTP Settings ---
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.sendgrid.net"
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = "apikey"  # This is always "apikey" for SendGrid
+    EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")
+    DEFAULT_FROM_EMAIL = "helloecobubba@gmail.com"
+    CONTACT_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")
+
 
 
 # Crispy Forms
