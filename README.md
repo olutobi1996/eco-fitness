@@ -1,0 +1,330 @@
+# Eco-Fitness - E-commerce Website
+
+**Eco-Fitness** is a Django-based e-commerce website designed to offer eco-friendly fitness products while promoting sustainability. It allows users to browse, purchase, and review products, subscribe to eco-conscious pricing plans, and engage in community discussions. This project serves as an example of a full-stack, cloud-hosted, commercial-grade e-commerce application.
+
+The platform integrates secure payment systems, advanced UX design, SEO optimization, role-based authentication, and several marketing features to ensure a seamless and engaging experience for users.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Business Model](#business-model)
+- [Learning Outcomes](#learning-outcomes)
+  - [LO1: Integrating E-commerce Payment System](#lo1-integrating-e-commerce-payment-system)
+  - [LO2: Advanced UX Design](#lo2-advanced-ux-design)
+  - [LO3: Search Engine Optimization (SEO)](#lo3-search-engine-optimization-seo)
+  - [LO4: Authentication and Authorization](#lo4-authentication-and-authorization)
+  - [LO5: Marketing Techniques](#lo5-marketing-techniques)
+  - [LO6: E-commerce Fundamentals](#lo6-e-commerce-fundamentals)
+- [Technologies Used](#technologies-used)
+- [Project Setup](#project-setup)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+  - [Deployment Procedure](#deployment-procedure)
+- [App Breakdown](#app-breakdown)
+  - [About Us](#about-us)
+  - [Pricing Plans](#pricing-plans)
+  - [Reviews](#reviews)
+  - [Shop](#shop)
+  - [Community](#community)
+  - [Contact](#contact)
+  - [Products](#products)
+  - [Account](#account)
+  - [Login](#login)
+  - [Logout](#logout)
+  - [Cart](#cart)
+  - [Bag](#bag)
+- [Testing](#testing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## Project Overview
+
+**Eco-Fitness** is a web-based application built using Django, designed to promote eco-friendly fitness products. It incorporates an interactive frontend with e-commerce capabilities, providing users with a shopping cart, checkout process, product reviews, and account management. The website also enables users to subscribe to different pricing plans based on their needs, engage in community discussions, and access educational content on eco-friendly fitness practices.
+
+---
+
+## Business Model
+
+**Eco-Fitness** follows a direct-to-consumer e-commerce business model, which integrates several key components:
+
+1. **Product Sales**: The core revenue stream comes from selling eco-friendly fitness products, ranging from gym equipment to accessories.
+2. **Subscription Plans**: Users can subscribe to different pricing plans, which offer perks such as discounted products, access to exclusive community content, and free shipping.
+3. **Community Engagement**: By fostering an online community, Eco-Fitness enhances customer loyalty and creates a sense of belonging among users. The platform encourages interaction through fitness challenges, shared goals, and discussions on eco-friendly living.
+4. **Reviews & Recommendations**: Users can leave reviews for products they purchase, which enhances the credibility and trustworthiness of the platform, and encourages more purchases.
+5. **Sustainability Focus**: The business model revolves around sustainability, focusing on products that are eco-friendly, promoting ethical business practices, and educating users on the benefits of fitness products that are kind to the planet.
+
+---
+
+## Learning Outcomes
+
+### LO1: Integrate an E-commerce Payment System
+
+- **1.1** Integrated **Stripe** for payment processing, allowing users to securely purchase products and subscribe to pricing plans.
+- **1.2** Implemented a feedback system to notify users of the status of their purchases, including success and error messages.
+- **1.3** Built a full-stack Django web application with interactive front-end and relational database to store product details, user data, orders, etc.
+- **1.4** Developed forms with validation, allowing users to create and edit data, such as personal details, shipping addresses, and payment information.
+- **1.5** Organized the project structure according to Django conventions to ensure scalability and maintainability.
+- **1.6** Followed best practices for clean code, ensuring readability and maintainability.
+- **1.7** Structured URL patterns consistently across all apps, providing clear paths for navigation.
+- **1.8** Designed a main navigation menu and structured layout for ease of use and accessibility.
+- **1.9** Integrated custom logic in Python for handling product inventory, cart functionality, and checkout processes.
+- **1.10** Used compound statements, loops, and conditional statements to handle product quantity updates and cart management.
+- **1.11** Created a relational database schema with clear relationships between entities such as Users, Products, Orders, and Reviews.
+- **1.12** Developed three custom Django models: Product, Order, and Review.
+- **1.13** Implemented CRUD functionality for all models, allowing the creation, updating, retrieval, and deletion of records.
+- **1.14** Deployed the application to **Heroku**, ensuring the production version matches the development environment.
+- **1.15** Removed any commented-out code and ensured all internal links were functional in the deployed version.
+- **1.16** Secured the deployment environment, ensuring no passwords or secret keys are committed to the git repository, and enabling proper environment variables.
+- **1.17** Utilized Git for version control with detailed commit messages and a consistent workflow. Commits are made regularly to ensure all changes are properly tracked. Each commit includes documentation updates reflecting changes made.
+- **1.18** Structured the project README using consistent markdown formatting, providing clear documentation of the setup, installation, and features.
+- **1.19** Documented the full deployment procedure, including database setup, testing, and application deployment steps.
+
+### LO2: Advanced UX Design
+
+- **2.1** Created a clean and responsive front-end design following UX principles, ensuring accessibility and ease of navigation.
+- **2.2** Mapped user stories to project goals, ensuring the platform meets the needs of fitness enthusiasts and environmentally-conscious consumers.
+- **2.3** Implemented both manual and automated tests to evaluate the functionality and responsiveness of the application across different devices.
+- **2.4** Demonstrated a clear rationale for the development of the project in the README, addressing user needs and explaining the product's value.
+- **2.5** Documented the UX design process, including wireframes and mockups created during the design phase.
+- **2.6** Managed the project’s planning and implementation using **Trello** to track progress and prioritize tasks.
+- **2.7** Documented all user stories and mapped them to the project in **Trello**, ensuring transparent development progress.
+
+### LO3: Search Engine Optimization (SEO)
+
+- **3.1** Ensured that all pages are reachable via internal links to improve crawlability.
+- **3.2** Included meta description tags in the HTML for all pages to provide search engines with context.
+- **3.3** Set a descriptive site title for the application, ensuring it's relevant for search engines.
+- **3.4** Used the `nofollow` attribute for external paid links and `sponsored` for compensated links to avoid link manipulation.
+- **3.5** Added a sitemap.xml file to assist search engine bots in crawling the site.
+- **3.6** Included a robots.txt file to guide search engine bots on what content to crawl and index.
+- **3.7** Designed a custom 404 error page with a friendly redirect for non-existent pages.
+- **3.8** Ensured all content is purposeful, avoiding placeholder text and providing relevant information for SEO optimization.
+
+### LO4: Authentication and Authorization
+
+- **4.1** Implemented a user authentication system, allowing users to register, log in, and manage their accounts securely.
+- **4.2** Restricted login and registration pages to anonymous users only.
+- **4.3** Ensured that non-admin users cannot directly access or manipulate backend data.
+- **4.4** Implemented role-based authentication, allowing different user permissions for regular users, admins, and staff.
+- **4.5** Displayed the current login state in the user interface.
+- **4.6** Prevented non-authenticated users from accessing restricted content before logging in.
+
+### LO5: Marketing Techniques
+
+- **5.1** Created a **Facebook Business Page** dedicated to **Eco-Fitness**, promoting brand awareness and customer engagement.
+- **5.2** Added a **newsletter signup form** to the website, allowing users to receive updates on promotions, new products, and fitness tips.
+
+### LO6: E-commerce Fundamentals
+
+- **6.1** Implemented an **eco-friendly fitness product store**, focusing on sustainability and ethical business practices. 
+
+---
+
+## Technologies Used
+
+- **Django**: Backend framework used to build the web application.
+- **Stripe**: Payment processing integration for secure online transactions.
+- **PostgreSQL**: Database system for storing user and product data.
+- **HTML/CSS/JavaScript**: Front-end technologies for building the user interface.
+- **Bootstrap**: CSS framework used for creating responsive and stylish web pages.
+- **Git**: Version control to track changes and collaborate on the project.
+- **Heroku**: Cloud platform used for deploying the application.
+
+---
+## WireFrame
+![Image](https://github.com/user-attachments/assets/ca82dc1d-1403-4982-8ad0-af37c8d2534b)
+
+![Image](https://github.com/user-attachments/assets/10f8a88a-ff42-477c-b66b-b648bd787fb7)
+
+## MockUp
+
+![Image](https://github.com/user-attachments/assets/bca3095e-34e1-4571-a885-6f92d786f3ae)
+
+## ERD Diagram 
++------------------+      +------------------+      +------------------+
+|   Accounts      |<-----|     Reviews      |----->|    Products      |
+|------------------|      |------------------|      |------------------|
+| AccountID (PK)  |      | ReviewID (PK)    |      | ProductID (PK)   |
+| Name            |      | AccountID (FK)   |      | Name             |
+| Email           |      | ProductID (FK)   |      | Description      |
+| Password        |      | Rating           |      | Price            |
+| Address         |      | Comment          |      | StockQuantity    |
+| PaymentDetails  |      | Date             |      | Category         |
++------------------+      +------------------+      +------------------+
+        |                         |
+        |                         |
+        |                         |
+        v                         v
++------------------+      +------------------+       +------------------+
+|    Cart Bag      |      |     Community    |       |  Pricing Plans   |
+|------------------|      |     Contact      |       |------------------|
+| CartID (PK)     |      |------------------|       | PlanID (PK)      |
+| AccountID (FK)  |      | ContactID (PK)   |       | Name             |
+| ProductID (FK)  |      | AccountID (FK)   |       | Price            |
+| Quantity        |      | Message          |       | Duration         |
+| TotalPrice      |      | Date             |       +------------------+
++------------------+      +------------------+  
+        |
+        |
+        v
++------------------+  
+|     Shop         |  
+|------------------|  
+| ShopID (PK)      |  
+| AccountID (FK)   |  
+| ProductID (FK)   |  
+| Quantity         |  
+| Price            |  
++------------------+  
+
+
+Entities:
+Accounts - Represents the users of the website. Each account can have one or more orders.
+
+Attributes: AccountID (PK), Name, Email, Password, Address, PaymentDetails.
+
+Reviews - Represents the product reviews given by users.
+
+Attributes: ReviewID (PK), AccountID (FK), ProductID (FK), Rating, Comment, Date.
+
+Products - Represents the fitness products available on the website.
+
+Attributes: ProductID (PK), Name, Description, Price, StockQuantity, Category.
+
+Sign Up - Represents the process where a user creates an account.
+
+Attributes: AccountID (PK), Name, Email, Password.
+
+Login - Represents user authentication to access the website.
+
+Attributes: LoginID (PK), AccountID (FK), Timestamp.
+
+Community Contact - Represents the contact information from users who want to reach out to the community or support.
+
+Attributes: ContactID (PK), AccountID (FK), Message, Date.
+
+Pricing Plans - Represents the different subscription plans or pricing models for users.
+
+Attributes: PlanID (PK), Name, Price, Duration.
+
+Shop - Represents the store section where products are listed.
+
+Attributes: ShopID (PK), AccountID (FK), ProductID (FK), Quantity, Price.
+
+Cart Bag - Represents the shopping cart with items before the user checks out.
+
+Attributes: CartID (PK), AccountID (FK), ProductID (FK), Quantity, TotalPrice.
+
+Relationships:
+Account ↔ Reviews: One account can give many reviews, but each review belongs to one account (One-to-Many).
+
+Account ↔ Community Contact: One account can send multiple community messages (One-to-Many).
+
+Account ↔ Cart Bag: One account can have many items in the cart (One-to-Many).
+
+Account ↔ Pricing Plans: An account can be subscribed to one pricing plan, but many users can share a pricing plan (Many-to-One).
+
+Account ↔ Login: One account can have multiple login attempts (One-to-Many).
+
+Product ↔ Reviews: A product can have many reviews, and each review refers to one product (One-to-Many).
+
+Product ↔ Shop: A product can be part of many different shops (Many-to-Many, possibly through an intermediate entity like ProductShop).
+
+Product ↔ Cart Bag: A product can appear in many cart bags, and each cart bag has a product (One-to-Many).
+
+Entity Relationship Overview:
+Accounts can create Reviews, make Community Contacts, add products to their Cart Bag, and be associated with Pricing Plans.
+
+Products can have many Reviews and be added to Cart Bags and Shops.
+
+Pricing Plans are linked to Accounts.
+
+Shops sell Products to Accounts, and Cart Bags represent what users are purchasing.
+
+## Project Setup
+
+1. Accounts
+Purpose: The Accounts app manages user profiles and accounts on the site.
+
+Functionality: Users can view and edit their account details (name, email, shipping address, etc.), manage past orders, and update preferences. It stores user data securely and enables personalized experiences on the website.
+
+2. Cart
+Purpose: The Cart app manages items users add while shopping but have not yet proceeded to checkout.
+
+Functionality: It allows users to add and view products, adjust quantities, and remove items from the cart. Users can see an estimated total price and continue shopping or proceed to checkout.
+
+3. Bag
+Purpose: The Bag app works similarly to the cart but often contains more detailed information like product sizes or personalized selections.
+
+Functionality: Users can view the specific items they've selected, including product variations like size or color. The bag holds the items until the user checks out.
+
+4. Login
+Purpose: The Login app allows users to authenticate themselves and gain access to their account.
+
+Functionality: Users can log in using their registered email and password. Once logged in, they can view personal details, check previous orders, and interact with other parts of the website.
+
+5. Logout
+Purpose: The Logout app ensures that users can safely sign out from their account.
+
+Functionality: It ends the user's session, ensuring they are logged out from their account. This improves security and prevents unauthorized access to personal information.
+
+6. Sign Up
+Purpose: The Sign Up app lets new users register for an account.
+
+Functionality: Users provide their personal information (email, password, etc.) to create an account. Once registered, they can log in, place orders, track purchases, and access special features.
+
+7. About Us
+Purpose: The About Us app provides information about the company’s values, mission, and team.
+
+Functionality: Users can learn more about the brand's dedication to eco-friendly fitness, the sustainability efforts of the company, and what sets Eco-Fitness apart from other fitness retailers.
+
+8. Products
+Purpose: The Products app displays and manages the product catalog.
+
+Functionality: Users can browse all available products (e.g., eco-friendly fitness gear, apparel, supplements). It provides details for each product, including descriptions, sizes, prices, and photos. Users can also filter products by category or attributes.
+
+9. Pricing Plans
+Purpose: The Pricing Plans app displays different subscription options available to customers.
+
+Functionality: Users can view and choose from various subscription plans, such as monthly or yearly memberships, which might provide exclusive content, discounts, or services like personalized fitness plans.
+
+10. Reviews
+Purpose: The Reviews app allows users to leave reviews and read feedback from others on products.
+
+Functionality: After purchasing products, users can submit ratings and written reviews. The app helps customers make informed decisions by displaying product ratings and reviews from previous buyers.
+
+11. Community
+Purpose: The Community app connects users and promotes engagement around fitness and sustainability.
+
+Functionality: Users can participate in fitness challenges, join discussions, share their fitness progress, and connect with like-minded individuals. This creates a social environment around Eco-Fitness, fostering a sense of community.
+
+12. Contact
+Purpose: The Contact app enables users to get in touch with the Eco-Fitness support team.
+
+Functionality: Users can submit inquiries, ask questions about products or services, and request assistance. This app typically includes contact forms, phone numbers, and email addresses for customer support.
+
+13. Shop
+Purpose: The Shop app is the primary interface for users to browse and purchase products.
+
+Functionality: It provides a user-friendly shopping experience where customers can explore different categories of products, select items to add to the cart or bag, view detailed product descriptions, and proceed to checkout.
+
+### Requirements
+
+- Python 3.8+
+- Django 3.2+
+- PostgreSQL (for production)
+- Stripe API credentials for payment processing
+- Heroku account for deployment
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/olutobi1996/eco-fitness.git
+   cd eco-fitness

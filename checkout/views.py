@@ -6,6 +6,8 @@ from .models import Order, OrderLineItem
 from .forms import OrderForm
 from products.models import Product
 from bag.contexts import bag_contents
+from accounts.models import AccountProfile
+from django.http import HttpResponse
 import stripe
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -13,16 +15,13 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
-    """
-    Caches checkout session data in Stripe PaymentIntent metadata.
-    """
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
-            'username': request.user,
+            'username': request.user.username if request.user.is_authenticated else 'AnonymousUser',
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -30,61 +29,75 @@ def cache_checkout_data(request):
         return HttpResponse(content=e, status=400)
 
 
+# Checkout View
 def checkout(request):
-    """
-    Handles the checkout process and payment creation via Stripe.
-    """
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    bag = request.session.get('bag', {})
+
+    if not bag:
+        messages.error(request, "There's nothing in your bag at the moment.")
+        return redirect(reverse('products'))
+
+    current_bag = bag_contents(request)
+    total = current_bag['grand_total']
+    stripe_total = round(total * 100)
+    stripe.api_key = stripe_secret_key
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+    )
+
+    # Pre-fill form for logged in users
     if request.user.is_authenticated:
-        try:
-            profile = User.objects.get(user=request.user)
-            order_form = OrderForm(initial={
-            'full_name': profile.user.get_full_name(),
-            'email': profile.user.email,
-            'phone_number': profile.default_phone_number,
-            'country': profile.default_country,
-            'postcode': profile.default_postcode,
-            'town_or_city': profile.default_town_or_city,
-            'street_address1': profile.default_street_address1,
-            'street_address2': profile.default_street_address2,
-            'county': profile.default_county,
-        })
-        except User.DoesNotExist:
-                        order_form = OrderForm()
-        else:
-             order_form = OrderForm()
+        # Get or create AccountProfile for the logged-in user
+        profile, created = AccountProfile.objects.get_or_create(user=request.user)
+        initial_data = {
+            'full_name': request.user.get_full_name(),
+            'email': request.user.email,
+            'phone_number': profile.default_phone_number if profile.default_phone_number else '',
+            'country': profile.default_country if profile.default_country else '',
+            'postcode': profile.default_postcode if profile.default_postcode else '',
+            'town_or_city': profile.default_town_or_city if profile.default_town_or_city else '',
+            'street_address1': profile.default_street_address1 if profile.default_street_address1 else '',
+            'street_address2': profile.default_street_address2 if profile.default_street_address2 else '',
+            'county': profile.default_county if profile.default_county else '',
+        }
+        order_form = OrderForm(initial=initial_data)
+    else:
+        order_form = OrderForm()
 
-
-
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+            if request.user.is_authenticated:
+                profile = AccountProfile.objects.get(user=request.user)
+                order.user_profile = profile
             order.save()
 
             for item_id, item_data in bag.items():
                 try:
                     product = Product.objects.get(id=item_id)
                     if isinstance(item_data, int):
-                        order_line_item = OrderLineItem(
+                        OrderLineItem.objects.create(
                             order=order,
                             product=product,
                             quantity=item_data,
                         )
-                        order_line_item.save()
                     else:
                         for size, quantity in item_data['items_by_size'].items():
-                            order_line_item = OrderLineItem(
+                            OrderLineItem.objects.create(
                                 order=order,
                                 product=product,
                                 quantity=quantity,
                                 product_size=size,
                             )
-                            order_line_item.save()
                 except Product.DoesNotExist:
-                    messages.error(request, "One of the products in your bag wasn't found in our database. Please call us for assistance!")
+                    messages.error(request, "One of the products in your bag wasn't found in our database.")
                     order.delete()
                     return redirect(reverse('view_bag'))
 
@@ -93,60 +106,49 @@ def checkout(request):
         else:
             messages.error(request, 'There was an error with your form. Please double-check your information.')
 
-    else:
-        bag = request.session.get('bag', {})
-        if not bag:
-            messages.error(request, "There's nothing in your bag at the moment.")
-            return redirect(reverse('products'))
-
-        current_bag = bag_contents(request)
-        total = current_bag['grand_total']
-        stripe_total = round(total * 100)
-        stripe.api_key = stripe_secret_key
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
-
-        order_form = OrderForm()
-
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
 
-    template = 'checkout/checkout.html'
     context = {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
 
-    return render(request, template, context)
+    return render(request, 'checkout/checkout.html', context)
 
-
+# Checkout Success View
 def checkout_success(request, order_number):
- if request.user.is_authenticated:
-    profile = User.objects.get(user=request.user)
-    order.user_profile = profile
-    order.save()
+    save_info = request.session.get('save_info')
+    order = get_object_or_404(Order, order_number=order_number)
 
-    if save_info:
-        profile_data = {
-            'default_phone_number': order.phone_number,
-            'default_country': order.country,
-            'default_postcode': order.postcode,
-            'default_town_or_city': order.town_or_city,
-            'default_street_address1': order.street_address1,
-            'default_street_address2': order.street_address2,
-            'default_county': order.county,
-        }
-        ## user_profile_form = UserProfileForm(profile_data, instance=profile)
-        ## if user_profile_form.is_valid():
-           ## user_profile_form.save()
+    if request.user.is_authenticated:
+        # Get or create AccountProfile for the logged-in user
+        profile, created = AccountProfile.objects.get_or_create(user=request.user)
+        order.user_profile = profile
+        order.save()
 
-    template = 'checkout/checkout_success.html'
-    context = {'order': order}
+        if save_info:
+            # Save the order information to the AccountProfile if "save_info" is checked
+            profile.default_phone_number = order.phone_number
+            profile.default_country = order.country
+            profile.default_postcode = order.postcode
+            profile.default_town_or_city = order.town_or_city
+            profile.default_street_address1 = order.street_address1
+            profile.default_street_address2 = order.street_address2
+            profile.default_county = order.county
+            profile.save()
 
-    return render(request, template, context)
+    messages.success(request, f'Order successfully processed! Your order number is {order_number}.')
+    if 'bag' in request.session:
+        del request.session['bag']
+
+    context = {
+        'order': order,
+    }
+
+    return render(request, 'checkout/checkout_success.html', context)
+
 
 
 class StripeWH_Handler:

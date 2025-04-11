@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_countries',
 
     # Third-party apps
     'allauth',
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     "crispy_bootstrap5",
-    'storages',  # for handling static files with AWS
+    'storages', 
 
     # Custom apps
     'accounts',
@@ -65,7 +66,7 @@ INSTALLED_APPS = [
     'contact',
     'subscriptions',
     'bag.templatetags.custom_filters',
-    'djstripe',  # Make sure djstripe is installed
+    'djstripe',  
 ]
 
 # Middleware
