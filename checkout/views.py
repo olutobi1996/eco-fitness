@@ -89,7 +89,7 @@ def checkout(request):
                             quantity=item_data,
                         )
                     else:
-                        for size, quantity in item_data['items_by_size'].items():
+                        for size, quantity in item_data['sizes'].items():
                             OrderLineItem.objects.create(
                                 order=order,
                                 product=product,

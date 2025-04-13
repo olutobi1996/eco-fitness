@@ -1,128 +1,140 @@
 {% load static %}
-
 <!doctype html>
 <html lang="en">
+
 <head>
     {% block meta %}
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Eco-Fitness | Sustainable Workouts & Nutrition Plans">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Eco-Fitness | Sustainable Workouts & Nutrition Plans">
+    <meta name="keywords"
+        content="eco-friendly fitness, sustainable fitness gear, green fitness products, eco-friendly activewear, yoga mats, eco-friendly supplements, sustainable health products">
+    <meta name="author" content="EcoFitness">
+    <meta property="og:title" content="Eco-Fitness - Sustainable Fitness Gear & Nutrition">
+    <meta property="og:description"
+        content="Shop eco-friendly fitness gear, apparel, and supplements. Join the sustainable fitness movement with Eco-Fitness.">
+    <meta property="og:image" content="URL_TO_AN_IMAGE">
+    <meta property="og:url" content="YOUR_PAGE_URL">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@EcoFitness">
     {% endblock %}
 
     {% block extra_meta %}{% endblock %}
 
     {% block corecss %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
     {% block extra_css %}{% endblock %}
 
     {% block corejs %}
     <script src="https://kit.fontawesome.com/6e4547598c.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Stripe -->
-        <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
 
     {% block extra_js %}{% endblock %}
 
-    <title>Eco-Fitness {% block extra_title %}{% endblock %}</title>
+    <title><strong>Eco-Fitness</strong> {% block extra_title %}{% endblock %}</title>
 </head>
+
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
-            Eco-Fitness
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}">Pricing Plans</a></li>
-                
-                <!-- Always Show the "Reviews" Link -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:product_reviews' %}">Reviews</a>
-                </li>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
+                <strong>Eco-Fitness</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}"><strong>About Us</strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}"><strong>Pricing Plans</strong></a></li>
 
-                <li class="nav-item"><a class="nav-link" href="{% url 'products:shop' %}">Shop</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'community' %}">Community</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'products:all_products' %}">Products</a></li>
-            </ul>
-            <!-- User & Cart -->
-            <ul class="navbar-nav ms-3">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-user"></i> Account
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        {% if request.user.is_authenticated %}
+                    <!-- Always Show the "Reviews" Link -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'products:product_reviews' %}"><strong>Reviews</strong></a>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="{% url 'products:shop' %}"><strong>Shop</strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'community' %}"><strong>Community</strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}"><strong>Contact</strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'products:all_products' %}"><strong>Products</strong></a></li>
+                </ul>
+                <!-- User & Cart -->
+                <ul class="navbar-nav ms-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> <strong>Account</strong>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                                <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
+                            <a href="{% url 'add_product' %}" class="dropdown-item"><strong>Product Management</strong></a>
                             {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
-                        {% else %}
-                            <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
-                        {% endif %}
-                    </ul>                        
-                </li>
-                <li class="list-inline-item">
-                    <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="{% url 'view_bag' %}">
-                        <div class="text-center">
-                            <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                            <p class="my-0">
-                                {% if grand_total %}
-                                    ${{ grand_total|floatformat:2 }}
-                                {% else %}
-                                    $0.00
-                                {% endif %}
-                            </p>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cart' %}">
-                        <i class="fas fa-shopping-cart"></i> Cart
-                    </a>
-                </li>
-            </ul>
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><strong>My Profile</strong></a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_logout' %}"><strong>Logout</strong></a></li>
+                            {% else %}
+                            <li><a class="dropdown-item" href="{% url 'account_signup' %}"><strong>Sign Up</strong></a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_login' %}"><strong>Login</strong></a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
+                            href="{% url 'view_bag' %}">
+                            <div class="text-center">
+                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                                <p class="my-0">
+                                    {% if grand_total %}
+                                    <strong>${{ grand_total|floatformat:2 }}</strong>
+                                    {% else %}
+                                    <strong>$0.00</strong>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_bag' %}">
+                            <i class="fas fa-shopping-bag fa-lg"></i> <strong>Bag</strong>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     {% include 'includes/mobile-top-header.html' %}
     {% include 'includes/main-nav.html' %}
 
     {% if messages %}
-        <div class="message-container mt-5">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                    {% with message.level as level %}
-                    {% if level == 40 %}
-                        {% include 'includes/toasts/toast_error.html' %}
-                    {% elif level == 30 %}
-                        {% include 'includes/toasts/toast_warning.html' %}
-                    {% elif level == 25 %}
-                        {% include 'includes/toasts/toast_success.html' %}
-                    {% else %}
-                        {% include 'includes/toasts/toast_info.html' %}
-                    {% endif %}
-                {% endwith %}
-                </div>
-            {% endfor %}
+    <div class="message-container mt-5">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            <strong>{{ message }}</strong>
+            {% with message.level as level %}
+            {% if level == 40 %}
+            {% include 'includes/toasts/toast_error.html' %}
+            {% elif level == 30 %}
+            {% include 'includes/toasts/toast_warning.html' %}
+            {% elif level == 25 %}
+            {% include 'includes/toasts/toast_success.html' %}
+            {% else %}
+            {% include 'includes/toasts/toast_info.html' %}
+            {% endif %}
+            {% endwith %}
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
     <!-- Main Content -->
@@ -133,8 +145,21 @@
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
-            <p>&copy; 2025 Eco-Fitness. All Rights Reserved.</p>
+            <p>&copy; 2025 <strong>Eco-Fitness</strong>. All Rights Reserved.</p>
             <div class="d-flex justify-content-center">
+                <a href="https://www.greenpeace.org" class="text-white me-3" target="_blank" rel="noopener noreferrer">
+                    <strong>Greenpeace</strong> - Global environmental charity
+                </a>
+                <a href="https://www.sustainablebrands.com" class="text-white me-3" target="_blank"
+                    rel="noopener noreferrer">
+                    <strong>Sustainable Brands</strong> - Sustainability community
+                </a>
+                <a href="https://www.wwf.org" class="text-white me-3" target="_blank" rel="noopener noreferrer">
+                    <strong>WWF</strong> - World Wide Fund for Nature
+                </a>
+                <a href="https://www.ecowatch.com" class="text-white" target="_blank" rel="noopener noreferrer">
+                    <strong>EcoWatch</strong> - Environmental News & Sustainability
+                </a>
                 <a href="https://facebook.com" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
                 <a href="https://twitter.com" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
                 <a href="https://instagram.com" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
@@ -144,4 +169,5 @@
 
     {% block postloadjs %}{% endblock %}
 </body>
+
 </html>

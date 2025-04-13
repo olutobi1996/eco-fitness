@@ -3,62 +3,65 @@
         <!-- Home Link -->
         <li class="nav-item d-block d-md-none">
             <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'home' %}" id="home-link">
-                Home
+                <strong>Home</strong>
             </a>
         </li>
 
         <!-- All Products Dropdown -->
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-dark mr-5 dropdown-toggle" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-expanded="false">
-                All Products
+                <strong>All Products</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc" class="dropdown-item">Price (Low to High)</a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item">Price (High to Low)</a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item">By Rating</a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
-                <li><a href="{% url 'products:all_products' %}" class="dropdown-item">All Products</a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc" class="dropdown-item"><strong>Price (Low to High)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item"><strong>Price (High to Low)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item"><strong>By Rating</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item"><strong>Name (A-Z)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item"><strong>Name (Z-A)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}" class="dropdown-item"><strong>All Products</strong></a></li>
             </ul>
         </li>
 
         <!-- Fitness Plans -->
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="fitness-plans-link" data-bs-toggle="dropdown" aria-expanded="false">
-                Fitness Plans
+                <strong>Fitness Plans</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?category=workout_plans" class="dropdown-item">Workout Plans</a></li>
-                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item">Diet Plans</a></li>
-                <li><a href="{% url 'products:all_products' %}?category=workout_plans,diet_plans" class="dropdown-item">All Plans</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans" class="dropdown-item"><strong>Workout Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item"><strong>Diet Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans,diet_plans" class="dropdown-item"><strong>All Plans</strong></a></li>
             </ul>
         </li>
 
         <!-- Merchandise -->
         <li class="nav-item dropdown">
             <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="merchandise-link" data-bs-toggle="dropdown" aria-expanded="false">
-                Merchandise
+                <strong>Merchandise</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?category=activewear" class="dropdown-item">Activewear</a></li>
-                <li><a href="{% url 'products:all_products' %}?category=accessories" class="dropdown-item">Accessories</a></li>
-                <li><a href="{% url 'products:all_products' %}?category=eco_bottles" class="dropdown-item">Eco Bottles</a></li>
-                <li><a href="{% url 'products:all_products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item">All Merchandise</a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear" class="dropdown-item"><strong>Activewear</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=accessories" class="dropdown-item"><strong>Accessories</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=eco_bottles" class="dropdown-item"><strong>Eco Bottles</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item"><strong>All Merchandise</strong></a></li>
             </ul>
         </li>
 
         <!-- Community & Reviews -->
         <li class="nav-item">
             <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'community' %}" id="community-link">
-                Community
+                <strong>Community</strong>
             </a>
-            <li class="nav-item">
-                {% if product and product.id %}
-                    <a class="nav-link" href="{% url 'products:product_reviews_by_id' product.id %}">Reviews</a>
-                {% endif %}
-            </li>            
+        </li>  
+
+        <li class="nav-item">
+            {% if product and product.id %}
+                <a class="nav-link" href="{% url 'products:product_reviews_by_id' product.id %}"><strong>Reviews</strong></a>
+            {% endif %}
+        </li>            
     </ul>
 </div>
+
 
 
 

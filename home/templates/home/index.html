@@ -5,10 +5,9 @@
 <!-- Hero Section -->
 <section class="hero bg-success text-white text-center py-5">
     <div class="container">
-        <h1 class="display-3 fw-bold">Transform Your Fitness, Sustainably</h1>
-        <p class="lead">Join our eco-friendly fitness community, shop sustainable merchandise, and achieve your health
-            goals.</p>
-        <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3">Explore Plans</a>
+        <h1 class="display-3 fw-bold"><strong>Transform Your Fitness, Sustainably</strong></h1>
+        <p class="lead">Join our <strong>eco-friendly fitness community</strong>, shop sustainable <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
+        <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3"><strong>Explore Plans</strong></a>
     </div>
 </section>
 
@@ -18,19 +17,19 @@
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Fitness & Diet Plans</h5>
-                    <p class="card-text">Custom workout and meal plans tailored for you.</p>
-                    <a href="/plans" class="btn btn-success">Get Started</a>
+                    <h5 class="card-title"><strong>Fitness & Diet Plans</strong></h5>
+                    <p class="card-text">Custom <strong>workout</strong> and <strong>meal plans</strong> tailored for you.</p>
+                    <a href="/plans" class="btn btn-success"><strong>Get Started</strong></a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Workout Reviews</h5>
-                    <p class="card-text">See how others are progressing and share your journey.</p>
+                    <h5 class="card-title"><strong>Workout Reviews</strong></h5>
+                    <p class="card-text">See how others are progressing and share your <strong>journey</strong>.</p>
                     {% if product and product.id %}
-                        <a class="btn btn-success" href="{% url 'products:product_reviews_by_id' product.id %}">View Reviews</a>
+                        <a class="btn btn-success" href="{% url 'products:product_reviews_by_id' product.id %}"><strong>View Reviews</strong></a>
                     {% else %}
                         <p>No product available to view reviews.</p>
                     {% endif %}
@@ -40,69 +39,67 @@
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Eco-Friendly Shop</h5>
-                    <p class="card-text">Sustainable fitness gear and apparel.</p>
-                    <a href="{% url 'products:all_products' %}" class="btn btn-success">Shop Now</a>
+                    <h5 class="card-title"><strong>Eco-Friendly Shop</strong></h5>
+                    <p class="card-text">Sustainable <strong>fitness gear</strong> and <strong>apparel</strong>.</p>
+                    <a href="{% url 'products:all_products' %}" class="btn btn-success"><strong>Shop Now</strong></a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Join the Community</h5>
-                    <p class="card-text">Connect with like-minded fitness enthusiasts.</p>
-                    <a href="{% url 'community' %}" class="btn btn-success">Join Now</a>
+                    <h5 class="card-title"><strong>Join the Community</strong></h5>
+                    <p class="card-text">Connect with like-minded <strong>fitness enthusiasts</strong>.</p>
+                    <a href="{% url 'community' %}" class="btn btn-success"><strong>Join Now</strong></a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-
 <!-- Featured Products -->
 <section class="container my-5">
-    <h2 class="text-center mb-4">Featured Merchandise</h2>
+    <h2 class="text-center mb-4"><strong>Featured Merchandise</strong></h2>
     <div class="row g-4">
         {% if products %}
             {% for product in products %}
                 <div class="col-md-4">
                     <div class="card shadow-sm">
                         <div class="card-body text-center">
-                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h5 class="card-title"><strong>{{ product.name }}</strong></h5>
                             <p class="card-text">${{ product.price }}</p>
-                            <a href="{% url 'products:product_detail' product.id %}" class="btn btn-outline-success">Buy Now</a>
+                            <a href="{% url 'products:product_detail' product.id %}" class="btn btn-outline-success"><strong>Buy Now</strong></a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p class="text-center">No featured products available at the moment.</p>
+            <p class="text-center"><strong>No featured products available at the moment.</strong></p>
         {% endif %}
     </div>
 </section>
 
-
 <!-- Testimonials Section -->
 <section class="bg-light py-5">
     <div class="container">
-        <h2 class="text-center mb-4">What Our Customers Say</h2>
+        <h2 class="text-center mb-4"><strong>What Our Customers Say</strong></h2>
         <div class="row">
             <div class="col-md-4">
                 <div class="card shadow-sm p-3">
-                    <p>"The meal plans helped me lose 10lbs in 2 months! Amazing community!"</p>
-                    <h6 class="text-end">- Sarah W.</h6>
+                    <p>"The <strong>meal plans</strong> helped me lose 10lbs in 2 months! Amazing <strong>community</strong>!"</p>
+                    <h6 class="text-end"><strong>- Sarah W.</strong></h6>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card shadow-sm p-3">
-                    <p>"Sustainable fitness gear that actually performs. Love my eco yoga mat!"</p>
-                    <h6 class="text-end">- John D.</h6>
+                    <p>"Sustainable <strong>fitness gear</strong> that actually performs. Love my eco yoga mat!"</p>
+                    <h6 class="text-end"><strong>- John D.</strong></h6>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card shadow-sm p-3">
-                    <p>"The workout reviews keep me motivated every day. Best fitness site ever!"</p>
-                    <h6 class="text-end">- Alex P.</h6>
+                    <p>"The <strong>workout reviews</strong> keep me motivated every day. Best fitness site ever!"</p>
+                    <h6 class="text-end"><strong>- Alex P.</strong></h6>
                 </div>
             </div>
         </div>
@@ -111,9 +108,10 @@
 
 <!-- Join Community CTA -->
 <section class="container text-center my-5">
-    <h2>Be Part of the Movement</h2>
-    <p>Connect with other fitness enthusiasts, share progress, and support each other.</p>
-    <a href="/community" class="btn btn-success btn-lg">Join the Community</a>
+    <h2><strong>Be Part of the Movement</strong></h2>
+    <p>Connect with other <strong>fitness enthusiasts</strong>, share progress, and support each other.</p>
+    <a href="/community" class="btn btn-success btn-lg"><strong>Join the Community</strong></a>
 </section>
 
 {% endblock %}
+

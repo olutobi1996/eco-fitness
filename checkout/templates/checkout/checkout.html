@@ -2,6 +2,8 @@
 {% load static %}
 {% load custom_filters %}
 
+
+
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
 {% endblock %}
@@ -66,7 +68,7 @@
                         {% for item in bag_items %}
                         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                             <div class="d-flex align-items-center">
-                                <a href="{% url 'product_detail' item.product.id %}">
+                                <a href="{% url 'products:product_detail' item.product.id %}">View Product</a>
                                     <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
                                         class="img-thumbnail mr-2" style="width: 50px;">
                                 </a>
@@ -144,7 +146,7 @@
         </div>
     </div>
 </div>
-
+{% endblock %}
 {% block extra_js %}
 <!-- Stripe JavaScript -->
 <script src="https://js.stripe.com/v3/"></script>

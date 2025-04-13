@@ -5,7 +5,7 @@ from django_countries.fields import CountryField
 class AccountProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     shipping_address = models.CharField(max_length=255, blank=True, null=True)
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    default_phone_number = models.CharField(max_length=15, blank=True, null=True)
 
     # Fields used during checkout
     default_country = CountryField(blank_label='(select country)', blank=True, null=True)

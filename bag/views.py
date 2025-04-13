@@ -37,9 +37,23 @@ def add_to_bag(request, product_id):
     
     return redirect(redirect_url)
 
+
 def view_bag(request):
     """ A view to render the shopping bag page """
-    return render(request, "bag.html")
+    bag = request.session.get('bag', {})
+    cart_items = []
+
+    # Iterate over the products in the bag to get product details
+    for product_id, product_data in bag.items():
+        product = get_object_or_404(Product, pk=product_id)
+        cart_items.append({
+            'product': product,
+            'quantity': product_data['quantity'],
+            'total': product.price * product_data['quantity']
+        })
+
+    return render(request, "bag/cart.html", {'cart_items': cart_items})
+
 
 def remove_from_bag(request, product_id):
     """ Remove an item from the shopping bag """

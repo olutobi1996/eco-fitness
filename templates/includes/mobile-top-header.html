@@ -4,13 +4,13 @@
         <a class="text-success nav-link d-block d-lg-none dropdown-toggle" href="#" id="mobile-search" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="text-center">
                 <i class="fas fa-search fa-lg"></i>
-                <p class="my-0 small">Search</p>
+                <p class="my-0 small"><strong>Search</strong></p>
             </div>
         </a>
         <div class="dropdown-menu border-0 w-100 p-3 rounded shadow-sm">
             <form method="GET" action="{% url 'products:all_products' %}">
                 <div class="input-group">
-                    <input class="form-control border-success rounded-start" type="text" name="q" placeholder="Search for fitness gear...">
+                    <input class="form-control border-success rounded-start" type="text" name="q" placeholder="Search for <strong>fitness gear</strong>...">
                     <button class="btn btn-success rounded-end" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
@@ -24,19 +24,19 @@
         <a class="text-success nav-link d-block d-lg-none dropdown-toggle" href="#" id="user-options" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="text-center">
                 <i class="fas fa-user fa-lg"></i>
-                <p class="my-0 small">My Account</p>
+                <p class="my-0 small"><strong>My Account</strong></p>
             </div>
         </a>
         <div class="dropdown-menu border-0 shadow-sm rounded">
             {% if request.user.is_authenticated %}
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
+                    <a href="{% url 'add_product' %}" class="dropdown-item"><strong>Product Management</strong></a>
                 {% endif %}
-                <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
-                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                <li><a class="dropdown-item" href="{% url 'profile' %}"><strong>My Profile</strong></a></li>
+                <a href="{% url 'account_logout' %}" class="dropdown-item"><strong>Logout</strong></a>
             {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                <a href="{% url 'account_signup' %}" class="dropdown-item"><strong>Register</strong></a>
+                <a href="{% url 'account_login' %}" class="dropdown-item"><strong>Login</strong></a>
             {% endif %}
         </div>
     </li>
@@ -46,8 +46,9 @@
         <a class="text-success nav-link d-block d-lg-none" href="{% url 'view_bag' %}">
             <div class="text-center">
                 <i class="fas fa-shopping-bag fa-lg"></i>
-                <p class="my-0 small">${{ grand_total|default:"0.00" }}</p>
+                <p class="my-0 small"><strong>${{ grand_total|default:"0.00" }}</strong></p>
             </div>
         </a>
     </li>
 </ul>
+

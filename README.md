@@ -146,42 +146,7 @@ The platform integrates secure payment systems, advanced UX design, SEO optimiza
 ![Image](https://github.com/user-attachments/assets/bca3095e-34e1-4571-a885-6f92d786f3ae)
 
 ## ERD Diagram 
-+------------------+      +------------------+      +------------------+
-|   Accounts      |<-----|     Reviews      |----->|    Products      |
-|------------------|      |------------------|      |------------------|
-| AccountID (PK)  |      | ReviewID (PK)    |      | ProductID (PK)   |
-| Name            |      | AccountID (FK)   |      | Name             |
-| Email           |      | ProductID (FK)   |      | Description      |
-| Password        |      | Rating           |      | Price            |
-| Address         |      | Comment          |      | StockQuantity    |
-| PaymentDetails  |      | Date             |      | Category         |
-+------------------+      +------------------+      +------------------+
-        |                         |
-        |                         |
-        |                         |
-        v                         v
-+------------------+      +------------------+       +------------------+
-|    Cart Bag      |      |     Community    |       |  Pricing Plans   |
-|------------------|      |     Contact      |       |------------------|
-| CartID (PK)     |      |------------------|       | PlanID (PK)      |
-| AccountID (FK)  |      | ContactID (PK)   |       | Name             |
-| ProductID (FK)  |      | AccountID (FK)   |       | Price            |
-| Quantity        |      | Message          |       | Duration         |
-| TotalPrice      |      | Date             |       +------------------+
-+------------------+      +------------------+  
-        |
-        |
-        v
-+------------------+  
-|     Shop         |  
-|------------------|  
-| ShopID (PK)      |  
-| AccountID (FK)   |  
-| ProductID (FK)   |  
-| Quantity         |  
-| Price            |  
-+------------------+  
-
+![Image](https://github.com/user-attachments/assets/90ac702a-198c-4920-ac74-172dd59c10d9)
 
 Entities:
 Accounts - Represents the users of the website. Each account can have one or more orders.
@@ -245,6 +210,96 @@ Products can have many Reviews and be added to Cart Bags and Shops.
 Pricing Plans are linked to Accounts.
 
 Shops sell Products to Accounts, and Cart Bags represent what users are purchasing.
+
+## SEO and Keyword Implementation
+SEO and Keyword Implementation
+To improve the search engine optimization (SEO) of this project, several techniques were used to help search engines understand and rank the content better. Here's a breakdown of how keywords were implemented throughout the project:
+
+1. Meta Tags in <head>
+Meta tags are essential for search engines and social media platforms to understand the content of the page. These tags were added to the <head> section in the base template (base.html):
+
+Meta Title: This sets the title of the page that appears on search engines.
+
+html
+Copy
+Edit
+<title>{% block title %}Eco Fitness - Sustainable Fitness & Gear{% endblock %}</title>
+Meta Description: A brief description that shows up in search results.
+
+html
+Copy
+Edit
+<meta name="description" content="Join our eco-friendly fitness community, shop sustainable merchandise, and achieve your health goals.">
+Meta Keywords: These are relevant keywords separated by commas to help search engines find the page.
+
+html
+Copy
+Edit
+<meta name="keywords" content="eco fitness, sustainable workout plans, fitness gear, diet plans, workout reviews, green fitness products">
+Open Graph Tags: These help social media platforms display the page correctly when shared.
+
+html
+Copy
+Edit
+<meta property="og:title" content="Eco Fitness - Sustainable Fitness & Gear">
+<meta property="og:description" content="Join our eco-friendly fitness community and shop sustainable fitness gear.">
+2. Using Keywords Throughout the Project
+Keywords were sprinkled throughout the project to make the content easier for search engines to understand. Here’s where we added them:
+
+Headings: Keywords were included in headings (<h1>, <h2>, etc.) because they help search engines understand the page's main topics.
+
+html
+Copy
+Edit
+<h1 class="display-3 fw-bold"><strong>Transform Your Fitness, Sustainably</strong></h1>
+<h2 class="text-center mb-4"><strong>Featured Merchandise</strong></h2>
+Content: Keywords were also included in the body text to make sure the page is relevant to what users are searching for.
+
+html
+Copy
+Edit
+<p class="lead">Join our <strong>eco-friendly fitness community</strong>, shop sustainable <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
+Links: Internal links also use relevant keywords, making it clear what users can expect when they click.
+
+html
+Copy
+Edit
+<a href="{% url 'products:all_products' %}" class="btn btn-success"><strong>Shop Now</strong></a>
+3. Using <strong> Tags for Emphasis
+The <strong> tag was used throughout the site to emphasize important keywords. This tells both users and search engines that these terms are crucial for understanding the content.
+
+html
+Copy
+Edit
+<h5 class="card-title"><strong>Eco-Friendly Shop</strong></h5>
+<p class="card-text">Sustainable <strong>fitness gear</strong> and <strong>apparel</strong>.</p>
+4. External Links
+External links to relevant and authoritative sources were added to build credibility and improve SEO. These links help both users and search engines understand more about the content of the site. For example:
+
+html
+Copy
+Edit
+<a href="https://www.sustainablefitness.com" target="_blank" class="btn btn-outline-success">Visit Our Partners</a>
+5. Internal Links
+Internal links connect different pages within the site and help both users and search engines navigate the content more easily. For example:
+
+html
+Copy
+Edit
+<a href="{% url 'community' %}" class="btn btn-success"><strong>Join the Community</strong></a>
+6. Optimizing for Mobile
+Since mobile optimization is important for SEO, the site is fully responsive, meaning that all content, including keywords, is easily accessible on any device.
+
+Best Practices for SEO:
+Use relevant keywords across the site, especially in headings and body text.
+
+Don’t overuse keywords—make sure the content still sounds natural.
+
+Make sure your meta tags are descriptive and relevant to the page content.
+
+Keep updating your content and keywords to stay relevant in search results.
+
+By following these steps, the project will have a better chance of ranking higher in search engine results and attracting more traffic.
 
 ## Project Setup
 
