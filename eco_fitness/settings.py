@@ -22,13 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')  # Use env variable in production
-DEBUG = os.getenv('DEVELOPMENT', 'False').lower() == 'true'  # Ensure it's a boolean
+DEBUG = os.getenv('DEVELOPMENT', 'False').lower() == 'true'  
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
-    "eco-fitness-2b6c5d715c47.herokuapp.com"
+    "https://eco-fitness-2b6c5d715c47.herokuapp.com/"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
