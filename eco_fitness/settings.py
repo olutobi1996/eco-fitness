@@ -28,13 +28,15 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
-    "https://eco-fitness-2b6c5d715c47.herokuapp.com/"
-]
+    "eco-fitness-2b6c5d715c47.herokuapp.com"]
+
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io/",
+    "http://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
     "https://*.gitpod.io",
+    "https://eco-fitness-2b6c5d715c47.herokuapp.com"  # ✅ add this too
 ]
+
 
 # Installed Apps
 INSTALLED_APPS = [
