@@ -9,10 +9,6 @@ def index(request):
     return render(request, 'home/index.html', context)
 
 
-def plans(request):
-    return render(request, 'home/plans.html') 
-
-
 def profile(request):
     return render(request, 'accounts/profile.html')
 
