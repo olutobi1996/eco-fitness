@@ -46,12 +46,10 @@ def checkout(request):
    # Inside checkout() view
 
 intent = stripe.PaymentIntent.create(
-    amount=stripe_total,
-    currency=settings.STRIPE_CURRENCY,
-    # Replace with your Heroku URLs
-    success_url="https://eco-fitness.herokuapp.com/checkout/success/",  
-    cancel_url="https://eco-fitness.herokuapp.com/checkout/cancel/",   
-)
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+
 
 
     # Pre-fill form for logged in users
