@@ -20,7 +20,9 @@ if os.path.exists(os.path.join(os.path.dirname(__file__), "../env.py")):
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEBUG = True
+# Security
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = os.getenv('DEVELOPMENT', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
     "localhost",
