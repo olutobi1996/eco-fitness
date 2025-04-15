@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 import json
 
+
 @require_POST
 def cache_checkout_data(request):
     try:
@@ -29,7 +30,6 @@ def cache_checkout_data(request):
         return HttpResponse(content=e, status=400)
 
 
-# Checkout View
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -43,44 +43,41 @@ def checkout(request):
     total = current_bag['grand_total']
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
-   # Inside checkout() view
 
-intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+    )
 
-
-
-    # Pre-fill form for logged in users
-if request.user.is_authenticated:
-        # Get or create AccountProfile for the logged-in user
+    if request.user.is_authenticated:
         profile, created = AccountProfile.objects.get_or_create(user=request.user)
         initial_data = {
             'full_name': request.user.get_full_name(),
             'email': request.user.email,
-            'phone_number': profile.default_phone_number if profile.default_phone_number else '',
-            'country': profile.default_country if profile.default_country else '',
-            'postcode': profile.default_postcode if profile.default_postcode else '',
-            'town_or_city': profile.default_town_or_city if profile.default_town_or_city else '',
-            'street_address1': profile.default_street_address1 if profile.default_street_address1 else '',
-            'street_address2': profile.default_street_address2 if profile.default_street_address2 else '',
-            'county': profile.default_county if profile.default_county else '',
+            'phone_number': profile.default_phone_number or '',
+            'country': profile.default_country or '',
+            'postcode': profile.default_postcode or '',
+            'town_or_city': profile.default_town_or_city or '',
+            'street_address1': profile.default_street_address1 or '',
+            'street_address2': profile.default_street_address2 or '',
+            'county': profile.default_county or '',
         }
         order_form = OrderForm(initial=initial_data)
-else:
+    else:
         order_form = OrderForm()
 
-if request.method == 'POST':
+    if request.method == 'POST':
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+
             if request.user.is_authenticated:
                 profile = AccountProfile.objects.get(user=request.user)
                 order.user_profile = profile
+
             order.save()
 
             for item_id, item_data in bag.items():
@@ -105,21 +102,13 @@ if request.method == 'POST':
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
-        else:
-            messages.error(request, 'There was an error with your form. Please double-check your information.')
-
-if not stripe_public_key:
-        messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
-
-context = {
+    context = {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
 
-return render(request, 'checkout/checkout.html', context)
+    return render(request, 'checkout/checkout.html', context)
 
 # Checkout Success View
 def checkout_success(request, order_number):
