@@ -43,13 +43,19 @@ def checkout(request):
     total = current_bag['grand_total']
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
+   # Inside checkout() view
+
+intent = stripe.PaymentIntent.create(
+    amount=stripe_total,
+    currency=settings.STRIPE_CURRENCY,
+    # Replace with your Heroku URLs
+    success_url="https://eco-fitness.herokuapp.com/checkout/success/",  
+    cancel_url="https://eco-fitness.herokuapp.com/checkout/cancel/",   
+)
+
 
     # Pre-fill form for logged in users
-    if request.user.is_authenticated:
+if request.user.is_authenticated:
         # Get or create AccountProfile for the logged-in user
         profile, created = AccountProfile.objects.get_or_create(user=request.user)
         initial_data = {
@@ -64,10 +70,10 @@ def checkout(request):
             'county': profile.default_county if profile.default_county else '',
         }
         order_form = OrderForm(initial=initial_data)
-    else:
+else:
         order_form = OrderForm()
 
-    if request.method == 'POST':
+if request.method == 'POST':
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -106,16 +112,16 @@ def checkout(request):
         else:
             messages.error(request, 'There was an error with your form. Please double-check your information.')
 
-    if not stripe_public_key:
+if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
 
-    context = {
+context = {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
 
-    return render(request, 'checkout/checkout.html', context)
+return render(request, 'checkout/checkout.html', context)
 
 # Checkout Success View
 def checkout_success(request, order_number):
