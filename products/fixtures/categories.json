@@ -1,9 +1,8 @@
 [
-    {"pk": 1, "model": "products.category", "fields": {"name": "fitness_plans", "friendly_name": "Fitness Plans"}},
-    {"pk": 2, "model": "products.category", "fields": {"name": "diet_plans", "friendly_name": "Diet Plans"}},
-    {"pk": 3, "model": "products.category", "fields": {"name": "eco_friendly_activewear", "friendly_name": "Eco-Friendly Activewear"}},
-    {"pk": 4, "model": "products.category", "fields": {"name": "recycled_fitness_gear", "friendly_name": "Recycled Fitness Gear"}},
-    {"pk": 5, "model": "products.category", "fields": {"name": "vegan_supplements", "friendly_name": "Vegan Supplements"}},
-    {"pk": 6, "model": "products.category", "fields": {"name": "biodegradable_accessories", "friendly_name": "Biodegradable Accessories"}}
-  ]
-  
+  {"pk": 1, "model": "products.category", "fields": {"name": "fitness_plans", "friendly_name": "Fitness Plans"}},
+  {"pk": 2, "model": "products.category", "fields": {"name": "diet_plans", "friendly_name": "Diet Plans"}},
+  {"pk": 3, "model": "products.category", "fields": {"name": "eco_friendly_activewear", "friendly_name": "Eco-Friendly Activewear"}},
+  {"pk": 4, "model": "products.category", "fields": {"name": "recycled_fitness_gear", "friendly_name": "Recycled Fitness Gear"}},
+  {"pk": 5, "model": "products.category", "fields": {"name": "vegan_supplements", "friendly_name": "Vegan Supplements"}},
+  {"pk": 6, "model": "products.category", "fields": {"name": "biodegradable_accessories", "friendly_name": "Biodegradable Accessories"}}
+]

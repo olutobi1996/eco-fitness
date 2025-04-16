@@ -164,7 +164,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Use AWS for Static & Media Files
-USE_AWS = os.getenv('USE_AWS', 'False').lower() == 'true'  # Convert to boolean
+USE_AWS = os.getenv('USE_AWS', 'False').lower() == 'true'
 
 if USE_AWS:
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', 'eco-fitness1')
@@ -175,7 +175,7 @@ if USE_AWS:
     if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
         raise ValueError("AWS credentials are missing!")
 
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
     # Cache control
     AWS_S3_OBJECT_PARAMETERS = {
@@ -183,15 +183,15 @@ if USE_AWS:
         'CacheControl': 'max-age=94608000',
     }
 
-    # Static & Media Storage
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-
+    
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 # Stripe API Keys
