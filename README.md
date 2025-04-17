@@ -148,6 +148,41 @@ The platform integrates secure payment systems, advanced UX design, SEO optimiza
 ## ERD Diagram 
 ![Image](https://github.com/user-attachments/assets/90ac702a-198c-4920-ac74-172dd59c10d9)
 
+## Facebook
+![Image](https://github.com/user-attachments/assets/b028d540-b3b9-4d76-93ec-1716601c72b8)
+Follow these steps to set up your Facebook page and start building a community for your eco-friendly fitness website.
+
+1. Log In to Facebook
+First, log into the Facebook account you want to use for your business.
+
+2. Create Your Page
+Go to Pages from the Facebook menu.
+
+Click Create New Page.
+
+Add your Page Name (like your website name) and pick a Category (e.g., "Fitness" or "Eco-Friendly Products").
+
+3. Add Bio & Description
+Write a short, clear description of your eco-friendly fitness brand. Mention your focus on sustainability and health.
+
+Example:
+
+GreenFit Eco Fitness offers eco-friendly fitness products and content to help you stay healthy while caring for the planet.
+
+4. Upload Photos
+Profile Picture: Upload your logo or a brand image.
+
+Cover Photo: Pick an image that reflects your brand’s eco-friendly and fitness vibe.
+
+5. Add Website & Contact Info
+Link to your website and fill in any contact details (email, phone, etc.).
+
+6. Publish Your Page
+Once you're happy with everything, click Publish to make your page live.
+
+7. Invite People to Like the Page
+Invite your friends, family, and followers to like and follow your page.
+
 Entities:
 Accounts - Represents the users of the website. Each account can have one or more orders.
 
@@ -367,6 +402,39 @@ Functionality: Users can submit inquiries, ask questions about products or servi
 Purpose: The Shop app is the primary interface for users to browse and purchase products.
 
 Functionality: It provides a user-friendly shopping experience where customers can explore different categories of products, select items to add to the cart or bag, view detailed product descriptions, and proceed to checkout.
+
+### Future Goals & improvments
+While the current focus is on providing quality products and content that promote fitness, we have exciting plans for future growth. Here's how we plan to evolve Eco-Fitness:
+
+1. Social Media Content Marketing
+We aim to expand our reach by creating engaging social media content, especially in the form of short videos. The content will focus on:
+
+Nutritious food tips: Short clips showcasing healthy, eco-friendly recipes and meal ideas that complement a fitness lifestyle.
+
+Fitness exercises for specific body parts: Video tutorials explaining how to target specific muscle groups and improve body strength.
+
+Eco-friendly lifestyle tips: Integrating sustainability with fitness, showing ways people can live greener lives while staying fit.
+
+By using platforms like Instagram, TikTok, and YouTube, we plan to share content that not only attracts new customers but builds a community around healthy and sustainable living.
+
+2. Email Marketing
+In the future, we plan to implement email marketing campaigns to stay connected with our audience. These campaigns will offer:
+
+Discounts: Offering exclusive deals to subscribers on fitness products, eco-friendly workout gear, or membership discounts.
+
+New product announcements: Informing customers about the latest eco-friendly fitness products, accessories, and apparel.
+
+Fitness tips & updates: Sending helpful fitness and wellness content directly to subscribers, keeping them engaged with useful information.
+
+The goal is to build a loyal customer base and foster long-term relationships with our audience through regular communication.
+
+3. Paid Advertising
+As the business grows, we plan to incorporate paid ads into our strategy to scale up. This will include:
+
+Google Ads and social media ads (e.g., Facebook, Instagram) to target individuals interested in fitness, eco-friendly products, and healthy living.
+
+Retargeting ads to re-engage visitors who didn’t convert the first time they visited the site.
+
 
 ### Requirements
 

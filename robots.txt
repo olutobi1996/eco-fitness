@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /orders/
+Disallow: /accounts/
+Disallow: /password/
+
+Sitemap: https://eco-fitness-2b6c5d715c47.herokuapp.com/sitemap.xml
