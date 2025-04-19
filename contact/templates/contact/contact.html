@@ -7,7 +7,7 @@
 
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}">
+            <div class="alert alert-{{ message.tags }} text-center">
                 {{ message }}
             </div>
         {% endfor %}
@@ -15,25 +15,53 @@
 
     <form method="POST" action="{% url 'contact' %}">
         {% csrf_token %}
+        
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" required name="name" 
+            <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" name="name" 
                 value="{% if request.POST.name %}{{ request.POST.name }}{% endif %}">
+            {% for error in form.name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
         </div>
+
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control" required name="email" 
+            <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" name="email" 
                 value="{% if request.POST.email %}{{ request.POST.email }}{% endif %}">
+            {% for error in form.email.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
         </div>
+
         <div class="mb-3">
             <label class="form-label">Message</label>
-            <textarea class="form-control" rows="4" required name="message">{% if request.POST.message %}{{ request.POST.message }}{% endif %}</textarea>
+            <textarea class="form-control {% if form.message.errors %}is-invalid{% endif %}" rows="4" name="message">
+                {% if request.POST.message %}{{ request.POST.message }}{% endif %}
+            </textarea>
+            {% for error in form.message.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
         </div>
-        <button type="submit" class="btn btn-success">
-            Send Message
-        </button>
-        
+
+        <button type="submit" class="btn btn-success">Send Message</button>
     </form>
+</div>
+
+<!-- Newsletter Signup Section -->
+<div class="container my-5">
+    <h5 class="text-center">🌱 Join Our Eco Newsletter</h5>
+    <form method="POST" action="{% url 'newsletter_signup' %}" class="d-flex justify-content-center">
+        {% csrf_token %}
+        {{ form.email }}
+        <button type="submit" class="btn btn-success ms-2">Subscribe</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} text-center mt-3">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 <script>
@@ -46,8 +74,9 @@
             submitButton.innerHTML = 'Sending... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
         });
     });
-    </script>
-    
+</script>
+
 {% endblock %}
+
 
 

@@ -224,8 +224,6 @@ FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10 
 
 
-import os
-
 # Email Settings
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -254,6 +252,10 @@ else:
     DEFAULT_FROM_EMAIL = "helloecobubba@gmail.com"
     CONTACT_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")
 
+# Mailchimp API settings
+MAILCHIMP_API_KEY = 'a892717bf40f0fe0529453c98de926dc-us21'  
+MAILCHIMP_SERVER_PREFIX = 'us21' 
+MAILCHIMP_LIST_ID = 'edf2bab4f4' 
 
 
 # Crispy Forms

@@ -27,5 +27,57 @@
     {% else %}
         <p class="text-center text-muted">Information about us is not available at the moment.</p>
     {% endif %}
+
+    <!-- Privacy Statement -->
+    <div class="mt-5">
+        <h2 class="mb-3">Privacy Statement</h2>
+        <p>Your privacy is important to us. We are committed to maintaining the confidentiality, integrity, and security of personal information about our users. We collect only the necessary data to process orders and enhance your shopping experience, such as your name, email, and shipping address.</p>
+        <p>We never sell or share your personal data with third parties without your explicit consent. All transactions are encrypted and processed securely. You may request to view, update, or delete your data at any time by contacting our support team.</p>
+        <p>By using our website, you consent to our privacy practices outlined above. We reserve the right to update this statement as our services evolve.</p>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="mt-5">
+        <h2 class="mb-3">Frequently Asked Questions (FAQs)</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                        What makes your products eco-friendly?
+                    </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Our products are made from sustainable, biodegradable, or recycled materials. We also ensure ethical production and minimal packaging waste.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                        Do you offer international shipping?
+                    </button>
+                </h2>
+                <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes! We ship worldwide using eco-conscious delivery partners whenever possible.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faq3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                        What is your return policy?
+                    </button>
+                </h2>
+                <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        We offer a 30-day return window for unused items in original condition. Simply contact us and we’ll guide you through the return process.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+

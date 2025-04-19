@@ -147,17 +147,17 @@
     </div>
 </div>
 {% endblock %}
-{% block extra_js %}
+{% block postloadjs %}
 <!-- Stripe JavaScript -->
 <script src="https://js.stripe.com/v3/"></script>
-/*
+<script>
+    /*
     Eco-Friendly Stripe Payment Integration
     - Securely processes payments using Stripe
     - Handles real-time validation
     - Sends order data to Django before payment
     - Provides eco-friendly UI feedback
 */
-
 var stripePublicKey = "{{ stripe_public_key }}";
 var clientSecret = "{{ client_secret }}";
 var stripe = Stripe(stripePublicKey);
@@ -298,5 +298,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
+</script>
 {% endblock %}
