@@ -2,58 +2,27 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import ContactForm, NewsletterSignupForm
 from .models import ContactMessage
-from .forms import NewsletterForm
 from .models import NewsletterSubscriber
-from mailchimp_marketing import Client
-from mailchimp_marketing.api_client import ApiClientError
 
-
-# Initialize Mailchimp Client
-mailchimp = Client()
-mailchimp.set_config({
-    "api_key": settings.MAILCHIMP_API_KEY,
-    "server": settings.MAILCHIMP_SERVER_PREFIX  # e.g., "us1" or "us2"
-})
-
-# Define the list ID for your Mailchimp audience (list)
-MAILCHIMP_LIST_ID = settings.MAILCHIMP_LIST_ID
 
 # View for Newsletter Sign-up
 def newsletter_signup(request):
     if request.method == 'POST':
-        form = NewsletterForm(request.POST)
+        form = NewsletterSignupForm(request.POST)
         if form.is_valid():
+            # Add email to the newsletter list or Mailchimp
             email = form.cleaned_data['email']
-            
-            # Add to Mailchimp list
-            try:
-                # Add subscriber to Mailchimp
-                response = mailchimp.lists.add_list_member(MAILCHIMP_LIST_ID, {
-                    "email_address": email,
-                    "status": "subscribed",  # "subscribed", "unsubscribed", "cleaned", or "pending"
-                })
-                
-                # Save subscriber in your local DB (optional)
-                NewsletterSubscriber.objects.create(email=email)
-                
-                # Send confirmation email (Optional)
-                send_confirmation_email(email)
+            # Example of adding to Mailchimp (you need to configure the Mailchimp API)
+            # mailchimp_api.add_to_newsletter_list(email)
 
-                messages.success(request, 'You have successfully signed up for our newsletter!')
-                return redirect('newsletter_signup')
-            except ApiClientError as e:
-                print(f"Error: {e.text}")
-                messages.error(request, 'There was an issue with your signup. Please try again.')
-                return redirect('newsletter_signup')
-        else:
-            messages.error(request, 'Please enter a valid email address.')
-
+            messages.success(request, "Thank you for subscribing to our newsletter!")
+            return redirect('contact')  # Redirect back to the contact page or wherever you want
     else:
-        form = NewsletterForm()
+        form = NewsletterSignupForm()
 
-    return render(request, 'newsletter/signup.html', {'form': form})
+    return render(request, 'contact/contact.html', {'form': form})
 
 
 # Sending confirmation email

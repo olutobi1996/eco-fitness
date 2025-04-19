@@ -15,7 +15,8 @@ from pathlib import Path
 
 # Load environment variables if env.py exists
 if os.path.exists(os.path.join(os.path.dirname(__file__), "../env.py")):
-    import env
+    import env  # Ensure env.py is loaded
+
 
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -252,9 +253,6 @@ else:
     DEFAULT_FROM_EMAIL = "helloecobubba@gmail.com"
     CONTACT_EMAIL = os.getenv("EMAIL_HOST_USER", "helloecobubba@gmail.com")
 
-MAILCHIMP_API_KEY = env.MAILCHIMP_API_KEY
-MAILCHIMP_SERVER_PREFIX = env.MAILCHIMP_SERVER_PREFIX
-MAILCHIMP_LIST_ID = env.MAILCHIMP_LIST_ID
 
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
