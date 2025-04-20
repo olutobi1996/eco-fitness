@@ -37,8 +37,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
     "https://*.gitpod.io",
     "https://eco-fitness-2b6c5d715c47.herokuapp.com",
-    "http://8000-olutobi1996-ecofitness-o2m4dwganzu.ws-eu118.gitpod.io",  # Add this line
-    "https://8000-olutobi1996-ecofitness-o2m4dwganzu.ws-eu118.gitpod.io",  # Add this line as well
+    "http://8000-olutobi1996-ecofitness-o2m4dwganzu.ws-eu118.gitpod.io",  
+    "https://8000-olutobi1996-ecofitness-o2m4dwganzu.ws-eu118.gitpod.io",  
 ]
 
 
@@ -168,34 +168,43 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Use AWS for Static & Media Files
+
+# Check if we are using AWS for storage
 USE_AWS = os.getenv('USE_AWS', 'False').lower() == 'true'
 
 if USE_AWS:
-    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME', 'eco-fitness1')
-    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
-    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    # Retrieve AWS settings from environment variables
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')  # Bucket name from Heroku environment
+    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')  # Default to 'us-east-1' if not provided
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')  # AWS Access Key
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')  # AWS Secret Key
 
+    # If AWS credentials are missing, raise an error
     if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
         raise ValueError("AWS credentials are missing!")
 
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
-    # Cache control
+    # Cache control settings for static files
     AWS_S3_OBJECT_PARAMETERS = {
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
         'CacheControl': 'max-age=94608000',
     }
 
+    # Set the custom storages for static and media files
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    
+
+    # Set media and static URLs
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 else:
+    # Local development settings (if not using AWS)
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Default storage (in case AWS is not being used)
+
 
 
 
