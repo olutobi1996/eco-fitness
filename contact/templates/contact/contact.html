@@ -13,34 +13,31 @@
         {% endfor %}
     {% endif %}
 
+    <!-- Contact Form -->
     <form method="POST" action="{% url 'contact' %}">
         {% csrf_token %}
         
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" name="name" 
-                value="{% if request.POST.name %}{{ request.POST.name }}{% endif %}">
-            {% for error in form.name.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
+            {{ contact_form.name }}
+            {% for error in contact_form.name.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
             {% endfor %}
         </div>
 
         <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" name="email" 
-                value="{% if request.POST.email %}{{ request.POST.email }}{% endif %}">
-            {% for error in form.email.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
+            {{ contact_form.email }}
+            {% for error in contact_form.email.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
             {% endfor %}
         </div>
 
         <div class="mb-3">
             <label class="form-label">Message</label>
-            <textarea class="form-control {% if form.message.errors %}is-invalid{% endif %}" rows="4" name="message">
-                {% if request.POST.message %}{{ request.POST.message }}{% endif %}
-            </textarea>
-            {% for error in form.message.errors %}
-                <div class="invalid-feedback">{{ error }}</div>
+            {{ contact_form.message }}
+            {% for error in contact_form.message.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
             {% endfor %}
         </div>
 
@@ -51,32 +48,28 @@
 <!-- Newsletter Signup Section -->
 <div class="container my-5">
     <h5 class="text-center">🌱 Join Our Eco Newsletter</h5>
-    <form method="POST" action="{% url 'newsletter_signup' %}" class="d-flex justify-content-center">
+    <form method="POST" action="{% url 'contact' %}" class="d-flex justify-content-center">
         {% csrf_token %}
-        {{ form.email }}
+        {{ newsletter_form.email }}
         <button type="submit" class="btn btn-success ms-2">Subscribe</button>
     </form>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} text-center mt-3">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        const submitButton = form.querySelector('button[type="submit"]');
-        
-        form.addEventListener('submit', function () {
-            submitButton.disabled = true;
-            submitButton.innerHTML = 'Sending... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            const submitButton = form.querySelector('button[type="submit"]');
+            form.addEventListener('submit', function () {
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Sending... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+            });
         });
     });
 </script>
 
 {% endblock %}
+
 
 
 

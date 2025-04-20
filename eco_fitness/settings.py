@@ -17,7 +17,6 @@ from pathlib import Path
 if os.path.exists(os.path.join(os.path.dirname(__file__), "../env.py")):
     import env  # Ensure env.py is loaded
 
-
 # Paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
