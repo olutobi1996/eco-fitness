@@ -206,8 +206,6 @@ else:
 # Default storage (in case AWS is not being used)
 
 
-
-
 # Stripe API Keys
 STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')  # For frontend only
