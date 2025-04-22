@@ -49,23 +49,6 @@ def checkout(request):
         currency=settings.STRIPE_CURRENCY,
     )
 
-    if request.user.is_authenticated:
-        profile, created = AccountProfile.objects.get_or_create(user=request.user)
-        initial_data = {
-            'full_name': request.user.get_full_name(),
-            'email': request.user.email,
-            'phone_number': profile.default_phone_number or '',
-            'country': profile.default_country or '',
-            'postcode': profile.default_postcode or '',
-            'town_or_city': profile.default_town_or_city or '',
-            'street_address1': profile.default_street_address1 or '',
-            'street_address2': profile.default_street_address2 or '',
-            'county': profile.default_county or '',
-        }
-        order_form = OrderForm(initial=initial_data)
-    else:
-        order_form = OrderForm()
-
     if request.method == 'POST':
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
@@ -102,6 +85,34 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
+            
+            request.session['save_info'] = 'save-info' in request.POST
+
+            
+            return redirect(reverse('checkout_success', args=[order.order_number]))
+
+        else:
+            print("Order form is not valid:")
+            print(order_form.errors)
+
+    else:
+        if request.user.is_authenticated:
+            profile, created = AccountProfile.objects.get_or_create(user=request.user)
+            initial_data = {
+                'full_name': request.user.get_full_name(),
+                'email': request.user.email,
+                'phone_number': profile.default_phone_number or '',
+                'country': profile.default_country or '',
+                'postcode': profile.default_postcode or '',
+                'town_or_city': profile.default_town_or_city or '',
+                'street_address1': profile.default_street_address1 or '',
+                'street_address2': profile.default_street_address2 or '',
+                'county': profile.default_county or '',
+            }
+            order_form = OrderForm(initial=initial_data)
+        else:
+            order_form = OrderForm()
+
     context = {
         'order_form': order_form,
         'stripe_public_key': stripe_public_key,
@@ -109,6 +120,8 @@ def checkout(request):
     }
 
     return render(request, 'checkout/checkout.html', context)
+
+
 
 # Checkout Success View
 def checkout_success(request, order_number):

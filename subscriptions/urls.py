@@ -8,3 +8,5 @@ urlpatterns = [
     path('plans/', plans_view, name='plans'),
 ]
 
+
+

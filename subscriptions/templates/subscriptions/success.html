@@ -1,0 +1,41 @@
+<!-- success.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Success</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/plans/">Plans</a></li>
+                <li><a href="/profile/">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Subscription Successful!</h1>
+        <p>Thank you for subscribing to our service. We're excited to have you as a member of our eco-friendly fitness community!</p>
+
+        <h3>Subscription Details:</h3>
+        <ul>
+            <li><strong>Subscription ID:</strong> {{ subscription.id }}</li>
+            <li><strong>Status:</strong> {{ subscription.status }}</li>
+            <li><strong>Amount:</strong> ${{ subscription.items.data.0.price.unit_amount / 100 }} {{ subscription.currency.upper() }}</li>
+            <li><strong>Plan Name:</strong> {{ subscription.items.data.0.price.product.name }}</li>
+        </ul>
+
+        <p>If you have any questions or need assistance, please don't hesitate to reach out to our support team.</p>
+        <p><a href="/">Return to Home</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Eco-Fitness</p>
+    </footer>
+</body>
+</html>
