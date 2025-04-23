@@ -228,7 +228,7 @@ STRIPE_PRICE_IDS = {
 
 # Default values (Modify as needed)
 FREE_DELIVERY_THRESHOLD = 50  
-STANDARD_DELIVERY_PERCENTAGE = 10 
+STANDARD_DELIVERY_PERCENTAGE = 10
 
 
 # Email settings for different environments

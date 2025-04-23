@@ -57,10 +57,7 @@ def checkout(request):
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
 
-            if request.user.is_authenticated:
-                profile = AccountProfile.objects.get(user=request.user)
-                order.user_profile = profile
-
+            # No user profile section: Skip attaching the user profile
             order.save()
 
             for item_id, item_data in bag.items():
@@ -85,10 +82,8 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse('view_bag'))
 
-            
             request.session['save_info'] = 'save-info' in request.POST
 
-            
             return redirect(reverse('checkout_success', args=[order.order_number]))
 
         else:
@@ -96,22 +91,7 @@ def checkout(request):
             print(order_form.errors)
 
     else:
-        if request.user.is_authenticated:
-            profile, created = AccountProfile.objects.get_or_create(user=request.user)
-            initial_data = {
-                'full_name': request.user.get_full_name(),
-                'email': request.user.email,
-                'phone_number': profile.default_phone_number or '',
-                'country': profile.default_country or '',
-                'postcode': profile.default_postcode or '',
-                'town_or_city': profile.default_town_or_city or '',
-                'street_address1': profile.default_street_address1 or '',
-                'street_address2': profile.default_street_address2 or '',
-                'county': profile.default_county or '',
-            }
-            order_form = OrderForm(initial=initial_data)
-        else:
-            order_form = OrderForm()
+        order_form = OrderForm()
 
     context = {
         'order_form': order_form,
@@ -122,29 +102,13 @@ def checkout(request):
     return render(request, 'checkout/checkout.html', context)
 
 
-
-# Checkout Success View
 def checkout_success(request, order_number):
-    save_info = request.session.get('save_info')
+    """
+    Handle successful checkouts
+    """
     order = get_object_or_404(Order, order_number=order_number)
 
-    if request.user.is_authenticated:
-        # Get or create AccountProfile for the logged-in user
-        profile, created = AccountProfile.objects.get_or_create(user=request.user)
-        order.user_profile = profile
-        order.save()
-
-        if save_info:
-            # Save the order information to the AccountProfile if "save_info" is checked
-            profile.default_phone_number = order.phone_number
-            profile.default_country = order.country
-            profile.default_postcode = order.postcode
-            profile.default_town_or_city = order.town_or_city
-            profile.default_street_address1 = order.street_address1
-            profile.default_street_address2 = order.street_address2
-            profile.default_county = order.county
-            profile.save()
-
+    # Since there is no user profile section, no need to attach user profile
     messages.success(request, f'Order successfully processed! Your order number is {order_number}.')
     if 'bag' in request.session:
         del request.session['bag']
@@ -157,73 +121,4 @@ def checkout_success(request, order_number):
 
 
 
-class StripeWH_Handler:
-    """Handles Stripe webhooks"""
 
-    def __init__(self, request):
-        self.request = request
-
-    def handle_event(self, event):
-        """Handles unexpected or unknown webhook events"""
-        return HttpResponse(
-            content=json.dumps({'message': f'Unhandled event: {event["type"]}'}),
-            content_type="application/json",
-            status=200
-        )
-
-    def handle_payment_intent_succeeded(self, event):
-        """
-        Handles the payment_intent.succeeded webhook from Stripe.
-        """
-        intent = event.data.object
-        pid = intent.id
-        bag = intent.metadata.bag
-        save_info = intent.metadata.save_info
-
-        billing_details = intent.charges.data[0].billing_details
-        shipping_details = intent.shipping
-        grand_total = round(intent.charges.data[0].amount / 100, 2)
-
-        # Clean empty shipping details
-        for field, value in shipping_details.address.items():
-            if value == "":
-                shipping_details.address[field] = None
-
-        order_exists = False
-        attempt = 1
-        while attempt <= 5:
-            try:
-                order = Order.objects.get(
-                    full_name__iexact=shipping_details.name,
-                    email__iexact=billing_details.email,
-                    phone_number__iexact=shipping_details.phone,
-                    country__iexact=shipping_details.address.country,
-                    postcode__iexact=shipping_details.address.postal_code,
-                    town_or_city__iexact=shipping_details.address.city,
-                    street_address1__iexact=shipping_details.address.line1,
-                    street_address2__iexact=shipping_details.address.line2,
-                    county__iexact=shipping_details.address.state,
-                    grand_total=grand_total,
-                    original_bag=bag,
-                    stripe_pid=pid,
-                )
-                order_exists = True
-                break
-            except Order.DoesNotExist:
-                attempt += 1
-                time.sleep(1)
-
-        if order_exists:
-            return HttpResponse(content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database', status=200)
-        else:
-            return HttpResponse(content=f'Webhook received: {event["type"]} | ERROR: Order not found', status=400)
-
-    def handle_payment_intent_payment_failed(self, event):
-        """
-        Handles the payment_intent.payment_failed webhook from Stripe.
-        """
-        return HttpResponse(
-            content=json.dumps({'message': f'Failed payment: {event["type"]}'}),
-            content_type="application/json",
-            status=200
-        )

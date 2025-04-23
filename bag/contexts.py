@@ -10,6 +10,7 @@ def bag_contents(request):
     total = Decimal('0.00')
     product_count = 0
     bag = request.session.get('bag', {})
+    print("🛍 BAG FROM SESSION:", bag)  
 
     for product_id, item_data in bag.items():
         product = get_object_or_404(Product, pk=product_id)
@@ -57,6 +58,7 @@ def bag_contents(request):
 
     grand_total = total + delivery
 
+
     context = {
         'bag_items': bag_items,
         'total': total,
@@ -69,4 +71,5 @@ def bag_contents(request):
     }
 
     return context
+
 

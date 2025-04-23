@@ -5,6 +5,7 @@
     <hr>
 
     {% if cart_items %}
+    <h3>Products</h3>
     <table class="table table-bordered">
         <thead class="bg-light">
             <tr>
@@ -31,14 +32,48 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
+
+    {% if items_by_size %}
+    <h3>Products Grouped by Size</h3>
+    {% for size, items in items_by_size.items %}
+        <h4>Size: {{ size }}</h4>
+        <table class="table table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>${{ item.product.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.total }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_bag' item.product.id %}" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+    {% endif %}
+
     <div class="d-flex justify-content-between">
         <a href="{% url 'products:all_products' %}" class="btn btn-outline-success">Continue Shopping</a>
         <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
     </div>
-{% else %}
+
+    {% if not cart_items and not items_by_size %}
     <p class="text-muted">Your cart is empty.</p>
     <a href="{% url 'products:all_products' %}" class="btn btn-success">Shop Now</a>
-{% endif %}
-
+    {% endif %}
 </div>
 {% endblock %}
+
