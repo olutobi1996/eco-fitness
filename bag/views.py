@@ -11,33 +11,40 @@ def view_bag(request):
     return render(request, 'bag/bag.html')
 
 
-def add_to_bag(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+def add_to_bag(request, item_id):  # Keeping 'item_id' as per your preference
+    product = get_object_or_404(Product, pk=item_id)
 
-    quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url') or reverse('view_bag')
+    quantity = int(request.POST.get('quantity', 1))  # Default quantity to 1 if not provided
+    redirect_url = request.POST.get('redirect_url')  # Get redirect_url from POST
+    if not redirect_url:  # If not provided, default to 'view_bag'
+        redirect_url = reverse('view_bag')
+        print(f"Using default redirect URL: {redirect_url}")  # Debugging line
+
     size = None
     if 'product_size' in request.POST:
         size = request.POST['product_size']
+    
     bag = request.session.get('bag', {})
 
     if size:
-        if product_id in list(bag.keys()):
-            if size in bag[product_id]['items_by_size'].keys():
-                bag[product_id]['items_by_size'][size] += quantity
-                messages.success(request, f'Updated size {size.upper()} {product.name} quantity to {bag[product_id]["items_by_size"][size]}')
+        # If item already in the bag, update size
+        if str(item_id) in list(bag.keys()):
+            if size in bag[str(item_id)]['items_by_size'].keys():
+                bag[str(item_id)]['items_by_size'][size] += quantity
+                messages.success(request, f'Updated size {size.upper()} {product.name} quantity to {bag[str(item_id)]["items_by_size"][size]}')
             else:
-                bag[product_id]['items_by_size'][size] = quantity
+                bag[str(item_id)]['items_by_size'][size] = quantity
                 messages.success(request, f'Added size {size.upper()} {product.name} to your bag')
         else:
-            bag[product_id] = {'items_by_size': {size: quantity}}
+            bag[str(item_id)] = {'items_by_size': {size: quantity}}
             messages.success(request, f'Added size {size.upper()} {product.name} to your bag')
     else:
-        if product_id in list(bag.keys()):
-            bag[product_id] += quantity
-            messages.success(request, f'Updated {product.name} quantity to {bag[product_id]}')
+        # If no size, just add the item
+        if str(item_id) in list(bag.keys()):
+            bag[str(item_id)] += quantity
+            messages.success(request, f'Updated {product.name} quantity to {bag[str(item_id)]}')
         else:
-            bag[product_id] = quantity
+            bag[str(item_id)] = quantity
             messages.success(request, f'Added {product.name} to your bag')
 
     request.session['bag'] = bag
