@@ -1,33 +1,50 @@
-import stripe
-from django.http import JsonResponse
-from django.conf import settings
+
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
+import stripe
+from django.conf import settings
+from .webhook_handler import StripeWH_Handler
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
+@require_POST
 @csrf_exempt
-def stripe_webhook(request):
+def webhook(request):
+    """Listen for webhooks from Stripe"""
+
+    # Get Stripe webhook secret and API key from settings
+    wh_secret = settings.STRIPE_WH_SECRET
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    # Retrieve the webhook payload and signature header
     payload = request.body
-    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', None)
     event = None
 
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, settings.DJSTRIPE_WEBHOOK_SECRET
-        )
+        event = stripe.Webhook.construct_event(payload, sig_header, wh_secret)
     except ValueError:
-        return JsonResponse({"error": "Invalid payload"}, status=400)
+        # Invalid payload
+        return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError:
-        return JsonResponse({"error": "Invalid signature"}, status=400)
+        # Invalid signature
+        return HttpResponse(status=400)
 
-    # Handle subscription events
-    if event["type"] == "invoice.payment_succeeded":
-        print("Subscription payment received!")
-        # Optionally, update your database or send a success email to the user
+    # Initialize the webhook handler
+    handler = StripeWH_Handler(request)
 
-    elif event["type"] == "customer.subscription.deleted":
-        print("Subscription canceled!")
-        # Optionally, update your database to reflect the canceled subscription
+    # Map Stripe events to their handlers
+    event_map = {
+        'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
+        'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed,
+        # Add other events here as needed
+    }
 
-    return JsonResponse({"status": "success"})
+    # Get the event type from Stripe
+    event_type = event['type']
+
+    # Get the handler function for the event type, or use the generic one
+    event_handler = event_map.get(event_type, handler.handle_event)
+
+    # Call the handler with the event
+    return event_handler(event)
 
