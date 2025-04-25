@@ -10,7 +10,7 @@
         <div class="carousel-inner">
             {% for product in featured_products %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ product.image.url }}" class="d-block w-100" style="height: 400px; object-fit: cover;">
+                <img src=https://eco-fitness1.s3.us-east-1.amazonaws.com/media/pexels-bamboo-ave-677926128-17917204.jpg">
                 <div class="carousel-caption bg-dark bg-opacity-50 rounded">
                     <h5>{{ product.name }}</h5>
                     <p>${{ product.price }}</p>
@@ -55,7 +55,7 @@
         {% for bundle in bundles %}
         <div class="col-md-4 mb-4">
             <div class="card shadow">
-                <img src="{{ bundle.image.url }}" class="card-img-top">
+                <img src="https://eco-fitness1.s3.us-east-1.amazonaws.com/media/pexels-rachid-azzouzy-2148847067-30320486.jpg">
                 <div class="card-body">
                     <h5 class="card-title">{{ bundle.name }}</h5>
                     <p class="text-muted"><del>${{ bundle.original_price }}</del> <strong>${{ bundle.discounted_price }}</strong></p>
