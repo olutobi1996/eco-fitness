@@ -64,7 +64,8 @@ def checkout(request):
                             quantity=item_data,
                         )
                         order_line_item.save()
-                    else:
+                    elif isinstance(item_data, dict) and 'items_by_size' in item_data:
+                        
                         for size, quantity in item_data['items_by_size'].items():
                             order_line_item = OrderLineItem(
                                 order=order,
