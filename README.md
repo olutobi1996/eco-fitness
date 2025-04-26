@@ -435,6 +435,15 @@ Google Ads and social media ads (e.g., Facebook, Instagram) to target individual
 
 Retargeting ads to re-engage visitors who didn’t convert the first time they visited the site.
 
+### Testing 
+Code Quality & Testing
+While I have not written extensive tests across all applications in my eco-friendly e-commerce website, I have ensured consistent code quality by running static analysis tools. I used flake8 to check for linting errors by executing the following command:
+
+bash
+Copy
+Edit
+python3 -m flake8 --exclude .venv,.vscode,migrations
+This command excludes common directories like virtual environments, editor settings, and database migrations. After running the checks, no significant issues were found — ensuring that the codebase maintains a clean and readable standard without major syntax or style problems.
 
 ### Requirements
 
