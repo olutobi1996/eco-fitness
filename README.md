@@ -472,6 +472,21 @@ Edit
 python3 -m flake8 --exclude .venv,.vscode,migrations
 This command excludes common directories like virtual environments, editor settings, and database migrations. After running the checks, no significant issues were found — ensuring that the codebase maintains a clean and readable standard without major syntax or style problems.
 
+### Custom 404 Page 
+To enhance the user experience on our eco-friendly fitness website, a custom 404 error page has been implemented. This page is displayed when a user attempts to access a URL that doesn't exist.
+
+How it Works:
+If a user navigates to a non-existent page (e.g., /test), the server will render a custom 404 error page.
+
+The custom 404 page is designed to be consistent with the website's branding, with a message guiding the user back to the homepage or relevant sections like the shop.
+
+Implementation:
+View: A handler404 function was added in the home/views.py file to handle the 404 error.
+
+URL Configuration: In the eco_fitness/urls.py file, we set the global 404 error handler.
+
+Template: The 404 error page is designed in home/templates/errors/404.html and integrates seamlessly with the rest of the site’s design.
+
 ### Requirements
 
 - Python 3.8+
