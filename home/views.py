@@ -22,3 +22,9 @@ def product_list(request):
 
 def add_product(request):
     return render(request, 'products/add_product.html')
+
+from django.shortcuts import render
+
+def handler404(request, exception):
+    """ Custom 404 Error Handler - Page Not Found """
+    return render(request, "errors/404.html", status=404)
