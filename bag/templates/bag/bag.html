@@ -143,7 +143,31 @@
             input.closest('form').submit();
         }
     });
+
+    
+    $('.remove-item').click(function(e) {
+        e.preventDefault();
+        const csrfToken = "{{ csrf_token }}";
+        const itemId = $(this).attr('id').split('remove_')[1];
+        const size = $(this).data('product_size');
+
+        const url = `/bag/remove/${itemId}/`;
+        const data = { 'csrfmiddlewaretoken': csrfToken };
+
+        if (size) {
+            data['product_size'] = size;
+        }
+
+        $.post(url, data)
+            .done(function() {
+                location.reload();
+            })
+            .fail(function() {
+                alert('Error removing item. Please try again.');
+            });
+    });
 </script>
+
 {% endblock %}
 
 
