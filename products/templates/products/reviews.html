@@ -6,66 +6,72 @@
         <h2 class="text-center">Customer Reviews</h2>
 
         {% if product %}
-            <h3>Reviews for: {{ product.name }}</h3>
+        <h3>Reviews for: {{ product.name }}</h3>
         {% else %}
-            <h3>Search for a Product</h3>
+        <h3>Search for a Product</h3>
         {% endif %}
 
         <!-- Search Form -->
         <form method="GET" action="{% url 'products:product_reviews' %}">
-            <input type="text" name="search" placeholder="Search for products..." class="form-control" value="{{ request.GET.search }}">
+            <input type="text" name="search" placeholder="Search for products..." class="form-control"
+                value="{{ request.GET.search }}">
             <button type="submit" class="btn btn-primary mt-2">Search</button>
         </form>
 
         {% if products %}
-            <h4>Search Results:</h4>
-            <ul class="list-group">
-                {% for prod in products %}
-                    <li class="list-group-item">
-                        <a href="{% url 'products:product_reviews_by_id' prod.id %}">{{ prod.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        <h4>Search Results:</h4>
+        <ul class="list-group">
+            {% for prod in products %}
+            <li class="list-group-item">
+                <a href="{% url 'products:product_reviews_by_id' prod.id %}">{{ prod.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
         {% else %}
-            {% if not product %}
-                <p>No products found matching your search.</p>
-            {% endif %}
+        {% if not product %}
+        <p>No products found matching your search.</p>
+        {% endif %}
         {% endif %}
 
         {% if product %}
-            <hr>
-            <h4>Reviews for {{ product.name }}:</h4>
-            {% for review in reviews %}
-                <div class="border p-3 my-3 rounded shadow-sm">
-                    <strong class="text-primary">{{ review.user.username }}</strong>
-                    <span class="text-warning"> - Rated: {{ review.rating }}/5 ⭐</span>
-                    <p class="mt-2">{{ review.comment }}</p>
-                    <small class="text-muted">{{ review.created_at|date:"M d, Y H:i" }}</small><br>
-                </div>
-            {% empty %}
-                <p>No reviews yet for this product.</p>
-            {% endfor %}
+        <hr>
+        <h4>Reviews for {{ product.name }}:</h4>
+        {% for review in reviews %}
+        <div class="border p-3 my-3 rounded shadow-sm">
+            <strong class="text-primary">{{ review.user.username }}</strong>
+            <span class="text-warning"> - Rated: {{ review.rating }}/5 ⭐</span>
+            <p class="mt-2">{{ review.comment }}</p>
+            <small class="text-muted">{{ review.created_at|date:"M d, Y H:i" }}</small><br>
+
+            {% if user == review.user or user.is_superuser %}
+            <div class="mt-2">
+                <a href="{% url 'products:edit_review' review.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                <a href="{% url 'products:delete_review' review.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% empty %}
+        <p>No reviews yet for this product.</p>
+        {% endfor %}
         {% endif %}
 
         {% if user.is_authenticated %}
-            {% if product %}
-                <h3 class="text-center">Leave a Review for {{ product.name }}</h3>
-                <form method="POST" class="border p-4 rounded shadow-sm">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-3">Submit Review</button>
-                </form>
-            {% else %}
-                <p>Please select a product to leave a review.</p>
-            {% endif %}
+        {% if product %}
+        <h3 class="text-center">Leave a Review for {{ product.name }}</h3>
+        <form method="POST" class="border p-4 rounded shadow-sm">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-3">Submit Review</button>
+        </form>
         {% else %}
-            <p class="text-center mt-3">
-                <a href="{% url 'account_login' %}" class="btn btn-outline-primary">Log in</a> to leave a review.
-            </p>
+        <p>Please select a product to leave a review.</p>
+        {% endif %}
+        {% else %}
+        <p class="text-center mt-3">
+            <a href="{% url 'account_login' %}" class="btn btn-outline-primary">Log in</a> to leave a review.
+        </p>
         {% endif %}
     </div>
 </div>
 {% endblock %}
-
-
-

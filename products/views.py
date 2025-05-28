@@ -104,6 +104,42 @@ def product_reviews(request, product_id=None):
 
     return render(request, "products/reviews.html", context)
 
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+
+    if request.user != review.user and not request.user.is_superuser:
+        messages.error(request, "You don't have permission to edit this review.")
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Review updated successfully.')
+            return redirect('products:product_reviews_by_id', review.product.id)
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, 'products/edit_review.html', {'form': form, 'review': review})
+
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+
+    if request.user != review.user and not request.user.is_superuser:
+        messages.error(request, "You don't have permission to delete this review.")
+        return redirect('home')
+
+    if request.method == 'POST':
+        review.delete()
+        messages.success(request, 'Review deleted successfully.')
+        return redirect('products:product_reviews_by_id', review.product.id)
+
+    return render(request, 'products/delete_review.html', {'review': review})
+
+
 
 @login_required
 def add_product(request):
@@ -146,6 +182,7 @@ def edit_product(request, product_id):
         messages.info(request, f'You are editing {product.name}')
 
     return render(request, 'products/edit_product.html', {'form': form, 'product': product})
+
 
 @login_required
 def delete_product(request, product_id):

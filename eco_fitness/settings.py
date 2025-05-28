@@ -27,10 +27,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "8000-olutobi1996-ecofitness-pbp3yxi9l6n.ws-eu118.gitpod.io",
+    ".gitpod.io",
     "eco-fitness-2b6c5d715c47.herokuapp.com",
-    "8000-olutobi1996-ecofitness-o2m4dwganzu.ws-eu118.gitpod.io",
-    "8000-olutobi1996-ecofitness-r9z8d8gtyac.ws-eu119.gitpod.io",  
 ]
 
 CSRF_TRUSTED_ORIGINS = [

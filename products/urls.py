@@ -7,7 +7,9 @@ from .views import (
     delete_product,
     product_reviews,  
     shop_view,  
-    category_products,  
+    category_products,
+    edit_review,
+    delete_review,
 )
 
 app_name = 'products'
@@ -20,7 +22,9 @@ urlpatterns = [
     path('edit/<int:product_id>/', edit_product, name='edit_product'),
     path('delete/<int:product_id>/', delete_product, name='delete_product'),
     path('reviews/', product_reviews, name='product_reviews'), 
-    path('<int:product_id>/reviews/', product_reviews, name='product_reviews_by_id'),  
+    path('<int:product_id>/reviews/', product_reviews, name='product_reviews_by_id'),
+    path('reviews/edit/<int:review_id>/', edit_review, name='edit_review'),
+    path('reviews/delete/<int:review_id>/', delete_review, name='delete_review'),
     path("category/<slug:category_slug>/", category_products, name="category_products"),
 ]
 
