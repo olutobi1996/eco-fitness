@@ -20,12 +20,13 @@
       </div>
       <div class="profile-item">
         <strong>Shipping Address:</strong>
-        {% if user.profile.shipping_address %}
-        <p>{{ user.profile.shipping_address }}</p>
+        {% if profile.shipping_address %}
+        <p>{{ profile.shipping_address }}</p>
         {% else %}
         <p>No shipping address added yet.</p>
         {% endif %}
       </div>
+
     </div>
 
     <!-- Order History Section -->
@@ -44,10 +45,10 @@
         <tbody>
           {% for order in orders %}
           <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.date_ordered|date:"F d, Y" }}</td>
-            <td>${{ order.total }}</td>
-            <td>{{ order.status }}</td>
+            <td>{{ order.order_number }}</td>
+            <td>{{ order.created_at|date:"F d, Y" }}</td>
+            <td>${{ order.grand_total }}</td>
+            <td>Paid</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -56,6 +57,7 @@
       <p>You haven't made any orders yet. Start shopping!</p>
       {% endif %}
     </div>
+
 
     <!-- Eco-Friendly Tips Section -->
     <div class="eco-tips">
@@ -93,7 +95,8 @@
         <div class="form-group">
           <label for="shipping_address">Shipping Address:</label>
           <textarea name="shipping_address" id="shipping_address"
-            class="form-control">{{ user.profile.shipping_address }}</textarea>
+            class="form-control">{{ profile.shipping_address }}</textarea>
+
         </div>
 
         <div class="form-group">

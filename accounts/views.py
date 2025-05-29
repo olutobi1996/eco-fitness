@@ -1,35 +1,52 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
+
 from django.contrib.auth.models import User
+from django.contrib import messages
+
 from .forms import ProfileForm
-from .models import AccountProfile  
+from .models import AccountProfile
+from checkout.models import Order
 
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    profile = get_object_or_404(AccountProfile, user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+
+    context = {
+        'profile': profile,
+        'orders': orders,
+    }
+
+    return render(request, 'accounts/profile.html', context)
+
+
+    return render(request, 'accounts/profile.html', {
+        'profile': profile,
+        'orders': orders,
+    })
+
 
 @login_required
 def edit_profile(request):
-    # Ensure the profile exists
     profile, created = AccountProfile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=request.user)
-
-        # Handle the shipping address form
         shipping_address = request.POST.get('shipping_address')
 
         if form.is_valid():
-            form.save()  # Save the User form
+            form.save()
 
-            # Save the shipping address if it's provided
+            # Update profile
             if shipping_address:
                 profile.shipping_address = shipping_address
                 profile.save()
 
-            return redirect('profile')  # Redirect to the profile page after saving
+            messages.success(request, "Your profile was updated successfully.")
+            return redirect('profile')
+
     else:
         form = ProfileForm(instance=request.user)
 
