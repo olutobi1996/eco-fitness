@@ -173,7 +173,43 @@ Offer incentives like subscription-based plans and discounts for loyal customers
 ![Image](https://github.com/user-attachments/assets/bca3095e-34e1-4571-a885-6f92d786f3ae)
 
 ## ERD Diagram 
-![Image](https://github.com/user-attachments/assets/90ac702a-198c-4920-ac74-172dd59c10d9)
+🗺️ ERD (Entity Relationship Diagram) Breakdown
+This ERD maps out the core structure of the backend — basically, how all the models in the database are connected and what data is being stored behind the scenes.
+
+At the heart of it, we’ve got the Django User model (which handles all the built-in auth stuff like login, email, password, etc.), and that links directly to a custom AccountProfile model — where we store all the extra bits like the user’s default address, phone number, and shipping details.
+
+Then we’ve got the products side:
+
+Products belong to categories (like supplements, fitness plans, or activewear).
+
+Users can leave reviews on products.
+
+Some products are bundled together in special bundles with a discounted price.
+
+On the checkout/order side:
+
+Orders are created when a user checks out.
+
+Each order can have multiple order line items (which tracks what was ordered, the size if relevant, and quantity).
+
+We also store things like delivery costs, Stripe payment ID, and timestamps for when the order was placed.
+
+There’s also the subscription system, which ties each user to a Stripe subscription (handy for premium plans or members-only content).
+
+Outside of ecommerce, we’ve got:
+
+A blog/community area where admins can post content.
+
+A contact message model that stores user messages from the contact form.
+
+A newsletter model that tracks subscribed emails.
+
+An About Us model that holds the page content for our mission/vision.
+
+It’s all designed to be modular and scalable, so each feature (shop, profile, blog, etc.) has its own clear structure and can grow independently.
+
+Here is my ERD:
+![Image](https://github.com/user-attachments/assets/417196db-d5e5-4669-bc38-d052d4d3289d)
 
 ## Facebook
 ![Image](https://github.com/user-attachments/assets/b028d540-b3b9-4d76-93ec-1716601c72b8)
