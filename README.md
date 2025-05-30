@@ -530,6 +530,26 @@ Each ad campaign will drive to a specific landing page optimised for conversions
 Overall Strategy
 The idea is to create a brand, not just a shop — one that users connect with emotionally and ethically. By combining data-driven digital marketing with real user reviews and content that helps educate or inspire, Eco-Fitness will build trust, community, and long-term loyalty from customers who believe in what we stand for: Wellness for people and the planet.
 
+## 🎨 Fonts and Typography
+
+A strong typographic system has been implemented to support a clean and accessible user experience while aligning with the brand’s eco-conscious identity.
+
+### Font Families Used:
+
+- **Poppins** – Used for logos, navigation bars, section headers, and CTAs. It has a modern, geometric look that helps headlines stand out and communicates confidence and clarity.
+- **Lato** – Used for body text across all pages. Chosen for its readability, subtle roundness, and friendly appeal, perfect for mobile and accessibility.
+- **Playfair Display** – Used selectively for quotes and testimonials. This elegant serif font adds visual contrast and a premium, editorial feel to certain content blocks.
+
+### Typography Roles:
+
+- **Hero Headers** use bold Poppins at larger sizes (3rem+), giving users immediate attention on promotions and CTAs.
+- **Section Headings** are set in Poppins, sized down to maintain hierarchy.
+- **Paragraph Text** and UI feedback (e.g., toasts) are in Lato, ensuring excellent legibility.
+- **Quote or Highlight Text** uses Playfair Display in italic for stylistic contrast.
+
+These font choices were also optimized for performance using Google Fonts, ensuring fast loading and accessibility across devices.
+
+
 ### Future Goals & improvments
 While the current focus is on providing quality products and content that promote fitness, we have exciting plans for future growth. Here's how we plan to evolve Eco-Fitness:
 

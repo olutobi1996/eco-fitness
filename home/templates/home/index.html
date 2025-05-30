@@ -2,15 +2,91 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+.hero-section {
+  position: relative;
+  background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px; /* add some horizontal padding */
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Responsive text size */
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Smaller devices */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 70vh;
+    min-height: 400px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 60vh;
+    min-height: 300px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+}
+</style>
 <!-- Hero Section -->
-<section class="hero bg-success text-white text-center py-5">
-    <div class="container">
-        <h1 class="display-3 fw-bold"><strong>Transform Your Fitness, Sustainably</strong></h1>
-        <p class="lead">Join our <strong>eco-friendly fitness community</strong>, shop sustainable
-            <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
-        <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3"><strong>Explore Plans</strong></a>
-    </div>
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>Transform Your Fitness, Sustainably</h1>
+    <img src="{% static 'css/images/EcoFitnessHero.jpg' %}" alt="Eco Fitness Hero">
+    <p>Join our <strong>eco-friendly fitness community</strong>, shop sustainable <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
+    <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3"><strong>Explore Plans</strong></a>
+  </div>
 </section>
+
 
 <!-- Categories Section -->
 <section class="container text-center my-5">

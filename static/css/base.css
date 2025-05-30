@@ -1,10 +1,12 @@
 /* General Styles */
-html, body {
-    height: 100%;
+body, html {
     font-family: 'Lato', sans-serif;
     color: #444;
+    font-size: 1rem;
+    line-height: 1.6;
     background-size: cover;
 }
+
 
 /* Navbar */
 .navbar {
@@ -12,9 +14,12 @@ html, body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-brand {
-    font-weight: bold;
-    color: #28a745 !important; /* Eco-friendly green */
+.navbar-brand,
+.logo-font {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .navbar-nav .nav-link {
@@ -73,13 +78,35 @@ html, body {
     border-color: #28a745;
 }
 
-/* Hero Section */
 .hero-section {
-    text-align: center;
-    color: white;
-    padding: 80px 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+  position: relative;
+  background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 20px;
 }
 
 /* Typography */
@@ -87,6 +114,25 @@ html, body {
     text-transform: uppercase;
     font-weight: bold;
 }
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #1b4332; /* Deeper eco green */
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
 
 .text-green {
     color: #28a745 !important;
@@ -110,13 +156,14 @@ a.category-badge > span.badge:hover {
     color: #fff !important;
 }
 
-/* Product Cards */
-.product-card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+/* Product Card */
+.product-card .card-text,
+.blog-content,
+.about-us p {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
 }
+
 
 .product-card:hover {
     transform: translateY(-5px);
@@ -150,6 +197,16 @@ footer a:hover {
 
 .btt-link {
     cursor: pointer;
+}
+
+/* General Toast Styles */
+.quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #2d6a4f;
+    margin: 20px auto;
+    text-align: center;
 }
 
 /* General Toast Styles */
