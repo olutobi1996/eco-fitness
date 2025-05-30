@@ -466,6 +466,70 @@ Purpose: The Shop app is the primary interface for users to browse and purchase 
 
 Functionality: It provides a user-friendly shopping experience where customers can explore different categories of products, select items to add to the cart or bag, view detailed product descriptions, and proceed to checkout.
 
+## Marketing Strategy
+Target Audience
+Eco-Fitness is aimed at two core user groups, brought together by a shared mindset:
+
+Fitness Enthusiasts – individuals who are actively trying to live healthier lifestyles, whether through gym workouts, home exercise routines, or structured fitness/diet plans.
+
+Environmentally Conscious Consumers – users who are mindful about sustainability, the climate crisis, and the impact their purchases have on the planet.
+
+Our brand sits right at the intersection of these audiences, appealing to those who want to stay fit without compromising their values. Whether it's someone looking for biodegradable workout gear, eco-friendly supplements, or a diet plan that aligns with plant-based living — Eco-Fitness offers a curated space for all.
+
+How We Attract Users
+
+We’ve planned a multi-channel strategy to drive traffic, build brand recognition, and create a loyal customer base:
+
+SEO-Driven Product Naming & Content
+Through research, we’ve identified high-performing keywords combining both the eco and fitness niches (e.g. eco-friendly workout clothes, plant-based supplements, sustainable gym gear, etc.). All product names, meta descriptions, and on-page content have been written with SEO in mind to organically improve visibility across search engines.
+
+Social Media (Instagram, TikTok & Pinterest)
+We’ll leverage visual-heavy platforms like Instagram and TikTok to showcase:
+
+Real customers using our products
+
+Short videos around fitness tips and sustainable living
+
+Collaborations with fitness influencers and eco-activists
+
+Pinterest will also be used to share moodboards and lifestyle inspiration (eco-home gyms, sustainable wellness routines, etc.) to drive clicks from a health- and design-savvy audience.
+
+Content Marketing (Wellness Blog & Product Reviews)
+We’ll feature a blog/community space that regularly publishes content such as:
+
+“5 Eco-Friendly Swaps for Your Gym Routine”
+
+“The Benefits of Vegan Supplements Backed by Science”
+
+Customer reviews, transformations, and testimonials
+
+Reviews on product pages not only build trust but also improve long-tail SEO.
+
+Email Campaigns & Subscriber Discounts
+We’ll build a newsletter list from the homepage and checkout process, offering a 10% discount on first orders in exchange for a signup. Email marketing will be used to:
+
+Send out new product drops
+
+Share sustainable fitness tips
+
+Re-engage abandoned carts
+
+Promote bundles or seasonal offers
+
+Paid Ads (Google & Meta Ads)
+We’ll run targeted campaigns using Google Ads (shopping + search) and Meta Ads (Facebook/Instagram) based on users interested in:
+
+Fitness
+
+Vegan/eco lifestyles
+
+Mindfulness/wellbeing
+
+Each ad campaign will drive to a specific landing page optimised for conversions.
+
+Overall Strategy
+The idea is to create a brand, not just a shop — one that users connect with emotionally and ethically. By combining data-driven digital marketing with real user reviews and content that helps educate or inspire, Eco-Fitness will build trust, community, and long-term loyalty from customers who believe in what we stand for: Wellness for people and the planet.
+
 ### Future Goals & improvments
 While the current focus is on providing quality products and content that promote fitness, we have exciting plans for future growth. Here's how we plan to evolve Eco-Fitness:
 
