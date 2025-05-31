@@ -6,32 +6,30 @@
 <style>
 .hero-section {
   position: relative;
-  background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
-  background-size: cover;
-  background-position: center center;
   height: 100vh;
   min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  overflow: hidden;
   text-align: center;
-  padding: 0 20px; /* add some horizontal padding */
+  padding: 0 20px;
+  color: white;
 }
 
-.hero-section::before {
-  content: '';
+#ecoCanvas {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: linear-gradient(to bottom, #14532d, #065f46); /* earthy green tones */
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 800px;
-  width: 100%;
   padding: 20px;
 }
 
@@ -87,14 +85,13 @@
 </style>
 <!-- Hero Section -->
 <section class="hero-section">
+  <canvas id="ecoCanvas"></canvas>
   <div class="hero-content">
     <h1>Transform Your Fitness, Sustainably</h1>
     <p>Join our <strong>eco-friendly fitness community</strong>, shop sustainable <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
     <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3"><strong>Explore Plans</strong></a>
   </div>
 </section>
-
-
 
 <!-- Categories Section -->
 <section class="container text-center my-5">
@@ -206,5 +203,69 @@
     <p>Connect with other <strong>fitness enthusiasts</strong>, share progress, and support each other.</p>
     <a href="/community" class="btn btn-success btn-lg"><strong>Join the Community</strong></a>
 </section>
+<script>
+const canvas = document.getElementById('ecoCanvas');
+const ctx = canvas.getContext('2d');
+
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x, y, size, speedY, symbol) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.speedY = speedY;
+    this.symbol = symbol;
+  }
+
+  update() {
+    this.y += this.speedY;
+    if (this.y > canvas.height) {
+      this.y = -this.size;
+      this.x = Math.random() * canvas.width;
+    }
+  }
+
+  draw() {
+    ctx.font = `${this.size}px Arial`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.fillText(this.symbol, this.x, this.y);
+  }
+}
+
+const symbols = ['🍃', '🏋️']; // Leaves and dumbbells
+
+function initParticles(count = 50) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    let size = Math.random() * 24 + 12;
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height;
+    let speedY = Math.random() * 1 + 0.5;
+    let symbol = symbols[Math.floor(Math.random() * symbols.length)];
+    particles.push(new Particle(x, y, size, speedY, symbol));
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+initParticles();
+animate();
+</script>
 
 {% endblock %}
