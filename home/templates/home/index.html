@@ -46,6 +46,14 @@
   margin-bottom: 1.5rem;
 }
 
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  margin-top: -50px; /* pushes it higher */
+  color: white; /* ensure text is white */
+}
+
+
 /* Smaller devices */
 @media (max-width: 768px) {
   .hero-section {
@@ -81,11 +89,11 @@
 <section class="hero-section">
   <div class="hero-content">
     <h1>Transform Your Fitness, Sustainably</h1>
-    <img src="{% static 'css/images/EcoFitnessHero.jpg' %}" alt="Eco Fitness Hero">
     <p>Join our <strong>eco-friendly fitness community</strong>, shop sustainable <strong>merchandise</strong>, and achieve your <strong>health goals</strong>.</p>
     <a href="{% url 'plans' %}" class="btn btn-light btn-lg mt-3"><strong>Explore Plans</strong></a>
   </div>
 </section>
+
 
 
 <!-- Categories Section -->
