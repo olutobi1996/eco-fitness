@@ -699,9 +699,122 @@ Subscription management
 Community interactions
 
 Contact form submissions
+### Deployment Instructions Heroku 
+This section outlines detailed steps to deploy the Eco-Fitness platform, focusing on Heroku as the hosting environment, while also including general best practices for environment variables and configuration.
 
+1. GitHub Repository Setup
+Create a GitHub repository and push your local project code.
 
+Ensure your .gitignore excludes sensitive files such as .env, local settings, and any secret keys to prevent accidental exposure.
 
+2. Prepare Environment Variables
+Locally, use a .env file for development with variables such as:
+
+env
+Copy
+Edit
+SECRET_KEY=your-django-secret-key
+DEBUG=False
+DATABASE_URL=your-database-url
+STRIPE_PUBLIC_KEY=your-stripe-public-key
+STRIPE_SECRET_KEY=your-stripe-secret-key
+EMAIL_HOST=smtp.your-email-provider.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email@example.com
+EMAIL_HOST_PASSWORD=your-email-password
+On Heroku, do not push .env files. Instead, set config vars via the Heroku Dashboard or CLI:
+
+bash
+Copy
+Edit
+heroku config:set SECRET_KEY='your-django-secret-key'
+heroku config:set DEBUG=False
+heroku config:set STRIPE_PUBLIC_KEY='your-stripe-public-key'
+heroku config:set STRIPE_SECRET_KEY='your-stripe-secret-key'
+heroku config:set EMAIL_HOST='smtp.your-email-provider.com'
+heroku config:set EMAIL_PORT=587
+heroku config:set EMAIL_HOST_USER='your-email@example.com'
+heroku config:set EMAIL_HOST_PASSWORD='your-email-password'
+For the database, Heroku typically provides a DATABASE_URL which Django can use directly with dj-database-url.
+
+3. Configure Static Files Handling
+Use whitenoise to serve static files in production.
+
+Run the following to collect static files before deployment or during your build process:
+
+bash
+Copy
+Edit
+python manage.py collectstatic --noinput
+Make sure STATIC_ROOT is correctly set in your Django settings.
+
+4. Hosting Setup on Heroku
+Create a new Heroku app via the dashboard or CLI:
+
+bash
+Copy
+Edit
+heroku create your-app-name
+Connect your GitHub repository for automatic deploys or deploy manually via CLI:
+
+bash
+Copy
+Edit
+git push heroku main
+Add a Heroku Postgres add-on for your database:
+
+bash
+Copy
+Edit
+heroku addons:create heroku-postgresql:hobby-dev
+Add any required buildpacks (Python is usually auto-detected).
+
+Set environment variables (config vars) as described above.
+
+If using Stripe, configure your webhook URL in Stripe dashboard to point to your Heroku app’s /webhook/ endpoint (e.g., https://your-app-name.herokuapp.com/webhook/).
+
+5. Database Migrations
+Run database migrations on Heroku:
+
+bash
+Copy
+Edit
+heroku run python manage.py migrate
+You can also create a superuser if needed:
+
+bash
+Copy
+Edit
+heroku run python manage.py createsuperuser
+6. Email Configuration
+Ensure your email backend is configured to use environment variables for credentials.
+
+Test email functionality in production by triggering password resets or contact form submissions.
+
+On Heroku, email sending depends on your SMTP provider—make sure ports and authentication details are correctly configured in your config vars.
+
+7. Final Testing and Maintenance
+After deployment, test all critical user flows on the live site:
+
+User signup/login/profile updates
+
+Product browsing and shopping bag functionality
+
+Checkout process including payment and subscriptions
+
+Community features such as posting comments
+
+Contact form submissions
+
+Monitor logs for errors with:
+
+bash
+Copy
+Edit
+heroku logs --tail
+To scale or update your app, use Heroku dashboard or CLI commands like heroku ps:scale web=1.
+
+Regularly update dependencies and apply security patches.
 ### Custom 404 Page 
 To enhance the user experience on our eco-friendly fitness website, a custom 404 error page has been implemented. This page is displayed when a user attempts to access a URL that doesn't exist.
 
