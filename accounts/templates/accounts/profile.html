@@ -29,47 +29,42 @@
 
     </div>
 
-    <!-- Order History Section -->
-    <div class="order-history">
-      <h2>Your Order History</h2>
-      {% if orders %}
-      <table class="order-table">
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Date</th>
-            <th>Total</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for order in orders %}
-          <tr>
-            <td>{{ order.order_number }}</td>
-            <td>{{ order.created_at|date:"F d, Y" }}</td>
-            <td>${{ order.grand_total }}</td>
-            <td>Paid</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <p>You haven't made any orders yet. Start shopping!</p>
-      {% endif %}
-    </div>
+<!-- Order History Section -->
+<div class="order-history">
+  <h2>Your Order History</h2>
+  {% if orders %}
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Order Number & Items</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr>
+        <td>
+          <strong>{{ order.order_number }}</strong>
+          <ul class="order-items">
+            {% for item in order.lineitems.all %}
+            <li>{{ item.product.name }} × {{ item.quantity }}</li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>{{ order.created_at|date:"F d, Y" }}</td>
+        <td>${{ order.grand_total }}</td>
+        <td>Paid</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>You haven't made any orders yet. Start shopping!</p>
+  {% endif %}
+</div>
 
-
-    <!-- Eco-Friendly Tips Section -->
-    <div class="eco-tips">
-      <h2>Eco-Friendly Fitness Tips</h2>
-      <ul>
-        <li>Choose sustainable, eco-friendly products for your fitness routine.</li>
-        <li>Switch to reusable water bottles and gym gear made from natural materials.</li>
-        <li>Consider digital fitness classes to reduce your carbon footprint.</li>
-        <li>Recycle your old workout gear and help reduce waste.</li>
-        <li>Support eco-conscious brands in the fitness industry.</li>
-      </ul>
-    </div>
 
     <!-- Profile Edit Section -->
     <div class="profile-edit">
@@ -187,6 +182,19 @@
   background-color: #f7f7f7;
   color: #333;
 }
+
+.order-items {
+  margin: 8px 0 0 0;
+  padding-left: 16px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.order-items li {
+  list-style: disc;
+  margin-bottom: 4px;
+}
+
 
 .eco-tips ul {
   padding-left: 20px;
