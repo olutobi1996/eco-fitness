@@ -1,10 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from products.models import Product  
+from home.models import HeroImage 
 
 def index(request):
-    product = Product.objects.first()  
+    product = Product.objects.first()
+    hero = HeroImage.objects.filter(active=True).first()  
+    
     context = {
-        'product': product, 
+        'product': product,
+        'hero': hero,
     }
     return render(request, 'home/index.html', context)
 
@@ -23,7 +27,6 @@ def product_list(request):
 def add_product(request):
     return render(request, 'products/add_product.html')
 
-from django.shortcuts import render
 
 def handler404(request, exception):
     """ Custom 404 Error Handler - Page Not Found """
