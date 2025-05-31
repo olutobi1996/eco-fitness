@@ -583,14 +583,124 @@ Google Ads and social media ads (e.g., Facebook, Instagram) to target individual
 Retargeting ads to re-engage visitors who didn’t convert the first time they visited the site.
 
 ### Testing 
-Code Quality & Testing
-While I have not written extensive tests across all applications in my eco-friendly e-commerce website, I have ensured consistent code quality by running static analysis tools. I used flake8 to check for linting errors by executing the following command:
+Testing and Code Quality Assurance
+In developing the Eco-Fitness platform—a comprehensive eco-friendly e-commerce website featuring user accounts, product management, shopping bag, checkout, subscription services, community engagement, and contact functionalities—I have prioritized building a clean, robust, and maintainable codebase.
+
+While comprehensive automated test coverage across all applications has not yet been fully implemented, a rigorous manual testing process has been carried out. This process systematically verified core user flows, including:
+
+Account registration, login, and profile management
+
+Browsing products and adding them to the shopping bag
+
+Completing the checkout process with subscription options
+
+Interacting within the community section
+
+Submitting inquiries via the contact form
+
+Each feature was carefully tested for expected behavior and responsiveness across various devices and browsers, ensuring a seamless and consistent user experience.
+
+To complement manual testing, I enforced high standards of code quality through static analysis. Specifically, I used flake8 to run linting checks with the following command:
 
 bash
 Copy
 Edit
 python3 -m flake8 --exclude .venv,.vscode,migrations
-This command excludes common directories like virtual environments, editor settings, and database migrations. After running the checks, no significant issues were found — ensuring that the codebase maintains a clean and readable standard without major syntax or style problems.
+This command excludes virtual environments, editor settings, and migration files to focus on the core application code. The results confirmed strong adherence to PEP8 style guidelines, with no critical syntax or style violations detected. This approach ensures the codebase remains clean, readable, and scalable, which is crucial for ongoing maintenance and feature expansion.
+
+Going forward, I plan to extend automated test coverage particularly around critical workflows such as checkout and subscription management. This will increase confidence in the system’s reliability and stability during deployment and future updates.
+
+Overall, these focused efforts in testing and quality assurance establish a solid foundation for Eco-Fitness to evolve into a polished and fully functional eco-friendly e-commerce platform.
+
+| Feature           | Test Case                            | Expected Result                                       | Outcome |
+| ----------------- | ------------------------------------ | ----------------------------------------------------- | ------- |
+| User Accounts     | Register a new user                  | Account created and confirmation email sent           | ✅       |
+|                   | Login with valid credentials         | User logged in successfully                           | ✅       |
+|                   | Edit user profile                    | Profile updates saved                                 | ✅       |
+| Product Browsing  | Navigate product catalog             | Products load and display correctly                   | ✅       |
+|                   | Filter products by category          | Filtered results displayed correctly                  | ✅       |
+| Shopping Bag      | Add product to bag                   | Product added, total updates                          | ✅       |
+|                   | Remove product from bag              | Product removed, total updates                        | ✅       |
+| Checkout          | Complete purchase with valid payment | Order processed, confirmation email sent              | ✅       |
+|                   | Checkout with subscription option    | Subscription activates and payment processed          | ✅       |
+| Community Section | Post a new comment or discussion     | Comment posted and visible to others                  | ✅       |
+| Contact Form      | Submit contact inquiry               | Inquiry sent successfully, confirmation message shown | ✅       |
+| Responsiveness    | Access site on mobile and desktop    | Layout adjusts correctly, navigation works            | ✅       |
+| Navigation        | Click all navbar links               | Pages load without errors                             | ✅       |
+
+### Deployment Instructions
+This section outlines the detailed steps to deploy the Eco-Fitness platform, ensuring a smooth setup on your preferred hosting environment.
+
+1. GitHub Repository Setup
+Create a GitHub repository and push your local project code to it.
+
+Ensure .gitignore excludes sensitive files like .env and local settings.
+
+2. Prepare Environment Variables
+Create a .env file or configure environment variables for:
+
+SECRET_KEY (Django secret key)
+
+DEBUG (set to False in production)
+
+Database credentials (DATABASE_URL or individual settings)
+
+Stripe API keys (STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY)
+
+Email server credentials (SMTP host, port, user, password)
+
+Any other service keys (e.g., AWS S3, third-party APIs)
+
+3. Configure Static Files Handling
+Use whitenoise to serve static files in production.
+
+Run:
+
+bash
+Copy
+Edit
+python manage.py collectstatic
+to gather all static files.
+
+4. Hosting Setup (Heroku / Render / Other)
+Create an app on your hosting platform.
+
+Connect your GitHub repo or deploy via CLI.
+
+Add necessary environment variables to the platform’s config.
+
+Set up the database service (PostgreSQL recommended).
+
+If using Stripe, configure your Stripe webhook URL to point to your hosted app's webhook endpoint.
+
+5. Database Migrations
+Run migrations on the production server:
+
+bash
+Copy
+Edit
+python manage.py migrate
+6. Email Configuration
+Configure your email backend to send registration confirmations, password resets, and contact form emails.
+
+Test email sending in production environment.
+
+7. Final Testing
+After deployment, test all critical flows:
+
+User signup/login
+
+Product browsing and shopping bag
+
+Checkout and payment processing
+
+Subscription management
+
+Community interactions
+
+Contact form submissions
+
+
 
 ### Custom 404 Page 
 To enhance the user experience on our eco-friendly fitness website, a custom 404 error page has been implemented. This page is displayed when a user attempts to access a URL that doesn't exist.
