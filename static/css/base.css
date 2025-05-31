@@ -319,6 +319,30 @@ footer a:hover {
     animation: spin 1s linear infinite;
     margin: 10px auto;
 }
+@media (max-width: 991px) {
+  /* Make sure navbar collapse container fills width and aligns under brand */
+  .navbar-collapse {
+    width: 100%;
+    background-color: #f8f9fa; /* match navbar bg */
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 1rem 1rem; /* some padding */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  /* Navbar nav full width with vertical layout */
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+  }
+}
 
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -326,6 +350,16 @@ footer a:hover {
 }
 
 /* -------------------------------- Media Queries */
+
+/* Mobile Responsive  */
+@media (max-width: 991px) {
+  .navbar-nav.ms-auto {
+    text-align: center;
+  }
+  .navbar-nav.ms-auto .nav-item {
+    margin-bottom: 10px;
+  }
+}
 
 /* Slightly larger container on xl screens */
 @media (min-width: 1200px) {
