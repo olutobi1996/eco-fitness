@@ -817,8 +817,6 @@ To scale or update your app, use Heroku dashboard or CLI commands like heroku ps
 
 Regularly update dependencies and apply security patches.
 
-:
-
 ### Testing Checkout with Stripe
 To test the checkout functionality on the deployed site, follow these steps:
 
