@@ -644,6 +644,7 @@ black .
 flake8 .
 
 (Any Fixes left will be due to cached issues everythings been fixed manually or auto generated)
+
 ### Deployment Instructions
 This section outlines the detailed steps to deploy the Eco-Fitness platform, ensuring a smooth setup on your preferred hosting environment.
 
@@ -687,7 +688,7 @@ Add necessary environment variables to the platform’s config.
 
 Set up the database service (PostgreSQL recommended).
 
-If using Stripe, configure your Stripe webhook URL to point to your hosted app's webhook endpoint.
+configure Stripe webhook URL to point to hosted app's webhook endpoint.
 
 5. Database Migrations
 Run migrations on the production server:
