@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+
 from .models import AccountProfile
 
 
@@ -12,7 +13,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']
+        fields = ["first_name", "last_name", "email"]
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -20,12 +21,13 @@ class ProfileForm(forms.ModelForm):
             user.save()
 
         # Update or create the AccountProfile linked to the user
-        account_profile, created = AccountProfile.objects.get_or_create(user=user)
-        account_profile.shipping_address = self.cleaned_data.get('shipping_address')
-        account_profile.phone_number = self.cleaned_data.get('phone_number')
+        account_profile, created = AccountProfile.objects.get_or_create(
+            user=user
+        )
+        account_profile.shipping_address = self.cleaned_data.get(
+            "shipping_address"
+        )
+        account_profile.phone_number = self.cleaned_data.get("phone_number")
         account_profile.save()
 
         return user
-
-
-

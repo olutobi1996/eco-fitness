@@ -4,12 +4,13 @@ import os
 import sys
 
 # Load environment variables from env.py if it exists
-if os.path.exists(os.path.join(os.path.dirname(__file__), 'env.py')):
+if os.path.exists(os.path.join(os.path.dirname(__file__), "env.py")):
     import env  # noqa
+
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'eco_fitness.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "eco_fitness.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -20,6 +21,6 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()

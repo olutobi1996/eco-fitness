@@ -7,17 +7,40 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='AboutUs',
+            name="AboutUs",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(default='About Us', max_length=200)),
-                ('content', models.TextField(help_text='Content about your company, mission, values, etc.')),
-                ('image', models.ImageField(blank=True, help_text="Image for your 'About Us' page", null=True, upload_to='about_us/')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(default="About Us", max_length=200),
+                ),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="Content about your company, mission, values, etc."
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        blank=True,
+                        help_text="Image for your 'About Us' page",
+                        null=True,
+                        upload_to="about_us/",
+                    ),
+                ),
             ],
         ),
     ]

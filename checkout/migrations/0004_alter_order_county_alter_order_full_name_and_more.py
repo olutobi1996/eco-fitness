@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('checkout', '0003_rename_user_profile_order_user'),
+        ("checkout", "0003_rename_user_profile_order_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='order',
-            name='county',
+            model_name="order",
+            name="county",
             field=models.CharField(blank=True, max_length=80, null=True),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='full_name',
+            model_name="order",
+            name="full_name",
             field=models.CharField(max_length=50),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='order_number',
+            model_name="order",
+            name="order_number",
             field=models.CharField(editable=False, max_length=32),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='street_address1',
+            model_name="order",
+            name="street_address1",
             field=models.CharField(max_length=80),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='street_address2',
+            model_name="order",
+            name="street_address2",
             field=models.CharField(blank=True, max_length=80, null=True),
         ),
         migrations.AlterField(
-            model_name='order',
-            name='town_or_city',
+            model_name="order",
+            name="town_or_city",
             field=models.CharField(max_length=40),
         ),
         migrations.AlterField(
-            model_name='orderlineitem',
-            name='product_size',
+            model_name="orderlineitem",
+            name="product_size",
             field=models.CharField(blank=True, max_length=2, null=True),
         ),
         migrations.AlterField(
-            model_name='orderlineitem',
-            name='quantity',
+            model_name="orderlineitem",
+            name="quantity",
             field=models.IntegerField(default=0),
         ),
     ]

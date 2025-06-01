@@ -1,10 +1,12 @@
 from decimal import Decimal
+
 from django import template
-from .custom_filters import *
+
 
 register = template.Library()
 
-@register.filter(name='calc_subtotal')
+
+@register.filter(name="calc_subtotal")
 def calc_subtotal(price, quantity):
     try:
         price = Decimal(price)

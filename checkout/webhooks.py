@@ -1,10 +1,13 @@
+import json
+
+import stripe
+from django.conf import settings
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse
-import stripe
-import json
-from django.conf import settings
+
 from .webhook_handler import StripeWH_Handler
+
 
 @require_POST
 @csrf_exempt
@@ -17,7 +20,7 @@ def webhook(request):
 
     # Retrieve the webhook payload and signature header
     payload = request.body
-    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', None)
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE", None)
     event = None
 
     try:
@@ -28,9 +31,9 @@ def webhook(request):
         return HttpResponse(status=400)  # Invalid signature
     except Exception as e:
         return HttpResponse(
-            content=json.dumps({'error': str(e)}),
+            content=json.dumps({"error": str(e)}),
             content_type="application/json",
-            status=400
+            status=400,
         )
 
     # Initialize Stripe webhook handler
@@ -38,12 +41,12 @@ def webhook(request):
 
     # Map webhook events to relevant handler functions
     event_map = {
-        'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
-        'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed,
+        "payment_intent.succeeded": handler.handle_payment_intent_succeeded,
+        "payment_intent.payment_failed": handler.handle_payment_intent_payment_failed,
     }
 
     # Get the webhook type from Stripe
-    event_type = event['type']
+    event_type = event["type"]
 
     # If there's a handler for it, get it from the event map
     # Use the generic one by default
@@ -52,4 +55,3 @@ def webhook(request):
     # Call the event handler with the event
     response = event_handler(event)
     return response
-

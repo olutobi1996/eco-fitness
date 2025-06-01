@@ -1,13 +1,16 @@
-from django.http import HttpResponse
-from .models import Order, OrderLineItem
-from products.models import Product
 import json
-import stripe
 import time
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
+
 from django.conf import settings
-from accounts.models import AccountProfile  # Import AccountProfile
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+from accounts.models import AccountProfile  # Make sure this import path is correct
+from products.models import Product
+
+from .models import Order, OrderLineItem
+
 
 class StripeWH_Handler:
     """Handle Stripe webhooks"""
@@ -16,63 +19,57 @@ class StripeWH_Handler:
         self.request = request
 
     def handle_event(self, event):
-        """
-        Handle a generic/unknown/unexpected webhook event
-        """
+        """Handle a generic/unknown/unexpected webhook event"""
         return HttpResponse(
-            content=json.dumps({'message': f'Unhandled event: {event["type"]}'}),
+            content=json.dumps({"message": f'Unhandled event: {event["type"]}'}),
             content_type="application/json",
-            status=200
+            status=200,
         )
 
     def _send_confirmation_email(self, order):
         """Send the user a confirmation email"""
         cust_email = order.email
         subject = render_to_string(
-            'checkout/confirmation_emails/confirmation_email_subject.txt',
-            {'order': order})
+            "checkout/confirmation_emails/confirmation_email_subject.txt",
+            {"order": order},
+        )
         body = render_to_string(
-            'checkout/confirmation_emails/confirmation_email_body.txt',
-            {'order': order, 'contact_email': settings.DEFAULT_FROM_EMAIL})
-        
-        send_mail(
-            subject,
-            body,
-            settings.DEFAULT_FROM_EMAIL,
-            [cust_email]
+            "checkout/confirmation_emails/confirmation_email_body.txt",
+            {"order": order, "contact_email": settings.DEFAULT_FROM_EMAIL},
         )
 
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [cust_email])
+
     def handle_payment_intent_succeeded(self, event):
-        """
-        Handle the payment_intent.succeeded webhook from Stripe
-        """
+        """Handle the payment_intent.succeeded webhook from Stripe"""
         intent = event.data.object
         pid = intent.id
-        bag = intent.metadata.get('bag', '{}')  # Ensure default value if missing
-        save_info = intent.metadata.get('save_info', False)
+        bag = intent.metadata.get("bag", "{}")
+        save_info = intent.metadata.get("save_info", False)
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
         grand_total = round(intent.charges.data[0].amount / 100, 2)
 
-        # Log payment success
-        print(f"✅ Payment succeeded for {grand_total} {intent.currency.upper()} (PID: {pid})")
+        print(
+            f"✅ Payment succeeded for {grand_total} {intent.currency.upper()} (PID: {pid})"
+        )
 
-        # Clean empty address fields
+        # Clean empty shipping address fields
         for field, value in shipping_details.address.items():
             if value == "":
                 shipping_details.address[field] = None
 
-        # Retrieve or create profile based on username
+        # Get profile if user exists
         profile = None
-        username = intent.metadata.get('username', 'AnonymousUser')
-        if username != 'AnonymousUser':
+        username = intent.metadata.get("username", "AnonymousUser")
+        if username != "AnonymousUser":
             try:
                 profile = AccountProfile.objects.get(user__username=username)
             except AccountProfile.DoesNotExist:
                 profile = None
 
-        # Update profile information if save_info was checked
+        # Update profile if save_info is True
         if profile and save_info:
             profile.default_phone_number = shipping_details.phone
             profile.default_country = shipping_details.address.country
@@ -83,7 +80,7 @@ class StripeWH_Handler:
             profile.default_county = shipping_details.address.state
             profile.save()
 
-        # Check if order already exists
+        # Check if order already exists, retry up to 5 times
         order_exists = False
         attempt = 1
         while attempt <= 5:
@@ -110,16 +107,16 @@ class StripeWH_Handler:
 
         if order_exists:
             return HttpResponse(
-                content=json.dumps({'message': 'Order already exists, skipping creation.'}),
+                content=json.dumps({"message": "Order already exists, skipping creation."}),
                 content_type="application/json",
-                status=200
+                status=200,
             )
 
-        # Order doesn't exist, create it
+        # Create order if it doesn't exist
         try:
             order = Order.objects.create(
                 full_name=shipping_details.name,
-                user_profile=profile,  # Link to user profile
+                user_profile=profile,
                 email=billing_details.email,
                 phone_number=shipping_details.phone,
                 country=shipping_details.address.country,
@@ -133,53 +130,49 @@ class StripeWH_Handler:
                 stripe_pid=pid,
             )
 
-            # Process order items
+            # Create line items
             for item_id, item_data in json.loads(bag).items():
                 product = Product.objects.get(id=item_id)
-                if isinstance(item_data, int):  # Simple quantity case
+                if isinstance(item_data, int):
                     OrderLineItem.objects.create(
                         order=order,
                         product=product,
                         quantity=item_data,
                     )
-                else:  # Case with different sizes
-                    for size, quantity in item_data['items_by_size'].items():
+                elif (
+                    isinstance(item_data, dict)
+                    and "items_by_size" in item_data
+                ):
+                    for size, quantity in item_data["items_by_size"].items():
                         OrderLineItem.objects.create(
                             order=order,
                             product=product,
                             quantity=quantity,
                             product_size=size,
                         )
-            
-            # Send confirmation email
-            self._send_confirmation_email(order)
-
-            return HttpResponse(
-                content=json.dumps({'message': 'Order created successfully!'}),
-                content_type="application/json",
-                status=200
-            )
-
         except Exception as e:
             if order:
-                order.delete()  # Rollback order if creation fails
+                order.delete()
             return HttpResponse(
-                content=json.dumps({'error': str(e)}),
+                content=json.dumps({"error": str(e)}),
                 content_type="application/json",
-                status=500
+                status=500,
             )
 
-    def handle_payment_intent_payment_failed(self, event):
-        """
-        Handle the payment_intent.payment_failed webhook from Stripe
-        """
-        intent = event.data.object
-        print(f"⚠️ Payment failed for {intent.amount / 100} {intent.currency.upper()} (PID: {intent.id})")
+        # Send confirmation email
+        self._send_confirmation_email(order)
 
         return HttpResponse(
-            content=json.dumps({'message': 'Payment failed.'}),
+            content=json.dumps({"message": "PaymentIntent succeeded"}),
             content_type="application/json",
-            status=200
+            status=200,
         )
 
+    def handle_payment_intent_payment_failed(self, event):
+        """Handle payment_intent.payment_failed webhook from Stripe"""
+        return HttpResponse(
+            content=json.dumps({"message": "Payment failed"}),
+            content_type="application/json",
+            status=200,
+        )
 

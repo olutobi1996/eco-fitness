@@ -699,6 +699,7 @@ Subscription management
 Community interactions
 
 Contact form submissions
+
 ### Deployment Instructions Heroku 
 This section outlines detailed steps to deploy the Eco-Fitness platform, focusing on Heroku as the hosting environment, while also including general best practices for environment variables and configuration.
 
@@ -815,6 +816,32 @@ heroku logs --tail
 To scale or update your app, use Heroku dashboard or CLI commands like heroku ps:scale web=1.
 
 Regularly update dependencies and apply security patches.
+
+:
+
+### Testing Checkout with Stripe
+To test the checkout functionality on the deployed site, follow these steps:
+
+Add any product to your bag.
+
+Proceed to checkout and fill in the required shipping details.
+
+Use the following Stripe test card details:
+
+Card number: 4242 4242 4242 4242
+
+Expiry date: Any future date (e.g. 12/34)
+
+CVC: Any 3 digits (e.g. 123)
+
+ZIP/Postcode: Any 5-digit number (e.g. 12345)
+
+Submit the payment — you should be redirected to a success page with an order confirmation.
+
+ Note: Checkout may not function correctly in local development environments such as Gitpod due to Stripe webhook and API configuration.
+However, all checkout functionality has been fully tested and is working as expected on the deployed Heroku site.
+
+
 ### Custom 404 Page 
 To enhance the user experience on our eco-friendly fitness website, a custom 404 error page has been implemented. This page is displayed when a user attempts to access a URL that doesn't exist.
 
