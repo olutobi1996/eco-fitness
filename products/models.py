@@ -12,8 +12,7 @@ class Category(models.Model):
         ("biodegradable_accessories", "Biodegradable Accessories"),
     ]
     name = models.CharField(
-        max_length=50, choices=CATEGORY_CHOICES, unique=True
-    )
+        max_length=50, choices=CATEGORY_CHOICES, unique=True)
     friendly_name = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
 
@@ -35,8 +34,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=8, decimal_places=2)
     rating = models.DecimalField(
-        max_digits=3, decimal_places=2, null=True, blank=True
-    )
+        max_digits=3, decimal_places=2, null=True, blank=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -52,9 +50,8 @@ class Review(models.Model):
     product = models.ForeignKey(
         "Product", on_delete=models.CASCADE, related_name="reviews"
     )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(default=5)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

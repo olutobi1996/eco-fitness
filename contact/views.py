@@ -32,8 +32,7 @@ def contact_view(request):
                 message = contact_form.cleaned_data["message"]
 
                 ContactMessage.objects.create(
-                    name=name, email=email, message=message
-                )
+                    name=name, email=email, message=message)
 
                 send_mail(
                     f"Contact Form Submission from {name}",
@@ -50,9 +49,7 @@ def contact_view(request):
             newsletter_form = NewsletterSignupForm(request.POST)
             if newsletter_form.is_valid():
                 email = newsletter_form.cleaned_data["email"]
-                if not NewsletterSubscriber.objects.filter(
-                    email=email
-                ).exists():
+                if not NewsletterSubscriber.objects.filter(email=email).exists():
                     NewsletterSubscriber.objects.create(email=email)
                     send_confirmation_email(email)
                     messages.success(

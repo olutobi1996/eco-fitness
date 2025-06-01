@@ -44,9 +44,7 @@ def edit_post(request, post_id):
     else:
         form = BlogPostForm(instance=post)
 
-    return render(
-        request, "community/edit_post.html", {"form": form, "post": post}
-    )
+    return render(request, "community/edit_post.html", {"form": form, "post": post})
 
 
 @login_required

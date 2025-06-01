@@ -4,8 +4,7 @@ from django.db import models
 
 class Subscription(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     stripe_subscription_id = models.CharField(max_length=255, unique=True)
     stripe_price_id = models.CharField(
         max_length=255

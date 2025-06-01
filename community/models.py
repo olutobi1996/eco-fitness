@@ -7,6 +7,5 @@ class BlogPost(models.Model):
     content = models.TextField()
     image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

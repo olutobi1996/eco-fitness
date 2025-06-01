@@ -106,7 +106,8 @@ def checkout(request):
     else:
         bag = request.session.get("bag", {})
         if not bag:
-            messages.error(request, "There's nothing in your bag at the moment.")
+            messages.error(
+                request, "There's nothing in your bag at the moment.")
             return redirect(reverse("products"))
 
         current_bag = bag_contents(request)
@@ -181,4 +182,3 @@ def checkout_success(request, order_number):
         del request.session["bag"]
 
     return render(request, "checkout/checkout_success.html", {"order": order})
-

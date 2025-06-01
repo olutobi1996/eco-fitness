@@ -26,9 +26,8 @@ class Migration(migrations.Migration):
                 ("content", models.TextField()),
                 (
                     "image",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="blog_images/"
-                    ),
+                    models.ImageField(blank=True, null=True,
+                                      upload_to="blog_images/"),
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
             ],

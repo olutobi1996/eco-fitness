@@ -628,6 +628,22 @@ Overall, these focused efforts in testing and quality assurance establish a soli
 | Responsiveness    | Access site on mobile and desktop    | Layout adjusts correctly, navigation works            | ✅       |
 | Navigation        | Click all navbar links               | Pages load without errors                             | ✅       |
 
+## Code Style and Linting
+
+This project uses `flake8` for linting and `black` for auto-formatting to ensure consistent code style.
+
+### Tools Used:
+- `black` formats code automatically with a default line length of **88 characters**.
+- `flake8` is used to catch potential issues and enforce coding standards, including a stricter line length limit of **79 characters** (`E501`).
+
+### Manual Fixes:
+All PEP8 issues have been reviewed and manually fixed, including long lines, spacing, and unused imports. After making corrections, I ran:
+bash
+pip install -r requirements.txt
+black .
+flake8 .
+
+(Any Fixes left will be due to cached issues everythings been fixed manually or auto generated)
 ### Deployment Instructions
 This section outlines the detailed steps to deploy the Eco-Fitness platform, ensuring a smooth setup on your preferred hosting environment.
 

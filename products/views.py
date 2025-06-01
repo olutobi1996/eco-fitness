@@ -56,7 +56,8 @@ def product_reviews(request, product_id=None):
 
     if product_id:
         product = get_object_or_404(Product, pk=product_id)
-        reviews = Review.objects.filter(product=product).order_by("-created_at")
+        reviews = Review.objects.filter(
+            product=product).order_by("-created_at")
     else:
         product = None
         reviews = []
@@ -83,8 +84,7 @@ def product_reviews(request, product_id=None):
         ).first()
         if existing_review:
             messages.error(
-                request, "You've already left a review for this product."
-            )
+                request, "You've already left a review for this product.")
             return redirect(
                 reverse("products:product_reviews_by_id", args=[product.id])
             )
@@ -123,8 +123,7 @@ def edit_review(request, review_id):
 
     if request.user != review.user and not request.user.is_superuser:
         messages.error(
-            request, "You don't have permission to edit this review."
-        )
+            request, "You don't have permission to edit this review.")
         return redirect("home")
 
     if request.method == "POST":
@@ -132,9 +131,7 @@ def edit_review(request, review_id):
         if form.is_valid():
             form.save()
             messages.success(request, "Review updated successfully.")
-            return redirect(
-                "products:product_reviews_by_id", review.product.id
-            )
+            return redirect("products:product_reviews_by_id", review.product.id)
     else:
         form = ReviewForm(instance=review)
 
@@ -149,8 +146,7 @@ def delete_review(request, review_id):
 
     if request.user != review.user and not request.user.is_superuser:
         messages.error(
-            request, "You don't have permission to delete this review."
-        )
+            request, "You don't have permission to delete this review.")
         return redirect("home")
 
     if request.method == "POST":
@@ -159,6 +155,7 @@ def delete_review(request, review_id):
         return redirect("products:product_reviews_by_id", review.product.id)
 
     return render(request, "products/delete_review.html", {"review": review})
+
 
 @login_required
 def add_product(request):
@@ -172,9 +169,7 @@ def add_product(request):
         if form.is_valid():
             product = form.save()
             messages.success(request, "Successfully added product!")
-            return redirect(
-                reverse("products:product_detail", args=[product.id])
-            )
+            return redirect(reverse("products:product_detail", args=[product.id]))
         else:
             messages.error(
                 request,
@@ -199,9 +194,7 @@ def edit_product(request, product_id):
         if form.is_valid():
             form.save()
             messages.success(request, "Successfully updated product!")
-            return redirect(
-                reverse("products:product_detail", args=[product.id])
-            )
+            return redirect(reverse("products:product_detail", args=[product.id]))
         else:
             messages.error(
                 request,
@@ -247,9 +240,7 @@ def product_detail(request, product_id):
             review.user = request.user
             review.save()
             messages.success(request, "Your review has been submitted!")
-            return redirect(
-                reverse("products:product_detail", args=[product.id])
-            )
+            return redirect(reverse("products:product_detail", args=[product.id]))
         else:
             messages.error(
                 request,

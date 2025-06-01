@@ -16,7 +16,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),  # Admin Panel
     path("", include("home.urls")),  # Home App
     path("bag/", include("bag.urls")),  # Shopping Bag
-    path("products/", include("products.urls", namespace="products")),  # Products (with namespace)
+    path(
+        "products/", include("products.urls", namespace="products")
+    ),  # Products (with namespace)
     path("checkout/", include("checkout.urls")),  # Checkout App
     path("community/", include("community.urls")),  # Community Page
     path("subscriptions/", include("subscriptions.urls")),
@@ -28,7 +30,7 @@ urlpatterns = [
 
 # Serve media files in development
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 handler404 = "home.views.handler404"
-

@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
             model_name="category",
             name="image",
             field=models.ImageField(
-                blank=True, null=True, upload_to="categories/"
-            ),
+                blank=True, null=True, upload_to="categories/"),
         ),
     ]

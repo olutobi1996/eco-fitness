@@ -10,8 +10,6 @@ urlpatterns = [
         views.checkout_success,
         name="checkout_success",
     ),
-    path(
-        "cache_checkout_data/", cache_checkout_data, name="cache_checkout_data"
-    ),
+    path("cache_checkout_data/", cache_checkout_data, name="cache_checkout_data"),
     path("webhook/", webhooks.webhook, name="stripe_webhook"),
 ]

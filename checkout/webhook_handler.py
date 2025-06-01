@@ -6,7 +6,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
-from accounts.models import AccountProfile  # Make sure this import path is correct
+# Make sure this import path is correct
+from accounts.models import AccountProfile
 from products.models import Product
 
 from .models import Order, OrderLineItem
@@ -21,7 +22,8 @@ class StripeWH_Handler:
     def handle_event(self, event):
         """Handle a generic/unknown/unexpected webhook event"""
         return HttpResponse(
-            content=json.dumps({"message": f'Unhandled event: {event["type"]}'}),
+            content=json.dumps(
+                {"message": f'Unhandled event: {event["type"]}'}),
             content_type="application/json",
             status=200,
         )
@@ -107,7 +109,9 @@ class StripeWH_Handler:
 
         if order_exists:
             return HttpResponse(
-                content=json.dumps({"message": "Order already exists, skipping creation."}),
+                content=json.dumps(
+                    {"message": "Order already exists, skipping creation."}
+                ),
                 content_type="application/json",
                 status=200,
             )
@@ -139,10 +143,7 @@ class StripeWH_Handler:
                         product=product,
                         quantity=item_data,
                     )
-                elif (
-                    isinstance(item_data, dict)
-                    and "items_by_size" in item_data
-                ):
+                elif isinstance(item_data, dict) and "items_by_size" in item_data:
                     for size, quantity in item_data["items_by_size"].items():
                         OrderLineItem.objects.create(
                             order=order,
@@ -175,4 +176,3 @@ class StripeWH_Handler:
             content_type="application/json",
             status=200,
         )
-

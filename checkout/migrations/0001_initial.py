@@ -26,8 +26,7 @@ class Migration(migrations.Migration):
                 (
                     "order_number",
                     models.CharField(
-                        editable=False, max_length=32, unique=True
-                    ),
+                        editable=False, max_length=32, unique=True),
                 ),
                 ("full_name", models.CharField(max_length=100)),
                 ("email", models.EmailField(max_length=254)),
@@ -54,20 +53,17 @@ class Migration(migrations.Migration):
                 (
                     "delivery_cost",
                     models.DecimalField(
-                        decimal_places=2, default=0, max_digits=6
-                    ),
+                        decimal_places=2, default=0, max_digits=6),
                 ),
                 (
                     "order_total",
                     models.DecimalField(
-                        decimal_places=2, default=0, max_digits=10
-                    ),
+                        decimal_places=2, default=0, max_digits=10),
                 ),
                 (
                     "grand_total",
                     models.DecimalField(
-                        decimal_places=2, default=0, max_digits=10
-                    ),
+                        decimal_places=2, default=0, max_digits=10),
                 ),
                 ("original_bag", models.TextField(default="")),
                 ("stripe_pid", models.CharField(default="", max_length=254)),
@@ -93,8 +89,7 @@ class Migration(migrations.Migration):
                 (
                     "lineitem_total",
                     models.DecimalField(
-                        decimal_places=2, editable=False, max_digits=6
-                    ),
+                        decimal_places=2, editable=False, max_digits=6),
                 ),
             ],
         ),

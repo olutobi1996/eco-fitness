@@ -17,9 +17,8 @@ class StripeWH_Handler:
     def handle_event(self, event):
         """Handle a generic/unknown/unexpected webhook event"""
         return HttpResponse(
-            content=json.dumps({
-                "message": f'Unhandled event: {event["type"]}'
-            }),
+            content=json.dumps(
+                {"message": f'Unhandled event: {event["type"]}'}),
             content_type="application/json",
             status=200,
         )
@@ -39,9 +38,9 @@ class StripeWH_Handler:
         self._send_subscription_email(user_email, subscription)
 
         return HttpResponse(
-            content=json.dumps({
-                "message": "Checkout session completed and subscription created."
-            }),
+            content=json.dumps(
+                {"message": "Checkout session completed and subscription created."}
+            ),
             content_type="application/json",
             status=200,
         )
@@ -53,16 +52,15 @@ class StripeWH_Handler:
         amount_paid = invoice.amount_paid / 100
 
         subscription = Subscription.objects.get(
-            stripe_subscription_id=subscription_id
-        )
+            stripe_subscription_id=subscription_id)
         subscription.status = "active"
         subscription.amount_paid = amount_paid
         subscription.save()
 
         return HttpResponse(
-            content=json.dumps({
-                "message": "Invoice payment succeeded and subscription updated."
-            }),
+            content=json.dumps(
+                {"message": "Invoice payment succeeded and subscription updated."}
+            ),
             content_type="application/json",
             status=200,
         )
@@ -73,15 +71,14 @@ class StripeWH_Handler:
         subscription_id = invoice.get("subscription")
 
         subscription = Subscription.objects.get(
-            stripe_subscription_id=subscription_id
-        )
+            stripe_subscription_id=subscription_id)
         subscription.status = "failed"
         subscription.save()
 
         return HttpResponse(
-            content=json.dumps({
-                "message": "Invoice payment failed and subscription updated."
-            }),
+            content=json.dumps(
+                {"message": "Invoice payment failed and subscription updated."}
+            ),
             content_type="application/json",
             status=200,
         )
@@ -100,9 +97,7 @@ class StripeWH_Handler:
         )
 
         return HttpResponse(
-            content=json.dumps({
-                "message": "Customer subscription created."
-            }),
+            content=json.dumps({"message": "Customer subscription created."}),
             content_type="application/json",
             status=200,
         )
@@ -112,14 +107,14 @@ class StripeWH_Handler:
         subscription = event.data.object
         subscription_id = subscription.id
 
-        Subscription.objects.filter(
-            stripe_subscription_id=subscription_id
-        ).update(status="canceled")
+        Subscription.objects.filter(stripe_subscription_id=subscription_id).update(
+            status="canceled"
+        )
 
         return HttpResponse(
-            content=json.dumps({
-                "message": "Customer subscription deleted (canceled)."
-            }),
+            content=json.dumps(
+                {"message": "Customer subscription deleted (canceled)."}
+            ),
             content_type="application/json",
             status=200,
         )
@@ -138,4 +133,3 @@ class StripeWH_Handler:
             },
         )
         send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [user_email])
-

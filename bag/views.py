@@ -32,7 +32,7 @@ def add_to_bag(request, item_id):
                 bag[item_id_str]["items_by_size"][size] += quantity
                 messages.success(
                     request,
-                    f'Updated size {size.upper()} {product.name} quantity to '
+                    f"Updated size {size.upper()} {product.name} quantity to "
                     f'{bag[item_id_str]["items_by_size"][size]}',
                 )
             else:
@@ -81,7 +81,7 @@ def adjust_bag(request, item_id):
                 bag[item_id_str]["items_by_size"][size] = quantity
                 messages.success(
                     request,
-                    f'Updated size {size.upper()} {product.name} quantity to {quantity}',
+                    f"Updated size {size.upper()} {product.name} quantity to {quantity}",
                 )
             else:
                 bag[item_id_str]["items_by_size"].pop(size, None)

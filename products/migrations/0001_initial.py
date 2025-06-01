@@ -89,9 +89,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "sku",
-                    models.CharField(
-                        blank=True, max_length=50, null=True, unique=True
-                    ),
+                    models.CharField(blank=True, max_length=50,
+                                     null=True, unique=True),
                 ),
                 ("name", models.CharField(max_length=255)),
                 ("description", models.TextField()),
@@ -108,9 +107,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "image",
-                    models.ImageField(
-                        blank=True, null=True, upload_to="products/"
-                    ),
+                    models.ImageField(blank=True, null=True,
+                                      upload_to="products/"),
                 ),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("updated_at", models.DateTimeField(auto_now=True)),

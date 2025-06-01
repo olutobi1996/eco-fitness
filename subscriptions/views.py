@@ -89,4 +89,3 @@ def plans_view(request):
 
     except stripe.error.StripeError as e:
         return JsonResponse({"error": str(e)}, status=500)
-
