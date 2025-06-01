@@ -789,7 +789,7 @@ Add any required buildpacks (Python is usually auto-detected).
 
 Set environment variables (config vars) as described above.
 
-If using Stripe, configure your webhook URL in Stripe dashboard to point to your Heroku app’s /webhook/ endpoint (e.g., https://your-app-name.herokuapp.com/webhook/).
+Using Stripe, configure, webhook URL in Stripe dashboard to point to your Heroku app’s /webhook/ endpoint (e.g., https://your-app-name.herokuapp.com/webhook/).
 
 5. Database Migrations
 Run database migrations on Heroku:
@@ -799,7 +799,6 @@ Copy
 Edit
 heroku run python manage.py migrate
 You can also create a superuser if needed:
-
 bash
 Copy
 Edit
