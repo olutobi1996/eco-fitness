@@ -46,7 +46,7 @@ def checkout(request):
 
     if request.method == "POST":
         bag = request.session.get("bag", {})
-        current_bag = bag_contents(request) 
+        current_bag = bag_contents(request)
 
         form_data = {
             "full_name": request.POST.get("full_name", ""),
@@ -59,13 +59,13 @@ def checkout(request):
             "street_address2": request.POST.get("street_address2", ""),
             "county": request.POST.get("county", ""),
         }
+
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get("client_secret").split("_secret")[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
-            order.grand_total = current_bag["grand_total"] 
             order.save()
 
             # Create line items
@@ -97,6 +97,9 @@ def checkout(request):
                     order.delete()
                     return redirect(reverse("view_bag"))
 
+            
+            order.update_total()
+
             request.session["save_info"] = "save-info" in request.POST
             return redirect(reverse("checkout_success", args=[order.order_number]))
         else:
@@ -108,13 +111,12 @@ def checkout(request):
     else:
         bag = request.session.get("bag", {})
         if not bag:
-            messages.error(
-                request, "There's nothing in your bag at the moment.")
+            messages.error(request, "There's nothing in your bag at the moment.")
             return redirect(reverse("products"))
 
         current_bag = bag_contents(request)
         total = current_bag["grand_total"]
-        stripe_total = round(total * 100)  # Amount in cents
+        stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
         intent = stripe.PaymentIntent.create(
             amount=stripe_total,
@@ -122,7 +124,6 @@ def checkout(request):
         )
 
         if request.user.is_authenticated:
-            # Prefill order form with user's info
             order_form = OrderForm(
                 initial={
                     "full_name": request.user.get_full_name(),
@@ -151,6 +152,7 @@ def checkout(request):
             "client_secret": intent.client_secret,
         }
         return render(request, "checkout/checkout.html", context)
+
 
 
 def checkout_success(request, order_number):
