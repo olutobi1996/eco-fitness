@@ -16,6 +16,10 @@ from products.models import Product
 
 from .forms import OrderForm
 from .models import Order, OrderLineItem
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
+
 
 
 @require_POST
@@ -166,7 +170,6 @@ def checkout_success(request, order_number):
         order.save()
 
         if save_info:
-            # Assuming these fields exist on the user model or user profile
             user.phone_number = order.phone_number
             user.country = order.country
             user.postcode = order.postcode
@@ -175,6 +178,23 @@ def checkout_success(request, order_number):
             user.street_address2 = order.street_address2
             user.county = order.county
             user.save()
+
+    
+    subject = render_to_string(
+        "checkout/confirmation_emails/confirmation_email_subject.txt",
+        {"order": order},
+    ).strip()
+    body = render_to_string(
+        "checkout/confirmation_emails/confirmation_email_body.txt",
+        {"order": order, "contact_email": settings.CONTACT_EMAIL},
+    )
+
+    send_mail(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        [order.email],
+    )
 
     messages.success(
         request,
@@ -186,3 +206,4 @@ def checkout_success(request, order_number):
         del request.session["bag"]
 
     return render(request, "checkout/checkout_success.html", {"order": order})
+

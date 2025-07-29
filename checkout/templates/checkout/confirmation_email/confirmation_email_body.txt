@@ -3,11 +3,11 @@ Hello {{ order.full_name }},
 Thank you for shopping with Eco Fitness! We're excited to process your eco-friendly order. Here are the details:
 
 Order Number: {{ order.order_number }}
-Order Date: {{ order.date }}
+Order Date: {{ order.created_at|date:"F j, Y, g:i a" }}
 
-Order Total: ${{ order.order_total }}
-Delivery: ${{ order.delivery_cost }}
-Grand Total: ${{ order.grand_total }}
+Order Total: £{{ order.order_total }}
+Delivery: £{{ order.delivery_cost }}
+Grand Total: £{{ order.grand_total }}
 
 Your order will be delivered to:
 {{ order.street_address1 }}, {{ order.town_or_city }}, {{ order.country }}
@@ -18,5 +18,5 @@ If you have any questions, feel free to reach out to us at {{ contact_email }}.
 
 Thanks for making a sustainable choice! 🌿
 
-Stay fit, stay green,
+Stay fit, stay green,  
 The Eco Fitness Team
