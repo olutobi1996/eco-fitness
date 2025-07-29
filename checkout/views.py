@@ -46,6 +46,7 @@ def checkout(request):
 
     if request.method == "POST":
         bag = request.session.get("bag", {})
+        current_bag = bag_contents(request) 
 
         form_data = {
             "full_name": request.POST.get("full_name", ""),
@@ -64,6 +65,7 @@ def checkout(request):
             pid = request.POST.get("client_secret").split("_secret")[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+            order.grand_total = current_bag["grand_total"] 
             order.save()
 
             # Create line items
