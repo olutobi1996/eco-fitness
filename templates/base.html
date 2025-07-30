@@ -48,28 +48,31 @@
 
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-    <div class="container">
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
-            <strong>Eco-Fitness</strong>
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
+                <strong>Eco-Fitness</strong>
+            </a>
 
-        <!-- Mobile Toggler -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
-            aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <!-- Burger / Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+                aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- Main Navigation -->
-        {% include 'includes/main-nav.html' %}
+            <!-- Nav Links (Collapsible on mobile) -->
+            <div class="collapse navbar-collapse" id="main-nav">
+                {% include 'includes/main-nav.html' %}
+            </div>
 
-        <!-- Mobile Top Header (Search, Profile, Cart) -->
-        <div class="d-lg-none">
-            {% include 'includes/mobile-top-header.html' %}
+            <!-- Mobile Top Icons: Search, Cart, Account (always visible on small screen) -->
+            <div class="d-lg-none ms-auto">
+                {% include 'includes/mobile-top-header.html' %}
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+
 
     {% if messages %}
     <div class="message-container mt-5">

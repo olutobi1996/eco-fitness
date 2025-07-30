@@ -9,59 +9,100 @@
 
         <!-- All Products Dropdown -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-dark mr-5 dropdown-toggle" href="#" id="all-products-link" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-dark mr-5 dropdown-toggle" href="#"
+                id="all-products-link" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>All Products</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc" class="dropdown-item"><strong>Price (Low to High)</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=price&direction=desc" class="dropdown-item"><strong>Price (High to Low)</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc" class="dropdown-item"><strong>By Rating</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=name&direction=asc" class="dropdown-item"><strong>Name (A-Z)</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc" class="dropdown-item"><strong>Name (Z-A)</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}" class="dropdown-item"><strong>All Products</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=asc"
+                        class="dropdown-item"><strong>Price (Low to High)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=price&direction=desc"
+                        class="dropdown-item"><strong>Price (High to Low)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=rating&direction=desc"
+                        class="dropdown-item"><strong>By Rating</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=asc"
+                        class="dropdown-item"><strong>Name (A-Z)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc"
+                        class="dropdown-item"><strong>Name (Z-A)</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}" class="dropdown-item"><strong>All Products</strong></a>
+                </li>
             </ul>
         </li>
 
         <!-- Fitness Plans -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="fitness-plans-link" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#"
+                id="fitness-plans-link" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>Fitness Plans</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?category=workout_plans" class="dropdown-item"><strong>Workout Plans</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item"><strong>Diet Plans</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?category=workout_plans,diet_plans" class="dropdown-item"><strong>All Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans"
+                        class="dropdown-item"><strong>Workout Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item"><strong>Diet
+                            Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=workout_plans,diet_plans"
+                        class="dropdown-item"><strong>All Plans</strong></a></li>
             </ul>
         </li>
 
         <!-- Merchandise -->
         <li class="nav-item dropdown">
-            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#" id="merchandise-link" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4 dropdown-toggle" href="#"
+                id="merchandise-link" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>Merchandise</strong>
             </a>
             <ul class="dropdown-menu border-0 shadow-sm">
-                <li><a href="{% url 'products:all_products' %}?category=activewear" class="dropdown-item"><strong>Activewear</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?category=accessories" class="dropdown-item"><strong>Accessories</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?category=eco_bottles" class="dropdown-item"><strong>Eco Bottles</strong></a></li>
-                <li><a href="{% url 'products:all_products' %}?category=activewear,accessories,eco_bottles" class="dropdown-item"><strong>All Merchandise</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear"
+                        class="dropdown-item"><strong>Activewear</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=accessories"
+                        class="dropdown-item"><strong>Accessories</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=eco_bottles" class="dropdown-item"><strong>Eco
+                            Bottles</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=activewear,accessories,eco_bottles"
+                        class="dropdown-item"><strong>All Merchandise</strong></a></li>
             </ul>
         </li>
 
         <!-- Community & Reviews -->
         <li class="nav-item">
-            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'community' %}" id="community-link">
+            <a class="logo-font font-weight-bold nav-link text-success mr-4" href="{% url 'community' %}"
+                id="community-link">
                 <strong>Community</strong>
             </a>
-        </li>  
+        </li>
 
         <li class="nav-item">
             {% if product and product.id %}
-                <a class="nav-link" href="{% url 'products:product_reviews_by_id' product.id %}"><strong>Reviews</strong></a>
+            <a class="nav-link"
+                href="{% url 'products:product_reviews_by_id' product.id %}"><strong>Reviews</strong></a>
             {% endif %}
-        </li>            
+        </li>
+        <!-- About Us -->
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'about_us' %}"><strong>About Us</strong></a>
+        </li>
+
+        <!-- User Account -->
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'profile' %}"><strong>My Profile</strong></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'account_logout' %}"><strong>Logout</strong></a>
+        </li>
+        {% if request.user.is_superuser %}
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'add_product' %}"><strong>Admin</strong></a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'account_signup' %}"><strong>Sign Up</strong></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-success" href="{% url 'account_login' %}"><strong>Login</strong></a>
+        </li>
+        {% endif %}
+
     </ul>
 </div>
-
-
-
-
