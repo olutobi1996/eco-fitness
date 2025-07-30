@@ -14,8 +14,8 @@
     <meta property="og:title" content="Eco-Fitness - Sustainable Fitness Gear & Nutrition">
     <meta property="og:description"
         content="Shop eco-friendly fitness gear, apparel, and supplements. Join the sustainable fitness movement with Eco-Fitness.">
-    <meta property="og:image" content="URL_TO_AN_IMAGE">
-    <meta property="og:url" content="YOUR_PAGE_URL">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@EcoFitness">
     {% endblock %}
@@ -48,87 +48,28 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}"><strong>Eco-Fitness</strong></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold text-success" href="{% url 'home' %}">
+            <strong>Eco-Fitness</strong>
+        </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Mobile Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+            aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}"><strong>About Us</strong></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'plans' %}"><strong>Pricing Plans</strong></a>
-                    </li>
+        <!-- Main Navigation -->
+        {% include 'includes/main-nav.html' %}
 
-                    <!-- Always Show the "Reviews" Link -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'products:product_reviews' %}"><strong>Reviews</strong></a>
-                    </li>
-
-                    <li class="nav-item"><a class="nav-link" href="{% url 'products:shop' %}"><strong>Shop</strong></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'community' %}"><strong>Community</strong></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}"><strong>Contact</strong></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link"
-                            href="{% url 'products:all_products' %}"><strong>Products</strong></a></li>
-                </ul>
-                <!-- User & Cart -->
-                <ul class="navbar-nav ms-3">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> <strong>Account</strong>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {% if request.user.is_authenticated %}
-                            {% if request.user.is_superuser %}
-                            <a href="{% url 'add_product' %}" class="dropdown-item"><strong>Product
-                                    Management</strong></a>
-                            {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'profile' %}"><strong>My Profile</strong></a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_logout' %}"><strong>Logout</strong></a>
-                            </li>
-                            {% else %}
-                            <li><a class="dropdown-item" href="{% url 'account_signup' %}"><strong>Sign Up</strong></a>
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'account_login' %}"><strong>Login</strong></a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link"
-                            href="{% url 'view_bag' %}">
-                            <div class="text-center">
-                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
-                                <p class="my-0">
-                                    {% if grand_total %}
-                                    <strong>${{ grand_total|floatformat:2 }}</strong>
-                                    {% else %}
-                                    <strong>$0.00</strong>
-                                    {% endif %}
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_bag' %}">
-                            <i class="fas fa-shopping-bag fa-lg"></i> <strong>Bag</strong>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <!-- Mobile Top Header (Search, Profile, Cart) -->
+        <div class="d-lg-none">
+            {% include 'includes/mobile-top-header.html' %}
         </div>
-    </nav>
-
-    {% include 'includes/mobile-top-header.html' %}
-    {% include 'includes/main-nav.html' %}
+    </div>
+</nav>
 
     {% if messages %}
     <div class="message-container mt-5">

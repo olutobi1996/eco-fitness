@@ -9,11 +9,6 @@ body, html {
 
 
 /* Navbar */
-.navbar {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 .navbar-brand,
 .logo-font {
     font-family: 'Poppins', sans-serif;
@@ -30,6 +25,84 @@ body, html {
 
 .navbar-nav .nav-link:hover {
     color: #28a745 !important;
+}
+/* Ensure navbar has relative positioning for absolute child elements */
+.navbar {
+  position: relative;
+  padding: 0.5rem 1rem;
+}
+
+/* Style toggler button */
+.navbar-toggler {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.75rem;
+  margin-left: auto; /* Push to right */
+  z-index: 1050; /* Above other elements */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Use Bootstrap default icon with optional color tweak */
+.navbar-toggler-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2828, 167, 69, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Show toggler only on mobile sizes */
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  /* Make sure navbar collapse container fills width and aligns under brand */
+  .navbar-collapse {
+    width: 100%;
+    background-color: #f8f9fa; /* match navbar bg */
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 1rem 1rem; /* some padding */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  /* Navbar nav full width with vertical layout */
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Navbar-collapse styling on mobile */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: absolute; /* Overlay below navbar */
+    top: 100%;
+    left: 0;
+    padding: 1rem;
+    z-index: 1040;
+  }
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+  }
 }
 
 /* Background Overlay */
@@ -319,31 +392,6 @@ footer a:hover {
     animation: spin 1s linear infinite;
     margin: 10px auto;
 }
-@media (max-width: 991px) {
-  /* Make sure navbar collapse container fills width and aligns under brand */
-  .navbar-collapse {
-    width: 100%;
-    background-color: #f8f9fa; /* match navbar bg */
-    position: relative;
-    top: 0;
-    left: 0;
-    padding: 1rem 1rem; /* some padding */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
-
-  /* Navbar nav full width with vertical layout */
-  .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .navbar-nav .nav-link {
-    padding: 0.75rem 1rem;
-    width: 100%;
-    text-align: left;
-  }
-}
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
