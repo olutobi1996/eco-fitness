@@ -1,5 +1,6 @@
 /* General Styles */
-body, html {
+body,
+html {
     font-family: 'Lato', sans-serif;
     color: #444;
     font-size: 1rem;
@@ -25,84 +26,161 @@ body, html {
 .navbar-nav .nav-link:hover {
     color: #28a745 !important;
 }
+
 /* Ensure navbar has relative positioning for absolute child elements */
 .navbar {
-  position: relative;
-  padding: 0.5rem 1rem;
+    position: relative;
+    padding: 0.5rem 1rem;
 }
 
 /* Style toggler button */
 .navbar-toggler {
-  border: none;
-  background: transparent;
-  padding: 0.25rem 0.75rem;
-  margin-left: auto; /* Push to right */
-  z-index: 1050; /* Above other elements */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border: none;
+    background: transparent;
+    padding: 0.25rem 0.75rem;
+    margin-left: auto;
+    /* Push to right */
+    z-index: 1050;
+    /* Above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Use Bootstrap default icon with optional color tweak */
 .navbar-toggler-icon {
-  width: 24px;
-  height: 24px;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2828, 167, 69, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2828, 167, 69, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Show toggler only on mobile sizes */
 @media (min-width: 992px) {
-  .navbar-toggler {
-    display: none;
-  }
+    .navbar-toggler {
+        display: none;
+    }
 }
+
 @media (max-width: 991px) {
-  /* Make sure navbar collapse container fills width and aligns under brand */
-  .navbar-collapse {
-    width: 100%;
-    background-color: #f8f9fa; /* match navbar bg */
-    position: relative;
-    top: 0;
-    left: 0;
-    padding: 1rem 1rem; /* some padding */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
 
-  /* Navbar nav full width with vertical layout */
-  .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-  }
+    /* Make sure navbar collapse container fills width and aligns under brand */
+    .navbar-collapse {
+        width: 100%;
+        background-color: #f8f9fa;
+        /* match navbar bg */
+        position: relative;
+        top: 0;
+        left: 0;
+        padding: 1rem 1rem;
+        /* some padding */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-  .navbar-nav .nav-link {
-    padding: 0.75rem 1rem;
-    width: 100%;
-    text-align: left;
-  }
+    /* Navbar nav full width with vertical layout */
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
+    }
+
+    .navbar-toggler-icon {
+        background-size: contain;
+    }
+
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        width: 100%;
+        text-align: left;
+    }
 }
 
 /* Navbar-collapse styling on mobile */
 @media (max-width: 991px) {
-  .navbar-collapse {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    position: absolute; /* Overlay below navbar */
-    top: 100%;
-    left: 0;
-    padding: 1rem;
-    z-index: 1040;
-  }
-  .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-  }
-  .navbar-nav .nav-link {
-    padding: 0.75rem 1rem;
-    width: 100%;
-    text-align: left;
-  }
+    .navbar-collapse {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        /* Overlay below navbar */
+        top: 100%;
+        left: 0;
+        padding: 1rem;
+        z-index: 1040;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+        width: 100%;
+        text-align: left;
+    }
 }
+
+@media (max-width: 768px) {
+    .navbar .dropdown-menu {
+        width: 100%;
+    }
+
+    .input-group input {
+        font-size: 14px;
+    }
+
+    .dropdown-menu .dropdown-item {
+        font-size: 15px;
+        padding: 10px 15px;
+    }
+
+    .nav-link p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        min-width: 90vw;
+        margin-top: 10px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+
+    .input-group button {
+        border-radius: 0 0.25rem 0.25rem 0;
+    }
+}
+
+/* Ensure dropdowns stack properly */
+.dropdown-menu {
+    z-index: 1051;
+}
+
+/* Improve spacing for dropdowns on mobile */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        padding: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .nav-link p {
+        font-size: 12px;
+    }
+
+    .dropdown-item {
+        padding: 10px 15px;
+    }
+}
+
+
 
 /* Background Overlay */
 .overlay {
@@ -116,7 +194,8 @@ body, html {
 }
 
 /* Buttons */
-.btn-green, .shop-now-button {
+.btn-green,
+.shop-now-button {
     background-color: #28a745;
     color: white;
     border-radius: 5px;
@@ -126,7 +205,8 @@ body, html {
     padding: 12px 20px;
 }
 
-.btn-green:hover, .shop-now-button:hover {
+.btn-green:hover,
+.shop-now-button:hover {
     background-color: #218838;
 }
 
@@ -151,34 +231,34 @@ body, html {
 }
 
 .hero-section {
-  position: relative;
-  background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
+    position: relative;
+    background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
 }
 
 .hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
-  z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  padding: 20px;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
 }
 
 /* Typography */
@@ -187,10 +267,13 @@ body, html {
     font-weight: bold;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    color: #1b4332; /* Deeper eco green */
+    color: #1b4332;
+    /* Deeper eco green */
 }
 
 h1 {
@@ -223,7 +306,7 @@ h3 {
 }
 
 /* Category Badges */
-a.category-badge > span.badge:hover {
+a.category-badge>span.badge:hover {
     background: #212529 !important;
     color: #fff !important;
 }
@@ -298,7 +381,8 @@ footer a:hover {
 
 /*  Success Toast (Green) */
 .toast-success {
-    background-color: #2d6a4f;  /* Deep forest green */
+    background-color: #2d6a4f;
+    /* Deep forest green */
     color: #ffffff;
     border-left: 5px solid #1b4332;
 }
@@ -309,14 +393,16 @@ footer a:hover {
 
 /* Warning Toast (Yellow) */
 .toast-warning {
-    background-color: #ffcc00;  /* Warm sunflower yellow */
+    background-color: #ffcc00;
+    /* Warm sunflower yellow */
     color: #333;
     border-left: 5px solid #e6b800;
 }
 
 /* Error Toast (Red) */
 .toast-error {
-    background-color: #d90429;  /* Bold eco-conscious red */
+    background-color: #d90429;
+    /* Bold eco-conscious red */
     color: white;
     border-left: 5px solid #a0001c;
 }
@@ -327,7 +413,8 @@ footer a:hover {
 
 /* Info Toast (Blue) */
 .toast-info {
-    background-color: #0077b6;  /* Ocean blue */
+    background-color: #0077b6;
+    /* Ocean blue */
     color: white;
     border-left: 5px solid #023e8a;
 }
@@ -360,8 +447,8 @@ footer a:hover {
 }
 
 
-  /* Loading Overlay Styling */
-  .loading-overlay {
+/* Loading Overlay Styling */
+.loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -391,21 +478,28 @@ footer a:hover {
     animation: spin 1s linear infinite;
     margin: 10px auto;
 }
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* -------------------------------- Media Queries */
 
 /* Mobile Responsive  */
 @media (max-width: 991px) {
-  .navbar-nav.ms-auto {
-    text-align: center;
-  }
-  .navbar-nav.ms-auto .nav-item {
-    margin-bottom: 10px;
-  }
+    .navbar-nav.ms-auto {
+        text-align: center;
+    }
+
+    .navbar-nav.ms-auto .nav-item {
+        margin-bottom: 10px;
+    }
 }
 
 /* Slightly larger container on xl screens */
@@ -454,6 +548,7 @@ footer a:hover {
         transform: translateY(-20px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 0.95;
