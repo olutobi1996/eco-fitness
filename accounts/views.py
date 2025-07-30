@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from checkout.models import Order
-
 from .forms import ProfileForm
 from .models import AccountProfile
 
@@ -19,15 +18,6 @@ def profile(request):
     }
 
     return render(request, "accounts/profile.html", context)
-
-    return render(
-        request,
-        "accounts/profile.html",
-        {
-            "profile": profile,
-            "orders": orders,
-        },
-    )
 
 
 @login_required
@@ -48,7 +38,6 @@ def edit_profile(request):
 
             messages.success(request, "Your profile was updated successfully.")
             return redirect("profile")
-
     else:
         form = ProfileForm(instance=request.user)
 
