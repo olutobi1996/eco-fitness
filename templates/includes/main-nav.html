@@ -24,33 +24,27 @@
                         class="dropdown-item"><strong>Name (A-Z)</strong></a></li>
                 <li><a href="{% url 'products:all_products' %}?sort=name&direction=desc"
                         class="dropdown-item"><strong>Name (Z-A)</strong></a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
                 <li><a href="{% url 'products:all_products' %}" class="dropdown-item"><strong>All Products</strong></a>
                 </li>
+                <li><a href="{% url 'products:all_products' %}?category=fitness_plans"
+                        class="dropdown-item"><strong>Workout Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item"><strong>Diet
+                            Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=fitness_plans,diet_plans"
+                        class="dropdown-item"><strong>All Plans</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=eco_friendly_activewear"
+                        class="dropdown-item"><strong>Activewear</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=biodegradable_accessories"
+                        class="dropdown-item"><strong>Accessories</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=recycled_fitness_gear"
+                        class="dropdown-item"><strong>Recycled Gear</strong></a></li>
+                <li><a href="{% url 'products:all_products' %}?category=eco_friendly_activewear,recycled_fitness_gear,biodegradable_accessories,vegan_supplements"
+                        class="dropdown-item"><strong>All Merchandise</strong></a></li>
             </ul>
         </li>
-
-        <li><a href="{% url 'products:all_products' %}?category=fitness_plans" class="dropdown-item"><strong>Workout
-                    Plans</strong></a></li>
-
-        <li><a href="{% url 'products:all_products' %}?category=diet_plans" class="dropdown-item"><strong>Diet
-                    Plans</strong></a></li>
-
-        <li><a href="{% url 'products:all_products' %}?category=fitness_plans,diet_plans"
-                class="dropdown-item"><strong>All Plans</strong></a></li>
-
-
-        <li><a href="{% url 'products:all_products' %}?category=eco_friendly_activewear"
-                class="dropdown-item"><strong>Activewear</strong></a></li>
-
-        <li><a href="{% url 'products:all_products' %}?category=biodegradable_accessories"
-                class="dropdown-item"><strong>Accessories</strong></a></li>
-
-        <li><a href="{% url 'products:all_products' %}?category=recycled_fitness_gear"
-                class="dropdown-item"><strong>Recycled Gear</strong></a></li>
-
-        <li><a href="{% url 'products:all_products' %}?category=eco_friendly_activewear,recycled_fitness_gear,biodegradable_accessories,vegan_supplements"
-                class="dropdown-item"><strong>All Merchandise</strong></a></li>
-
 
         <!-- Community & Reviews -->
         <li class="nav-item">
@@ -65,6 +59,7 @@
                 <strong>Reviews</strong>
             </a>
         </li>
+
         <!-- About Us -->
         <li class="nav-item">
             <a class="nav-link text-success" href="{% url 'about_us' %}"><strong>About Us</strong></a>
@@ -94,36 +89,14 @@
         </li>
     </ul>
 </div>
-<ul class="list-inline d-flex justify-content-end align-items-center d-lg-none">
-    <!-- User Account Dropdown (Mobile) -->
-    <li class="list-inline-item dropdown">
-        <a class="text-success nav-link dropdown-toggle" href="#" id="user-options" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <div class="text-center">
-                <i class="fas fa-user fa-lg"></i>
-                <p class="my-0 small"><strong>My Account</strong></p>
-            </div>
-        </a>
-        <div class="dropdown-menu border-0 shadow-sm rounded">
-            {% if request.user.is_authenticated %}
-            {% if request.user.is_superuser %}
-            <a href="{% url 'add_product' %}" class="dropdown-item"><strong>Product Management</strong></a>
-            {% endif %}
-            <a class="dropdown-item" href="{% url 'profile' %}"><strong>My Profile</strong></a>
-            <a href="{% url 'account_logout' %}" class="dropdown-item"><strong>Logout</strong></a>
-            {% else %}
-            <a href="{% url 'account_signup' %}" class="dropdown-item"><strong>Register</strong></a>
-            <a href="{% url 'account_login' %}" class="dropdown-item"><strong>Login</strong></a>
-            {% endif %}
-        </div>
-    </li>
 
-    <!-- Cart icon (visible on all sizes) -->
-    <li class="nav-item">
-        <a class="nav-link text-success position-relative" href="{% url 'view_bag' %}">
-            <i class="fas fa-shopping-bag fa-lg"></i>
-            <span class="fw-bold">${{ grand_total|default:"0.00" }}</span>
-        </a>
-    </li>
+<!-- Shopping Cart (Desktop) -->
+<li class="nav-item d-none d-lg-block">
+    <a class="nav-link text-success position-relative" href="{% url 'view_bag' %}">
+        <i class="fas fa-shopping-bag fa-lg"></i>
+        <span class="fw-bold">${{ grand_total|default:"0.00" }}</span>
+    </a>
+</li>
+
 
 </ul>
