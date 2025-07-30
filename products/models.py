@@ -17,7 +17,8 @@ class Category(models.Model):
     image = models.ImageField(null=True, blank=True)
 
     
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
