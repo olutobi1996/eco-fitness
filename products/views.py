@@ -10,13 +10,32 @@ from .models import Category, Product, Review
 
 def all_products(request):
     """A view to show all products, including sorting and search queries"""
+
     products = Product.objects.all()
     query = request.GET.get("q", "")
-    categories = request.GET.getlist("category")
+    category_param = request.GET.get("category", "")  
     sort = request.GET.get("sort")
     direction = request.GET.get("direction")
 
-    # Sorting logic
+    
+    if category_param:
+        categories = category_param.split(",")
+    else:
+        categories = []
+
+    
+    if query:
+        queries = Q(name__icontains=query) | Q(description__icontains=query)
+        products = products.filter(queries)
+    elif "q" in request.GET and not query:
+        messages.error(request, "You didn't enter any search criteria!")
+        return redirect(reverse("products:all_products"))
+
+    
+    if categories:
+        products = products.filter(category__name__in=categories).distinct()
+
+    
     if sort:
         sortkey = sort
         if sortkey == "name":
@@ -28,19 +47,6 @@ def all_products(request):
             sortkey = f"-{sortkey}"
         products = products.order_by(sortkey)
 
-    # Filtering by category
-    if categories:
-        products = products.filter(category__name__in=categories)
-        categories = Category.objects.filter(name__in=categories)
-
-    # Search logic
-    if query:
-        queries = Q(name__icontains=query) | Q(description__icontains=query)
-        products = products.filter(queries)
-    elif "q" in request.GET:
-        messages.error(request, "You didn't enter any search criteria!")
-        return redirect(reverse("products:all_products"))
-
     context = {
         "products": products,
         "search_term": query,
@@ -49,6 +55,7 @@ def all_products(request):
     }
 
     return render(request, "products/products.html", context)
+
 
 
 def product_reviews(request, product_id=None):

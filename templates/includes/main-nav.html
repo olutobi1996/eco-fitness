@@ -73,7 +73,7 @@
 
         <li class="nav-item">
             {% if product and product.id %}
-            <a class="nav-link"
+            <a class="nav-link text-success"
                 href="{% url 'products:product_reviews_by_id' product.id %}"><strong>Reviews</strong></a>
             {% endif %}
         </li>
@@ -82,27 +82,61 @@
             <a class="nav-link text-success" href="{% url 'about_us' %}"><strong>About Us</strong></a>
         </li>
 
-        <!-- User Account -->
-        {% if request.user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'profile' %}"><strong>My Profile</strong></a>
+        <!-- User Account Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link text-success dropdown-toggle" href="#" id="navbarProfile" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle me-1"></i><strong>My Account</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm" aria-labelledby="navbarProfile">
+                {% if request.user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                {% if request.user.is_superuser %}
+                <li><a class="dropdown-item" href="{% url 'add_product' %}">Admin</a></li>
+                {% endif %}
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                {% else %}
+                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'account_logout' %}"><strong>Logout</strong></a>
-        </li>
-        {% if request.user.is_superuser %}
-        <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'add_product' %}"><strong>Admin</strong></a>
-        </li>
-        {% endif %}
-        {% else %}
-        <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'account_signup' %}"><strong>Sign Up</strong></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-success" href="{% url 'account_login' %}"><strong>Login</strong></a>
-        </li>
-        {% endif %}
-
     </ul>
 </div>
+<ul class="list-inline d-flex justify-content-end align-items-center d-lg-none">
+    <!-- User Account Dropdown (Mobile) -->
+    <li class="list-inline-item dropdown">
+        <a class="text-success nav-link dropdown-toggle" href="#" id="user-options" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <div class="text-center">
+                <i class="fas fa-user fa-lg"></i>
+                <p class="my-0 small"><strong>My Account</strong></p>
+            </div>
+        </a>
+        <div class="dropdown-menu border-0 shadow-sm rounded">
+            {% if request.user.is_authenticated %}
+            {% if request.user.is_superuser %}
+            <a href="{% url 'add_product' %}" class="dropdown-item"><strong>Product Management</strong></a>
+            {% endif %}
+            <a class="dropdown-item" href="{% url 'profile' %}"><strong>My Profile</strong></a>
+            <a href="{% url 'account_logout' %}" class="dropdown-item"><strong>Logout</strong></a>
+            {% else %}
+            <a href="{% url 'account_signup' %}" class="dropdown-item"><strong>Register</strong></a>
+            <a href="{% url 'account_login' %}" class="dropdown-item"><strong>Login</strong></a>
+            {% endif %}
+        </div>
+    </li>
+
+    <!-- Shopping Cart (Mobile) -->
+    <li class="list-inline-item">
+        <a class="text-success nav-link" href="{% url 'view_bag' %}">
+            <div class="text-center">
+                <i class="fas fa-shopping-bag fa-lg"></i>
+                <p class="my-0 small"><strong>${{ grand_total|default:"0.00" }}</strong></p>
+            </div>
+        </a>
+    </li>
+</ul>
