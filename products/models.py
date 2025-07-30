@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-
+from django.utils.text import slugify
 
 class Category(models.Model):
     CATEGORY_CHOICES = [
@@ -12,9 +12,17 @@ class Category(models.Model):
         ("biodegradable_accessories", "Biodegradable Accessories"),
     ]
     name = models.CharField(
-        max_length=50, choices=CATEGORY_CHOICES, unique=True)
+        max_length=50, choices=CATEGORY_CHOICES)
     friendly_name = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
+
+    
+    slug = models.SlugField(blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.friendly_name or self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.friendly_name or self.name
@@ -23,6 +31,7 @@ class Category(models.Model):
         return self.friendly_name or dict(self.CATEGORY_CHOICES).get(
             self.name, self.name
         )
+
 
 
 class Product(models.Model):
