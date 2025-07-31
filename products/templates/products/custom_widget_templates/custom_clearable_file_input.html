@@ -19,31 +19,12 @@
     </label>
     <strong><p class="text-green mt-1" id="filename"></p></strong>
 </div>
-
-<style>
-    .eco-file-upload {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .eco-image-preview img {
-        border-radius: 8px;
-        transition: transform 0.3s;
-    }
-    .eco-image-preview img:hover {
-        transform: scale(1.05);
-    }
-    .btn-file {
-        cursor: pointer;
-    }
-    .text-green {
-        color: #2e7d32;
-    }
-</style>
-
+{% block postloadjs %}
+    {{ block.super }}
 <script>
     document.getElementById("new-image").addEventListener("change", function() {
         let fileName = this.files[0] ? this.files[0].name : "No file selected";
         document.getElementById("filename").textContent = fileName;
     });
 </script>
+{% endblock %}

@@ -1,564 +1,339 @@
-/* General Styles */
-body,
-html {
-    font-family: 'Lato', sans-serif;
-    color: #444;
+/* Reset and General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+background: #e8f5e9;
+}
+
+/* Container for centering content - keep for hero and services */
+.container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+/* Hero section stays full viewport width */
+.hero-section {
+  position: relative;
+  width: 100vw;
+  min-height: 400px;
+  background: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Use container inside hero for consistent max-width and centering */
+.hero-content-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Restore max-width on services container for alignment */
+.categories-section .container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
+/* Hero content text */
+.hero-content {
+  max-width: 800px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-shadow: 0 0 6px rgba(0,0,0,0.5);
+  padding: 20px;
+}
+
+/* Responsive Hero Text */
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Canvas full hero background */
+#ecoCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+  background: transparent;
+}
+
+/* Remove max-width on .container inside categories to allow stretching */
+.categories-section {
+  padding: 3rem 20px;
+  background-color: #f9f9f9;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Section title */
+.categories-section .section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #2e7d32;
+}
+
+/* Flex row container for cards */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 0;
+}
+
+/* Columns: 4 per row max, flex-grow with min and max widths */
+.col {
+  flex: 1 1 220px; /* grow and shrink */
+  max-width: 270px;
+  box-sizing: border-box;
+}
+
+/* Card styles */
+.card {
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(34, 139, 34, 0.25);
+}
+
+.card h5 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #2e7d32;
+}
+
+.card p {
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  flex-grow: 1; /* push button to bottom */
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  background-color: #43a047;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+}
+
+.btn-primary:hover {
+  background-color: #2e7d32;
+}
+
+.btn-success {
+  background-color: #2e7d32;
+  border-color: #2e7d32;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #14532d;
+  border-color: #14532d;
+}
+
+/* Text colors */
+.text-green {
+  color: #28a745 !important;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 70vh;
+    min-height: 400px;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
     font-size: 1rem;
-    line-height: 1.6;
-    background-size: cover;
+  }
+  .col {
+    max-width: 100%; /* full width on smaller */
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 60vh;
+    min-height: 300px;
+  }
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+  .hero-content p {
+    font-size: 0.9rem;
+  }
 }
 
 /* Navbar */
 .navbar-brand,
 .logo-font {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .navbar-nav .nav-link {
-    font-size: 1rem;
-    color: #444 !important;
-    transition: color 0.3s ease-in-out;
+  font-size: 1rem;
+  color: #444 !important;
+  transition: color 0.3s ease-in-out;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #28a745 !important;
+  color: #28a745 !important;
 }
 
 /* Ensure navbar has relative positioning for absolute child elements */
 .navbar {
-    position: relative;
-    padding: 0.5rem 1rem;
+  position: relative;
+  padding: 0.5rem 1rem;
 }
 
 /* Style toggler button */
 .navbar-toggler {
-    border: none;
-    background: transparent;
-    padding: 0.25rem 0.75rem;
-    margin-left: auto;
-    /* Push to right */
-    z-index: 1050;
-    /* Above other elements */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.75rem;
+  margin-left: auto; /* Push to right */
+  z-index: 1050; /* Above other elements */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Use Bootstrap default icon with optional color tweak */
 .navbar-toggler-icon {
-    width: 24px;
-    height: 24px;
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2828, 167, 69, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2828, 167, 69, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 /* Show toggler only on mobile sizes */
 @media (min-width: 992px) {
-    .navbar-toggler {
-        display: none;
-    }
+  .navbar-toggler {
+    display: none;
+  }
 }
 
 @media (max-width: 991px) {
+  .navbar-collapse {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1rem;
+    z-index: 1040;
+  }
 
-    /* Make sure navbar collapse container fills width and aligns under brand */
-    .navbar-collapse {
-        width: 100%;
-        background-color: #f8f9fa;
-        /* match navbar bg */
-        position: relative;
-        top: 0;
-        left: 0;
-        padding: 1rem 1rem;
-        /* some padding */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
 
-    /* Navbar nav full width with vertical layout */
-    .navbar-nav {
-        flex-direction: column;
-        width: 100%;
-    }
+  .navbar-nav .nav-item {
+    margin-bottom: 0.5rem;
+  }
 
-    .navbar-nav .nav-item {
-        margin-bottom: 0.5rem;
-    }
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+  }
 
-    .navbar-toggler-icon {
-        background-size: contain;
-    }
-
-
-    .navbar-nav .nav-link {
-        padding: 0.75rem 1rem;
-        width: 100%;
-        text-align: left;
-    }
+  .navbar-toggler-icon {
+    background-size: contain;
+  }
 }
 
-/* Navbar-collapse styling on mobile */
-@media (max-width: 991px) {
-    .navbar-collapse {
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        position: absolute;
-        /* Overlay below navbar */
-        top: 100%;
-        left: 0;
-        padding: 1rem;
-        z-index: 1040;
-    }
-
-    .navbar-nav {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .navbar-nav .nav-link {
-        padding: 0.75rem 1rem;
-        width: 100%;
-        text-align: left;
-    }
-}
-
+/* Dropdowns on mobile */
 @media (max-width: 768px) {
-    .navbar .dropdown-menu {
-        width: 100%;
-    }
-
-    .input-group input {
-        font-size: 14px;
-    }
-
-    .dropdown-menu .dropdown-item {
-        font-size: 15px;
-        padding: 10px 15px;
-    }
-
-    .nav-link p {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 768px) {
-    .dropdown-menu {
-        min-width: 90vw;
-        margin-top: 10px;
-    }
-
-    .input-group input {
-        font-size: 14px;
-        border-radius: 0.25rem 0 0 0.25rem;
-    }
-
-    .input-group button {
-        border-radius: 0 0.25rem 0.25rem 0;
-    }
-}
-
-/* Ensure dropdowns stack properly */
-.dropdown-menu {
+  .navbar .dropdown-menu {
+    width: 100%;
+    min-width: 90vw;
+    margin-top: 10px;
+    padding: 0.5rem;
+    font-size: 0.95rem;
     z-index: 1051;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+
+  .input-group button {
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+
+  .dropdown-menu .dropdown-item {
+    font-size: 15px;
+    padding: 10px 15px;
+  }
+
+  .nav-link p {
+    font-size: 12px;
+  }
 }
-
-/* Improve spacing for dropdowns on mobile */
-@media (max-width: 768px) {
-    .dropdown-menu {
-        padding: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    .nav-link p {
-        font-size: 12px;
-    }
-
-    .dropdown-item {
-        padding: 10px 15px;
-    }
-}
-
-
 
 /* Background Overlay */
 .overlay {
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    background: rgba(255, 255, 255, 0.8);
-    z-index: -1;
-}
-
-/* Buttons */
-.btn-green,
-.shop-now-button {
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s ease-in-out;
-    min-width: 260px;
-    padding: 12px 20px;
-}
-
-.btn-green:hover,
-.shop-now-button:hover {
-    background-color: #218838;
-}
-
-/* Alternative Button */
-.btn-outline-green {
-    border: 2px solid #28a745;
-    color: #28a745;
-}
-
-.btn-outline-green:hover {
-    background-color: #28a745;
-    color: white;
-}
-
-/* Search Bar */
-.navbar .form-control {
-    border: 2px solid #28a745;
-}
-
-.navbar .btn-outline-success {
-    border-color: #28a745;
-}
-
-.hero-section {
-    position: relative;
-    background-image: url("{% static 'css/images/EcoFitnessHero.jpg' %}");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 20px;
-}
-
-/* Typography */
-.logo-font {
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-h1,
-h2,
-h3 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    color: #1b4332;
-    /* Deeper eco green */
-}
-
-h1 {
-    font-size: 2.5rem;
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-h3 {
-    font-size: 1.5rem;
-}
-
-
-.text-green {
-    color: #28a745 !important;
-}
-
-.text-black {
-    color: #000 !important;
-}
-
-.border-black {
-    border: 1px solid black !important;
-}
-
-.bg-black {
-    background: #000 !important;
-}
-
-/* Category Badges */
-a.category-badge>span.badge:hover {
-    background: #212529 !important;
-    color: #fff !important;
-}
-
-/* Product Card */
-.product-card .card-text,
-.blog-content,
-.about-us p {
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-}
-
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Footer */
-footer {
-    background: #222;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer a {
-    color: #28a745;
-    transition: color 0.3s ease-in-out;
-}
-
-footer a:hover {
-    color: #45c367;
-}
-
-/* Back to Top Button */
-.btt-button {
-    height: 42px;
-    width: 42px;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-}
-
-.btt-link {
-    cursor: pointer;
-}
-
-/* General Toast Styles */
-.quote {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.2rem;
-    color: #2d6a4f;
-    margin: 20px auto;
-    text-align: center;
-}
-
-/* General Toast Styles */
-.toast-container {
-    z-index: 1050;
-}
-
-.toast {
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    min-width: 300px;
-    max-width: 400px;
-    opacity: 0.95;
-}
-
-/*  Success Toast (Green) */
-.toast-success {
-    background-color: #2d6a4f;
-    /* Deep forest green */
-    color: #ffffff;
-    border-left: 5px solid #1b4332;
-}
-
-.toast-success .btn-close {
-    filter: invert(1);
-}
-
-/* Warning Toast (Yellow) */
-.toast-warning {
-    background-color: #ffcc00;
-    /* Warm sunflower yellow */
-    color: #333;
-    border-left: 5px solid #e6b800;
-}
-
-/* Error Toast (Red) */
-.toast-error {
-    background-color: #d90429;
-    /* Bold eco-conscious red */
-    color: white;
-    border-left: 5px solid #a0001c;
-}
-
-.toast-error .btn-close {
-    filter: invert(1);
-}
-
-/* Info Toast (Blue) */
-.toast-info {
-    background-color: #0077b6;
-    /* Ocean blue */
-    color: white;
-    border-left: 5px solid #023e8a;
-}
-
-.toast-info .btn-close {
-    filter: invert(1);
-}
-
-/* Icon Styling */
-.toast .toast-body i {
-    margin-right: 8px;
-    font-size: 1.2rem;
-}
-
-.eco-divider {
-    border-top: 2px solid #28a745;
-    width: 50%;
-    margin: 10px auto;
-}
-
-.eco-logo-font {
-    font-family: "Poppins", sans-serif;
-    text-transform: uppercase;
-}
-
-.eco-form {
-    background: #f8f9fa;
-    border-left: 5px solid #28a745;
-    max-width: 400px;
-}
-
-
-/* Loading Overlay Styling */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.loading-message {
-    text-align: center;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-/* CSS Spinner */
-.spinner {
-    border: 5px solid rgba(255, 255, 255, 0.3);
-    border-top: 5px solid #fff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 10px auto;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* -------------------------------- Media Queries */
-
-/* Mobile Responsive  */
-@media (max-width: 991px) {
-    .navbar-nav.ms-auto {
-        text-align: center;
-    }
-
-    .navbar-nav.ms-auto .nav-item {
-        margin-bottom: 10px;
-    }
-}
-
-/* Slightly larger container on xl screens */
-@media (min-width: 1200px) {
-    .container {
-        max-width: 80%;
-    }
-}
-
-/* Fixed top navbar only on medium and up */
-@media (min-width: 992px) {
-    .fixed-top-desktop-only {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-
-    .header-container {
-        padding-top: 164px;
-    }
-}
-
-/* Pad the top a bit when navbar is collapsed on mobile */
-@media (max-width: 991px) {
-    .header-container {
-        padding-top: 116px;
-    }
-
-    body {
-        height: calc(100vh - 116px);
-    }
-}
-
-/* Responsive Hero Section */
-@media (max-width: 768px) {
-    .hero-section {
-        padding: 60px 10px;
-    }
-}
-
-/* 🕒 Fade-in Animation */
-@keyframes fadeInSlide {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 0.95;
-    }
-}
-
-/* 📱 Mobile-Friendly Adjustments */
-@media (max-width: 768px) {
-    .toast {
-        min-width: 250px;
-        max-width: 320px;
-    }
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 1001;
 }
