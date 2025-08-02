@@ -2,45 +2,44 @@
 {% load static %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="text-center mb-4">About Us</h1>
+<section class="container-fluid text-center my-5">
+  <div class="container boxed-section" data-aos="fade-up">
+
+    <h1 class="text-center mb-4" data-aos="zoom-in">About Us</h1>
 
     {% if about_us %}
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row" data-aos="fade-right">
+            <div class="col-md-6" data-aos="fade-up-right">
                 {% if about_us.image %}
                     <img class="img-fluid" src="https://eco-fitness1.s3.us-east-1.amazonaws.com/media/pexels-cottonbro-5081915.jpg" alt="About Us Image">
                 {% else %}
                     <img class="img-fluid" src="https://eco-fitness1.s3.us-east-1.amazonaws.com/media/pexels-cottonbro-5081915.jpg" alt="About Us Image">
                 {% endif %}
             </div>
-            <div class="col-md-6">
-                <p>Welcome to Eco-Fitness, an eco-conscious fitness brand dedicated to helping you improve both your health and the planet. Our mission is simple: to provide high-quality, sustainable fitness products that promote physical well-being while reducing environmental impact. We believe that fitness is not just about the body but also about the world around us.</p>
-
-                <p>As part of our commitment to sustainability, we carefully choose the materials for our fitness products. Whether it’s eco-friendly yoga mats, biodegradable resistance bands, or sustainable apparel, we ensure that every product we offer is made with the planet in mind. We strive to minimize waste, use recyclable packaging, and support ethical production practices that benefit not only the environment but also the people involved in the creation of our products.</p>
-
-                <p>Our goal is to make it easy for fitness enthusiasts to make environmentally friendly choices without compromising on quality. When you shop with us, you're not only investing in products that will enhance your physical health but also contributing to the improvement of the planet. Every step you take towards a healthier you is a step towards a healthier planet.</p>
-
-                <p>We are dedicated to creating a space where fitness meets sustainability. Through our products and community, we aim to inspire people to live a healthier and more eco-conscious lifestyle. Join us in making a difference—because together, we can build a better, greener world, one workout at a time.</p>
+            <div class="col-md-6" data-aos="fade-up-left">
+                <p>Welcome to Eco-Fitness, an eco-conscious fitness brand...</p>
+                <p>As part of our commitment to sustainability...</p>
+                <p>Our goal is to make it easy for fitness enthusiasts...</p>
+                <p>We are dedicated to creating a space where fitness meets sustainability...</p>
             </div>
         </div>
     {% else %}
-        <p class="text-center text-muted">Information about us is not available at the moment.</p>
+        <p class="text-center text-muted" data-aos="fade-in">Information about us is not available at the moment.</p>
     {% endif %}
 
     <!-- Privacy Statement -->
-    <div class="mt-5">
+    <div class="mt-5" data-aos="fade-up">
         <h2 class="mb-3">Privacy Statement</h2>
-        <p>Your privacy is important to us. We are committed to maintaining the confidentiality, integrity, and security of personal information about our users. We collect only the necessary data to process orders and enhance your shopping experience, such as your name, email, and shipping address.</p>
-        <p>We never sell or share your personal data with third parties without your explicit consent. All transactions are encrypted and processed securely. You may request to view, update, or delete your data at any time by contacting our support team.</p>
-        <p>By using our website, you consent to our privacy practices outlined above. We reserve the right to update this statement as our services evolve.</p>
+        <p>Your privacy is important to us...</p>
+        <p>We never sell or share your personal data...</p>
+        <p>By using our website, you consent to our privacy practices...</p>
     </div>
 
     <!-- FAQs Section -->
-    <div class="mt-5">
+    <div class="mt-5" data-aos="fade-up">
         <h2 class="mb-3">Frequently Asked Questions (FAQs)</h2>
         <div class="accordion" id="faqAccordion">
-            <div class="accordion-item">
+            <div class="accordion-item" data-aos="fade-right">
                 <h2 class="accordion-header" id="faq1">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
                         What makes your products eco-friendly?
@@ -48,11 +47,11 @@
                 </h2>
                 <div id="collapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Our products are made from sustainable, biodegradable, or recycled materials. We also ensure ethical production and minimal packaging waste.
+                        Our products are made from sustainable...
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" data-aos="fade-left">
                 <h2 class="accordion-header" id="faq2">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
                         Do you offer international shipping?
@@ -60,11 +59,11 @@
                 </h2>
                 <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Yes! We ship worldwide using eco-conscious delivery partners whenever possible.
+                        Yes! We ship worldwide using eco-conscious...
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item" data-aos="fade-right">
                 <h2 class="accordion-header" id="faq3">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
                         What is your return policy?
@@ -72,12 +71,14 @@
                 </h2>
                 <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        We offer a 30-day return window for unused items in original condition. Simply contact us and we’ll guide you through the return process.
+                        We offer a 30-day return window...
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+  </div>
+</section>
 {% endblock %}
+
 

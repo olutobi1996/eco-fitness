@@ -1,75 +1,89 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <h2 class="text-center">Customer Reviews</h2>
+<div class="row" data-aos="fade-up">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+
+        <div class="text-center my-4">
+            <h2 class="text-success display-5 fw-bold">
+                Customer Reviews <i class="fas fa-leaf text-success ms-2"></i>
+            </h2>
+            <p class="text-muted">Real feedback from our eco-conscious community 🌱</p>
+        </div>
 
         {% if product %}
-        <h3>Reviews for: {{ product.name }}</h3>
+        <h4 class="text-info mb-3">Reviews for: <strong>{{ product.name }}</strong></h4>
         {% else %}
-        <h3>Search for a Product</h3>
+        <h4 class="text-secondary mb-3">Search for a Product</h4>
         {% endif %}
 
         <!-- Search Form -->
-        <form method="GET" action="{% url 'products:product_reviews' %}">
-            <input type="text" name="search" placeholder="Search for products..." class="form-control"
-                value="{{ request.GET.search }}">
-            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        <form method="GET" action="{% url 'products:product_reviews' %}" class="mb-4">
+            <div class="input-group shadow-sm">
+                <input type="text" name="search" placeholder="Search for products..." class="form-control rounded-start"
+                    value="{{ request.GET.search }}">
+                <button type="submit" class="btn btn-success rounded-end">Search</button>
+            </div>
         </form>
 
         {% if products %}
-        <h4>Search Results:</h4>
-        <ul class="list-group">
-            {% for prod in products %}
-            <li class="list-group-item">
-                <a href="{% url 'products:product_reviews_by_id' prod.id %}">{{ prod.name }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="mb-3">
+            <h5 class="text-muted">Search Results:</h5>
+            <ul class="list-group shadow-sm">
+                {% for prod in products %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'products:product_reviews_by_id' prod.id %}" class="text-decoration-none text-dark fw-medium">{{ prod.name }}</a>
+                    <i class="fas fa-leaf text-success"></i>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% else %}
         {% if not product %}
-        <p>No products found matching your search.</p>
+        <p class="text-muted fst-italic">No products found matching your search.</p>
         {% endif %}
         {% endif %}
 
         {% if product %}
         <hr>
-        <h4>Reviews for {{ product.name }}:</h4>
+        <h5 class="text-success mb-4">Reviews for {{ product.name }}:</h5>
         {% for review in reviews %}
-        <div class="border p-3 my-3 rounded shadow-sm">
-            <strong class="text-primary">{{ review.user.username }}</strong>
-            <span class="text-warning"> - Rated: {{ review.rating }}/5 ⭐</span>
-            <p class="mt-2">{{ review.comment }}</p>
-            <small class="text-muted">{{ review.created_at|date:"M d, Y H:i" }}</small><br>
+        <div class="border rounded p-3 mb-4 shadow-sm bg-light" data-aos="fade-up">
+            <div class="d-flex justify-content-between align-items-center">
+                <strong class="text-success">{{ review.user.username }}</strong>
+                <span class="text-warning small">Rated: {{ review.rating }}/5 ⭐</span>
+            </div>
+            <p class="mt-2 mb-1">{{ review.comment }}</p>
+            <small class="text-muted">{{ review.created_at|date:"M d, Y H:i" }}</small>
 
             {% if user == review.user or user.is_superuser %}
             <div class="mt-2">
-                <a href="{% url 'products:edit_review' review.id %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                <a href="{% url 'products:edit_review' review.id %}" class="btn btn-sm btn-outline-warning me-2">Edit</a>
                 <a href="{% url 'products:delete_review' review.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
             </div>
             {% endif %}
         </div>
-
         {% empty %}
-        <p>No reviews yet for this product.</p>
+        <p class="text-muted fst-italic">No reviews yet for this product.</p>
         {% endfor %}
         {% endif %}
 
         {% if user.is_authenticated %}
         {% if product %}
-        <h3 class="text-center">Leave a Review for {{ product.name }}</h3>
-        <form method="POST" class="border p-4 rounded shadow-sm">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-3">Submit Review</button>
-        </form>
+        <div class="mt-5">
+            <h4 class="text-center text-success mb-3">Leave a Review for {{ product.name }}</h4>
+            <form method="POST" class="border p-4 rounded shadow-sm bg-white" data-aos="zoom-in">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success btn-lg d-block mx-auto mt-3">Submit Review</button>
+            </form>
+        </div>
         {% else %}
-        <p>Please select a product to leave a review.</p>
+        <p class="text-muted">Please select a product to leave a review.</p>
         {% endif %}
         {% else %}
-        <p class="text-center mt-3">
-            <a href="{% url 'account_login' %}" class="btn btn-outline-primary">Log in</a> to leave a review.
+        <p class="text-center mt-4">
+            <a href="{% url 'account_login' %}" class="btn btn-outline-success">Log in</a> to leave a review.
         </p>
         {% endif %}
     </div>
