@@ -2,7 +2,7 @@
 
 {% block content %}
 <!-- Profile Section -->
-<div class="profile-container">
+<div class="profile-container" data-aos="fade-up" data-aos-delay="500">
   <div class="profile-header">
     <h1>Welcome, {{ user.first_name }}!</h1>
     <p>Your Eco-Friendly Fitness Journey Starts Here!</p>
@@ -10,7 +10,7 @@
 
   <div class="profile-content">
     <!-- Profile Details Section -->
-    <div class="profile-details">
+    <div class="profile-details" data-aos="fade-right" data-aos-delay="600">
       <h2>Your Profile</h2>
       <div class="profile-item">
         <strong>Email:</strong> {{ user.email }}
@@ -30,7 +30,7 @@
     </div>
 
 <!-- Order History Section -->
-<div class="order-history">
+<div class="order-history" data-aos="fade-left" data-aos-delay="700">
   <h2>Your Order History</h2>
   {% if orders %}
   <table class="order-table">
@@ -67,7 +67,7 @@
 
 
     <!-- Profile Edit Section -->
-    <div class="profile-edit">
+    <div class="profile-edit" data-aos="zoom-in" data-aos-delay="800">
       <h2>Edit Your Profile</h2>
       <form method="POST" action="{% url 'edit_profile' %}">
         {% csrf_token %}
