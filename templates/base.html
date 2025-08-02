@@ -150,6 +150,18 @@
             "max-glare": 0.2
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messages = document.querySelectorAll('.fade-message');
+            messages.forEach((msg) => {
+                setTimeout(() => {
+                    msg.classList.add('fade-out');
+                }, 5000); // 5 seconds
+            });
+        });
+    </script>
+
     {% endblock %}
 
 </body>
