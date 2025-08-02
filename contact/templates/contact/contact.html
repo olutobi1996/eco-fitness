@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-5">
-    <h2 class="text-success text-center">Contact Us</h2>
-    <hr>
+<div class="container py-5" data-aos="fade-up">
+    <div class="text-center mb-4">
+        <h2 class="text-success fw-bold display-5">Contact Us <i class="fas fa-leaf text-success ms-2"></i></h2>
+        <p class="text-muted">We’d love to hear from you. Help us grow greener together! 🌱</p>
+    </div>
+    <hr class="w-25 mx-auto">
 
     {% if messages %}
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} text-center">
+            <div class="alert alert-{{ message.tags }} text-center shadow-sm" data-aos="zoom-in">
                 {{ message }}
             </div>
         {% endfor %}
     {% endif %}
 
     <!-- Contact Form -->
-    <form method="POST" action="{% url 'contact' %}">
+    <form method="POST" action="{% url 'contact' %}" class="bg-light p-4 rounded shadow-sm" data-aos="fade-up">
         {% csrf_token %}
         
         <div class="mb-3">
-            <label class="form-label">Name</label>
+            <label class="form-label fw-medium">Name</label>
             {{ contact_form.name }}
             {% for error in contact_form.name.errors %}
                 <div class="invalid-feedback d-block">{{ error }}</div>
@@ -26,7 +29,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Email</label>
+            <label class="form-label fw-medium">Email</label>
             {{ contact_form.email }}
             {% for error in contact_form.email.errors %}
                 <div class="invalid-feedback d-block">{{ error }}</div>
@@ -34,27 +37,33 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Message</label>
+            <label class="form-label fw-medium">Message</label>
             {{ contact_form.message }}
             {% for error in contact_form.message.errors %}
                 <div class="invalid-feedback d-block">{{ error }}</div>
             {% endfor %}
         </div>
 
-        <button type="submit" class="btn btn-success">Send Message</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success px-4">Send Message</button>
+        </div>
     </form>
 </div>
 
 <!-- Newsletter Signup Section -->
-<div class="container my-5">
-    <h5 class="text-center">🌱 Join Our Eco Newsletter</h5>
-    <form method="POST" action="{% url 'contact' %}" class="d-flex justify-content-center">
+<div class="container my-5" data-aos="zoom-in">
+    <div class="text-center mb-3">
+        <h5 class="fw-bold text-success">🌿 Join Our Eco Newsletter</h5>
+        <p class="text-muted small">Stay up to date with sustainable tips and new products.</p>
+    </div>
+    <form method="POST" action="{% url 'contact' %}" class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
         {% csrf_token %}
         {{ newsletter_form.email }}
-        <button type="submit" class="btn btn-success ms-2">Subscribe</button>
+        <button type="submit" class="btn btn-outline-success">Subscribe</button>
     </form>
 </div>
 
+<!-- Submission Spinner -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const forms = document.querySelectorAll('form');
@@ -67,8 +76,8 @@
         });
     });
 </script>
-
 {% endblock %}
+
 
 
 

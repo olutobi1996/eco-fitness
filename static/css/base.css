@@ -393,14 +393,3 @@ h5,
     font-size: 12px;
   }
 }
-
-/* Background Overlay */
-.overlay {
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1001;
-}
