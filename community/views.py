@@ -11,32 +11,18 @@ def community_home(request):
     return render(request, "community/community.html", {"posts": posts})
 
 
-
-logger = logging.getLogger(__name__)
-
 @login_required
-def create_post(request):
-    if request.method == "POST":
-        logger.info("Received POST request for blog post creation")
-        logger.info("FILES received: %s", request.FILES)
-
+def create_blog_post(request):
+    if request.method == 'POST':
         form = BlogPostForm(request.POST, request.FILES)
-        if form.is_valid():  
+        if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
+            post.author = request.user  # Set author here
             post.save()
-
-            logger.info("IMAGE FIELD: %s", post.image)
-            logger.info("IMAGE NAME: %s", post.image.name)
-            logger.info("IMAGE URL: %s", post.image.url)
-
-            return redirect("community")
-        else:
-            logger.warning("Form is invalid: %s", form.errors)
+            return redirect('community')  # Redirect after POST
     else:
         form = BlogPostForm()
-
-    return render(request, "community/create_post.html", {"form": form})
+    return render(request, "community/create_post.html", {'form': form})
 
 
 

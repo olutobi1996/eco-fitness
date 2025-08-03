@@ -15,8 +15,10 @@
         <div class="post-title">{{ post.title }}</div>
         <div class="post-meta">By {{ post.author }} | {{ post.created_at|date:"F d, Y" }}</div>
         {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
-        {% endif %}
+<img src="{{ post.image.url }}" alt="{{ post.title }}">
+{% endif %}
+
+
 
         <div class="post-content">{{ post.content|truncatewords:50 }}</div>
         <a href="{% url 'post_detail' post.id %}" class="text-success">Read More</a>
