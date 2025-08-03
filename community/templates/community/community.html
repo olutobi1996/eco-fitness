@@ -15,9 +15,7 @@
         <div class="post-title">{{ post.title }}</div>
         <div class="post-meta">By {{ post.author }} | {{ post.created_at|date:"F d, Y" }}</div>
         {% if post.image %}
-        <img src="{{ post.image.url }}" class="post-image" alt="Post Image">
-        {% elif post.image_url %}
-        <img src="{{ post.image_url }}" class="post-image" alt="Post Image">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
         {% endif %}
 
         <div class="post-content">{{ post.content|truncatewords:50 }}</div>
