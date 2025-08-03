@@ -7,6 +7,6 @@ class StaticStorage(S3Boto3Storage):
 
 
 class MediaStorage(S3Boto3Storage):
-    location = "media"  # all uploaded files go under "media/" in your bucket
+    location = "media"  
     default_acl = "public-read"
     file_overwrite = False
