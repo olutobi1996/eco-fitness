@@ -3,9 +3,9 @@
 {% load bag_tools %}
 
 {% block page_header %}
-<div class="container-fluid my-4 px-4">
+<div class="container-fluid my-4 px-0">
     <div class="row">
-        <div class="col text-center pt-4">
+        <div class="col-12 text-center pt-4">
             <h2 class="logo-font text-success">Your Eco Bag</h2>
         </div>
     </div>
@@ -13,13 +13,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid my-4 px-4">
+<div class="container-fluid my-4 px-0">
     <div class="row">
-        <div class="col">
+        <div class="col-12">
             <div class="bg-light p-4 rounded shadow-sm">
                 {% if bag_items %}
-                    <div class="table-responsive">
-                        <table class="table table-sm">
+                    <div class="table-responsive w-100">
+                        <table class="table table-sm w-100">
                             <thead class="text-success border-bottom">
                                 <tr>
                                     <th>Product</th>
@@ -115,6 +115,7 @@
     </div>
 </div>
 {% endblock %}
+
 
 {% block postloadjs %}
 {{ block.super }}
