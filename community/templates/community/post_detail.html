@@ -4,11 +4,13 @@
 <div class="container">
     <h2 class="text-success">{{ post.title }}</h2>
     <p class="text-muted">By {{ post.author }} | {{ post.created_at|date:"F d, Y" }}</p>
-    
+
     {% if post.image %}
     <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; border-radius: 8px;">
+    {% elif post.image_url %}
+    <img src="{{ post.image_url }}" alt="Post Image" style="max-width: 100%; border-radius: 8px;">
     {% endif %}
-    
+
     <p>{{ post.content }}</p>
 
     {% if user == post.author %}
