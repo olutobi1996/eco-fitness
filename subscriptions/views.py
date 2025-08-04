@@ -1,5 +1,6 @@
 import stripe
 from django.conf import settings
+from .utils import send_confirmation_email
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -45,13 +46,16 @@ def create_checkout_session(request, price_id):
 
 def subscription_success(request):
     """Handle the successful subscription redirect."""
-    messages.success(request, "Your subscription was successful!")
+    if request.user.is_authenticated:
+        send_confirmation_email(request.user.email)
 
+    messages.success(request, "Your subscription was successful!")
     return render(
         request,
         "subscriptions/subscription_success.html",
         {"is_subscription": True},
     )
+
 
 
 def subscription_cancel(request):

@@ -9,7 +9,19 @@ from .models import ContactMessage, NewsletterSubscriber
 
 def send_confirmation_email(email):
     subject = "🌿 Welcome to Eco-Fitness!"
-    message = "Thanks for subscribing to our eco-fitness newsletter. Stay tuned for green tips!"
+    message = (
+        "Hi there,\n\n"
+        "Thank you for subscribing to the Eco-Fitness newsletter!\n\n"
+        "We're excited to have you on board. You'll be the first to receive:\n"
+        "• Sustainable health and wellness tips\n"
+        "• Eco-friendly workout ideas\n"
+        "• Exclusive offers and updates from our green community\n\n"
+        "Together, we can build a healthier body and a healthier planet.\n\n"
+        "Stay tuned — your first eco-fitness tip is coming soon!\n\n"
+        "Warm regards,\n"
+        "The Eco-Fitness Team\n"
+        f"{settings.DEFAULT_FROM_EMAIL}"
+    )
     send_mail(
         subject,
         message,
@@ -17,7 +29,6 @@ def send_confirmation_email(email):
         [email],
         fail_silently=False,
     )
-
 
 def contact_view(request):
     contact_form = ContactForm()
