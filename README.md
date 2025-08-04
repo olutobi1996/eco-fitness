@@ -285,7 +285,6 @@ A strong typographic system has been implemented to support a clean and accessib
 
 These font choices were also optimized for performance using Google Fonts, ensuring fast loading and accessibility across devices.
 
-
 ### Future Goals & improvments
 While the current priority remains on delivering high-quality eco-friendly fitness products and valuable content, Eco-Fitness has ambitious plans for future growth across multiple channels. We aim to expand our reach through dynamic social media content marketing, including short-form videos showcasing nutritious, sustainable meal ideas, targeted fitness tutorials, and practical eco-lifestyle tips—primarily using platforms like Instagram, TikTok, and YouTube to foster a wider community built around health and sustainability. Our roadmap also includes launching personalized email marketing campaigns that deliver exclusive discounts, product announcements, and expert wellness tips directly to subscribers, helping us nurture customer loyalty and long-term engagement. To further scale the business, we plan to invest in targeted paid advertising across Google and social media, along with retargeting strategies to convert first-time visitors into returning customers. During development, we encountered challenges with the community page—specifically, enabling users to upload images. While image uploads for products via AWS S3 worked reliably, user uploads on the community page consistently failed, prompting a switch to Cloudinary, which also presented inconsistencies. In the future, a key goal is to enable seamless image uploads for users, giving them the ability to visually share their fitness journeys and fully participate in the community experience—enhancing both engagement and authenticity on the platform.
 
@@ -373,7 +372,7 @@ bash
 Copy
 Edit
 git init
-git remote add origin https://github.com/your-username/eco-fitness.git
+git remote add origin https://github.com/olutobi1996/eco-fitness.git
 git push -u origin main
 Ensure your .gitignore file includes sensitive and environment-specific files such as:
 
@@ -397,13 +396,13 @@ Copy
 Edit
 SECRET_KEY=your-django-secret-key
 DEBUG=False
-DATABASE_URL=your-database-url
-STRIPE_PUBLIC_KEY=your-stripe-public-key
-STRIPE_SECRET_KEY=your-stripe-secret-key
+DATABASE_URL(.env)
+STRIPE_PUBLIC_KEY=(.env)
+STRIPE_SECRET_KEY=(.env)
 EMAIL_HOST=smtp.your-email-provider.com
 EMAIL_PORT=587
-EMAIL_HOST_USER=your-email@example.com
-EMAIL_HOST_PASSWORD=your-email-password
+EMAIL_HOST_USER=helloecobubba@gmail.com
+EMAIL_HOST_PASSWORD=(.env)
 If using additional third-party services (e.g., AWS S3, SendGrid, reCAPTCHA), be sure to include their corresponding credentials here as well.
 
  Never commit .env files to source control.
@@ -452,13 +451,13 @@ Add all environment variables:
 bash
 Copy
 Edit
-heroku config:set SECRET_KEY=your-secret-key
+heroku config:set SECRET_KEY=(.env)
 Set up Stripe webhooks (on Stripe Dashboard):
 
 arduino
 Copy
 Edit
-https://your-app-name.herokuapp.com/webhook/
+https://eco-fitness.herokuapp.com/webhook/
  If using Render or another platform, follow a similar process using their interface for services, variables, and deployment triggers.
 
 5.  Database Migrations
@@ -534,7 +533,7 @@ bash
 Copy
 Edit
 git init
-git remote add origin https://github.com/your-username/eco-fitness.git
+git remote add origin https://github.com/olutobi1996/eco-fitness.git
 git push -u origin main
 Ensure your .gitignore file excludes sensitive files and unnecessary build artifacts:
 
@@ -558,15 +557,15 @@ Use a .env file to store secrets safely during development:
 env
 Copy
 Edit
-SECRET_KEY=your-django-secret-key
+SECRET_KEY=(.env)
 DEBUG=False
-DATABASE_URL=your-database-url
-STRIPE_PUBLIC_KEY=your-stripe-public-key
-STRIPE_SECRET_KEY=your-stripe-secret-key
-EMAIL_HOST=smtp.your-provider.com
+DATABASE_URL=(.env)
+STRIPE_PUBLIC_KEY=(.env)
+STRIPE_SECRET_KEY=(.env)
+EMAIL_HOST=smtp.django email
 EMAIL_PORT=587
-EMAIL_HOST_USER=your-email@example.com
-EMAIL_HOST_PASSWORD=your-email-password
+EMAIL_HOST_USER=hellecobubba@gmail.com
+EMAIL_HOST_PASSWORD=(.env)
  Keep .env files local only and never commit them to GitHub.
 
  Production Environment (Heroku Config Vars)
@@ -575,15 +574,15 @@ Configure secrets using the Heroku CLI or Dashboard:
 bash
 Copy
 Edit
-heroku config:set SECRET_KEY='your-django-secret-key'
+heroku config:set SECRET_KEY=(.env)
 heroku config:set DEBUG=False
-heroku config:set DATABASE_URL='your-database-url'
-heroku config:set STRIPE_PUBLIC_KEY='your-stripe-public-key'
-heroku config:set STRIPE_SECRET_KEY='your-stripe-secret-key'
-heroku config:set EMAIL_HOST='smtp.your-provider.com'
+heroku config:set DATABASE_URL=(.env)
+heroku config:set STRIPE_PUBLIC_KEY=(.env)
+heroku config:set STRIPE_SECRET_KEY=(.env)
+heroku config:set EMAIL_HOST='smtp.django email
 heroku config:set EMAIL_PORT=587
-heroku config:set EMAIL_HOST_USER='your-email@example.com'
-heroku config:set EMAIL_HOST_PASSWORD='your-email-password'
+heroku config:set EMAIL_HOST_USER=helloecobubba@gmail.om
+heroku config:set EMAIL_HOST_PASSWORD=(.env)
 Heroku auto-generates the DATABASE_URL if you're using the Postgres add-on.
 
 3. Static Files (Whitenoise Configuration)
