@@ -1,6 +1,6 @@
 import stripe
+from django.core.mail import send_mail
 from django.conf import settings
-from .utils import send_confirmation_email
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -55,7 +55,6 @@ def subscription_success(request):
         "subscriptions/subscription_success.html",
         {"is_subscription": True},
     )
-
 
 
 def subscription_cancel(request):
