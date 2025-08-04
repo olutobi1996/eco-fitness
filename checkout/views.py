@@ -70,6 +70,11 @@ def checkout(request):
             pid = request.POST.get("client_secret").split("_secret")[0]
             order.stripe_pid = pid
             order.original_bag = json.dumps(bag)
+
+            
+            if request.user.is_authenticated:
+                order.user = request.user
+
             order.save()
 
             # Create line items
@@ -78,9 +83,7 @@ def checkout(request):
                     product = Product.objects.get(id=int(item_id))
                     if isinstance(item_data, int):
                         OrderLineItem.objects.create(
-                            order=order,
-                            product=product,
-                            quantity=item_data,
+                            order=order, product=product, quantity=item_data
                         )
                     elif isinstance(item_data, dict) and "items_by_size" in item_data:
                         for size, quantity in item_data["items_by_size"].items():
@@ -91,31 +94,19 @@ def checkout(request):
                                 product_size=size,
                             )
                 except Product.DoesNotExist:
-                    messages.error(
-                        request,
-                        (
-                            "One of the products in your bag wasn't found in our database. "
-                            "Please contact us for assistance."
-                        ),
-                    )
+                    messages.error(request, "A product in your bag no longer exists.")
                     order.delete()
                     return redirect(reverse("view_bag"))
 
-            
             order.update_total()
-
             request.session["save_info"] = "save-info" in request.POST
             return redirect(reverse("checkout_success", args=[order.order_number]))
         else:
-            messages.error(
-                request,
-                "There was an error with your form. Please double check your information.",
-            )
-
+            messages.error(request, "Please check your details and try again.")
     else:
         bag = request.session.get("bag", {})
         if not bag:
-            messages.error(request, "There's nothing in your bag at the moment.")
+            messages.error(request, "Your bag is empty.")
             return redirect(reverse("products"))
 
         current_bag = bag_contents(request)
@@ -128,27 +119,31 @@ def checkout(request):
         )
 
         if request.user.is_authenticated:
-            order_form = OrderForm(
-                initial={
-                    "full_name": request.user.get_full_name(),
-                    "email": request.user.email,
-                    "phone_number": getattr(request.user, "phone_number", ""),
-                    "country": getattr(request.user, "country", ""),
-                    "postcode": getattr(request.user, "postcode", ""),
-                    "town_or_city": getattr(request.user, "town_or_city", ""),
-                    "street_address1": getattr(request.user, "street_address1", ""),
-                    "street_address2": getattr(request.user, "street_address2", ""),
-                    "county": getattr(request.user, "county", ""),
-                }
-            )
+            initial_data = {
+                "full_name": request.user.get_full_name(),
+                "email": request.user.email,
+            }
+            try:
+                profile = request.user.accountprofile
+                initial_data.update({
+                    "phone_number": profile.phone_number,
+                    "country": profile.default_country,
+                    "postcode": profile.default_postcode,
+                    "town_or_city": profile.default_town_or_city,
+                    "street_address1": profile.default_street_address1,
+                    "street_address2": profile.default_street_address2,
+                    "county": profile.default_county,
+                })
+
+            except AccountProfile.DoesNotExist:
+                pass
+
+            order_form = OrderForm(initial=initial_data)
         else:
             order_form = OrderForm()
 
         if not stripe_public_key:
-            messages.warning(
-                request,
-                "Stripe public key is missing. Did you forget to set it in your environment?",
-            )
+            messages.warning(request, "Stripe public key is missing.")
 
         context = {
             "order_form": order_form,
@@ -170,16 +165,17 @@ def checkout_success(request, order_number):
         order.save()
 
         if save_info:
-            user.phone_number = order.phone_number
-            user.country = order.country
-            user.postcode = order.postcode
-            user.town_or_city = order.town_or_city
-            user.street_address1 = order.street_address1
-            user.street_address2 = order.street_address2
-            user.county = order.county
-            user.save()
+            profile, _ = AccountProfile.objects.get_or_create(user=user)
+            profile.phone_number = order.phone_number
+            profile.default_country = order.country
+            profile.default_postcode = order.postcode
+            profile.default_town_or_city = order.town_or_city
+            profile.default_street_address1 = order.street_address1
+            profile.default_street_address2 = order.street_address2
+            profile.default_county = order.county
+            profile.save()
 
-    
+
     subject = render_to_string(
         "checkout/confirmation_emails/confirmation_email_subject.txt",
         {"order": order},
@@ -206,4 +202,5 @@ def checkout_success(request, order_number):
         del request.session["bag"]
 
     return render(request, "checkout/checkout_success.html", {"order": order})
+
 
