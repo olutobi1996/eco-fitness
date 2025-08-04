@@ -22,7 +22,8 @@ def create_checkout_session(request, price_id):
         success_url = domain_url + reverse("subscription_success")
 
         # Cancel URL
-        cancel_url = domain_url + "/subscriptions/cancel/"
+        cancel_url = domain_url + reverse("subscription_cancel")
+        
 
         # Create Stripe checkout session for subscription
         checkout_session = stripe.checkout.Session.create(
@@ -47,9 +48,8 @@ def create_checkout_session(request, price_id):
 def subscription_success(request):
     """Handle the successful subscription redirect."""
     if request.user.is_authenticated:
-        send_confirmation_email(request.user.email)
 
-    messages.success(request, "Your subscription was successful!")
+        messages.success(request, "Your subscription was successful!")
     return render(
         request,
         "subscriptions/subscription_success.html",
