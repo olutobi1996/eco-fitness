@@ -13,7 +13,7 @@ from django.views.decorators.http import require_POST
 
 from bag.contexts import bag_contents
 from products.models import Product
-
+from accounts.models import AccountProfile 
 from .forms import OrderForm
 from .models import Order, OrderLineItem
 from django.core.mail import send_mail
