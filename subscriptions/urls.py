@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import create_checkout_session, plans_view, subscription_success
+from .views import create_checkout_session, plans_view, subscription_success,  subscription_cancel
 from .webhooks import webhook
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path("webhook/", webhook, name="stripe_webhook"),  # Use 'webhook' here
     path("plans/", plans_view, name="plans"),
     path("success/", subscription_success, name="subscription_success"),
+    path("cancel/", subscription_cancel, name="subscription_cancel")
 ]
